@@ -109,6 +109,9 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+users_file/
+test_data/
+
 
 # Spyder project settings
 .spyderproject
@@ -127,3 +130,15 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Biodata and other formats
+*.fasta
+*.fastq
+*.zip
+*.Rhistory
+*.bam
+*.fai
+*.png
+*.bai
+*.fastq
+*.fastq.gz

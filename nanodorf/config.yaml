@@ -1,0 +1,34 @@
+
+pipeline: "Nanopore cDNA gene expression profiling"
+
+reference_genome: "ftp://ftp.ensembl.org/pub/release-102/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz"
+
+genome_annotation: "ftp://ftp.ensembl.org/pub/release-102/gtf/homo_sapiens/Homo_sapiens.GRCh38.102.gtf.gz"
+
+Samples:
+    - "barcode05":   # this is a group
+        E1: "fastq/barcode05.fastq.gz"    # filename pairs must be maintained - identifier and filename
+
+    - "barcode06":  # this is another group - names are arbitrary but must be unique
+        F1: "fastq/barcode06.fastq.gz"
+
+    - "barcode07":   # this is a group
+        G1: "fastq/barcode07.fastq.gz"    # filename pairs must be maintained - identifier and filename
+
+    - "barcode08":  # this is another group - names are arbitrary but must be unique
+        H1: "fastq/barcode08.fastq.gz"
+
+    - "barcode09":  # this is another group - names are arbitrary but must be unique
+        I1: "fastq/barcode09.fastq.gz"
+
+    - "barcode11":  # this is another group - names are arbitrary but must be unique
+        K1: "fastq/barcode11.fastq.gz"
+
+referenceGroup: "barcode05"   # this name *must* match one of the group names
+
+readCountMinThreshold: 10   # what is the minimum number of transcripts for a gene feature to be considered
+lfcThreshold : 1            # minimum required log2 fold change for differential expression analysis
+adjPValueThreshold: 0.05    # adjusted p-value threshold for differential expression analysis
+
+tutorialText: FALSE
+# please change the tutorialText: value to FALSE to mask the tutorial instructions

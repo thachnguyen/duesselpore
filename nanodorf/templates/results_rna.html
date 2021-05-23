@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name ="author" content = "Rossi Lab">
+  <title>Your result</title>
+
+  <!-- Below is used locally but not on server. May generate warnings. -->
+</head>
+<body>
+  
+    <div id="Text_Buttons">
+
+      <h1>
+        Your computational results
+      </h1>
+
+      <a  href="/static/{{file_id}}.zip" download> Download results </a>
+
+      {% autoescape off %}
+      {{ plot_div }}
+      {% endautoescape %}
+
+         
+    </div>
+  
+
+
+</body>
+</html>

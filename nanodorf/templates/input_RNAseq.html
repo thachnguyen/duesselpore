@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Webserver for NGS analysis. </title>
+</head>
+<body>
+<h1>Nanodorf: Webserver for RNAseq analysis. </h1>
+<h4>Before submission, please read <a href="/static/instruction_nanodorf.md"> the instruction</a>  carefully </h4>
+
+<form enctype="multipart/form-data" method=post action="">{% csrf_token %}
+<table>
+  {% for field in form %}
+    <tr>
+    <td>{{ field.label }}</td>
+    <td>{{ field }}</td>
+    <td></td>
+    </tr>
+  {% endfor %}
+</table>
+<p><input type=submit value=Submit></form></p>
+
+<p>
+{% if result != None %}
+{% load static %}
+<img src="{% get_static_prefix %}{{ result }}" width=500>
+{% endif %}
+</p>
+<div class="siteFooterBar">
+  <div class="content">
+    <h5>Genome Engineering and Model Development lab (GEMD)</h5>
+    <h5>AG Rossi</h5>
+    <h6>IUF – Leibniz Research Institute for Environmental Medicine</h6>
+<div>Auf’m Hennekamp 50</div>
+<div>D-40225 Düsseldorf</div>
+
+      <img src="https://iuf-duesseldorf.de/wp-content/uploads/2021/01/logo.png" width="70px" height="70px">
+          <div class="foot">2021 © All rights reserved.</div>
+  </div>
+</div>
+
+
+</body>
+</html>
