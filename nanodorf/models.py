@@ -7,15 +7,16 @@ from captcha.fields import ReCaptchaField
 
 class Input(models.Model):
     Human_hg38 = 'hg38'
-    Human_hg19 = 'hg19'
     Zebra_fish = 'zbrf'
     Mouse = 'mouse'
+    Rat = 'rat'
+    C_elegant = 'rat'
 
     Reference_gene = [
         (Human_hg38, 'Human hg38'),
-        (Human_hg19, 'Human hg19'),
         (Zebra_fish, 'Zebrafish'),
         (Mouse, 'Mouse'),
+        (Rat, 'Rat'),
     ]
 
     name = models.CharField(max_length=100,  verbose_name='Your submission', default='Test_name')

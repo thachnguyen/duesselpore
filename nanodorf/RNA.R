@@ -257,6 +257,7 @@ options(repr.plot.width=12, repr.plot.height=15)
 
 
 
+
 gse <- gseGO(geneList = geneList,
              ont = "ALL",
              keyType = "ENSEMBL",
@@ -268,10 +269,19 @@ gse <- gseGO(geneList = geneList,
              OrgDb = organism,
              pAdjustMethod = "none",
              eps =0.0,
-             filename = 'pathway.pdf'
+             filename = 'gseGO_pathway.pdf'
             )
 
 dotplot(gse, showCategory = 35, split =".sign", orderBy = "x")+
   facet_grid(.~.sign)
+
+
+library(DOSE)
+data(geneList)
+de <- names(geneList)[abs(geneList) > 2]
+
+edo <- enrichDGN(de)
+library(enrichplot)
+barplot(edo, showCategory=20)
 
 
