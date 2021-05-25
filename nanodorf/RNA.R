@@ -1,19 +1,31 @@
-library(digest)
-library(ShortRead)  
-library(ggplot2)
-library(plyr)
-library(dplyr)      
-library(tidyr)
-library(Rsubread)
-library(DESeq2)
-library(pcaMethods)
-library(kableExtra)  
-library(caTools)     # base64decode for embedded Snakefile
-library(writexl)     # writing results to Excel files
-library(yaml)
-library(session)
-library(AnnotationDbi) # These packages are needed to convert the ENSEMBL ID into Gene symbols
-library(org.Hs.eg.db)
+suppressMessages(library(digest))
+suppressMessages(library(ShortRead))  
+suppressMessages(library(ggplot2))
+suppressMessages(library(plyr))
+suppressMessages(library(dplyr))      
+suppressMessages(library(tidyr))
+suppressMessages(library(Rsubread))
+suppressMessages(library(DESeq2))
+suppressMessages(library(pcaMethods))
+suppressMessages(library(kableExtra))  
+suppressMessages(library(caTools))     # base64decode for embedded Snakefile
+suppressMessages(library(writexl))     # writing results to Excel files
+suppressMessages(library(yaml))
+suppressMessages(library(session))
+suppressMessages(library(AnnotationDbi)) # These packages are needed to convert the ENSEMBL ID into Gene symbols
+suppressMessages(library(org.Hs.eg.db))
+suppressMessages(library(RColorBrewer))
+suppressMessages(library(PoiClaClu))
+suppressMessages(library(pheatmap))
+suppressMessages(library(vsn))
+suppressMessages(library(karyoploteR))
+suppressMessages(library(ensembldb))
+suppressMessages(library(viridis))
+suppressMessages(library(gridExtra))
+suppressMessages(library(DOSE))
+suppressMessages(library(pathview))
+suppressMessages(library(clusterProfiler))
+suppressMessages(library(enrichplot))
 
 # Loading of a file with customized functions----
 source("Static/R/common.R")
@@ -42,9 +54,7 @@ for (i in 1:length(config$Samples)) {
 # With this function we add a new columns containing informations about the number of replicates
 studyDesign$replicate <- sapply(1:nrow(studyDesign), function(x)sum(studyDesign$group[1:x]==studyDesign$group[x]))
 
-# Adding a md5 fingerprint.
-# Theoretically there are unlimited combinations and number of files with any given MD5-Hash
-# Basically a control that the accidentally aligned a fastq-File twise. This would result in a identical MD5-Hash
+
 studyDesign$md5 <- lapply(as.character(studyDesign$filename), md5sum)
 
 # Relevel the data according to our control group.

@@ -9,7 +9,6 @@ import os
 from zipfile import ZipFile
 import shutil
 import zipfile
-from django.core.mail import send_mail
 
 from django.http import HttpResponse
 import numpy as np
@@ -92,7 +91,7 @@ def run_minimap2(path='users_file/', s_id = 'Test_name_1618217069'):
     return
 
 def write_rscript(path='users_file/', s_id = 'Test_name_1618217069/'):
-    new_R = 'setwd("/home/ag-rossi/projects/NGS_webserver/NGS_webserver/nanodorf/%s%s")\n'%(path, s_id)
+    new_R = 'setwd("/home/ag-rossi/projects/nanodorf/nanodorf/%s%s")\n'%(path, s_id)
     new_R += open('RNA.R', 'r').read()
 
     f = open(path+s_id+'/RNA.R', 'w')
@@ -102,6 +101,7 @@ def write_rscript(path='users_file/', s_id = 'Test_name_1618217069/'):
         
 # 
 def send_result(submission_name, link_address, recipient_email):
+    from django.core.mail import send_mail
     send_mail(subject='Your RNAseq computational results',
         message= 'Dear User\nYour RNAseq analyse <%s> job is now completed\n\Your computational result will be stored in 30 days, You can download your result from this link <<%s>>\n\n\
     Thanks for using our service, if you have any problems please send an email to the developer webserver.iuf@gmail.com'%(submission_name, link_address),

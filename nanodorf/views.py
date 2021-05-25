@@ -33,7 +33,6 @@ def index(request):
                 print('Read time %i seconds' %(t3 - t2))
                 create_yaml(s_id=session_id, samples=samples, ref_group= form.reference_group, readCountMinThreshold=form.readCountMinThreshold, lfcThreshold=form.lfcThreshold, adjPValueThreshold=form.adjPValueThreshold)
                 write_rscript(s_id=session_id)
-                
                 #os.unlink('users_file/'+session_id)
                 run_minimap2(s_id=session_id)
                 t4 = time()
@@ -46,7 +45,8 @@ def index(request):
                 shutil.make_archive('static/%s'%session_id, 'zip', 'users_file/%s/Analysis/Results/' %session_id)
                 context = {'file_id': session_id}
                 link = 'http://172.17.21.81:8000/static/%s.zip'%session_id
-                send_result(str(form.name), link, form.email)
+                # send email is not implemented in local mode
+                #send_result(str(form.name), link, form.email)
                 
             return render(request, 'results_rna.html', context)
 
