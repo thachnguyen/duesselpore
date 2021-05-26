@@ -6,17 +6,18 @@ from captcha.fields import ReCaptchaField
 # from .forms import FileFieldForm
 
 class Input(models.Model):
-    Human_hg38 = 'hg38'
-    Zebra_fish = 'zbrf'
-    Mouse = 'mouse'
-    Rat = 'rat'
-    C_elegant = 'rat'
+    human = 'hg38'
+    zebrafish = 'zebrafish'
+    mouse = 'mouse'
+    rat = 'rat'
+    celegans = 'c_elegans'
 
     Reference_gene = [
-        (Human_hg38, 'Human hg38'),
-        (Zebra_fish, 'Zebrafish'),
-        (Mouse, 'Mouse'),
-        (Rat, 'Rat'),
+        (human, 'Human hg38 (Homo sapiens)'),
+        (mouse, 'Mouse (Mus musculus)'),
+        (rat, 'Rat (Rattus norvegicus)'),
+        (zebrafish, 'Zebrafish (Danio rerio)'),
+        (celegans, 'Caenorhabditis elegans'),
     ]
 
     name = models.CharField(max_length=100,  verbose_name='Your submission', default='Test_name')
@@ -26,7 +27,7 @@ class Input(models.Model):
     reference_genes = models.CharField(
         max_length=100,
         choices=Reference_gene,
-        default=Human_hg38,
+        default=human,
     )
     reference_group = models.CharField(max_length=100,  verbose_name='your reference group (reference\'s directory name)', default='group01')
     readCountMinThreshold = models.IntegerField(verbose_name='readCountMinThreshold (Optional)', default=10)

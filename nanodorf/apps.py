@@ -50,11 +50,17 @@ def manage_fastq_list(s_id):
     return samples_data    
 
 
-def create_yaml(s_id, samples, yaml_file = 'config.yaml', ref_group = 0, readCountMinThreshold = 10, lfcThreshold =1,  adjPValueThreshold = 0.05, tutorialText=False):
+def create_yaml(s_id, samples, yaml_file = 'config.yaml', ref_group = 0, readCountMinThreshold = 10, lfcThreshold =1,  adjPValueThreshold = 0.05, tutorialText=False, organism='human'):
     # '''
     # Create the user defined YAML from YAML template for RScript. The fastq files are separate into different groups as subfolders. Named by directory's name and file'sname.
     # '''
-    import yaml
+    import yaml   
+    genome_annotation = {"human":"ftp://ftp.ensembl.org/pub/release-102/gtf/homo_sapiens/Homo_sapiens.GRCh38.102.gtf.gz",\
+                        "rat": "ftp://ftp.ensembl.org/pub/release-102/gtf/rattus_norvegicus/Rattus_norvegicus.Rnor_6.0.102.gtf.gz",\
+                        "mouse": "ftp://ftp.ensembl.org/pub/release-102/gtf/mus_musculus/Mus_musculus.GRCm39.102.gtf.gz",\
+                        "zebrafish": "ftp://ftp.ensembl.org/pub/release-102/gtf/danio_rerio/Danio_rerio.GRCz11.102.gtf.gz",\
+                        "celegans": "ftp://ftp.ensembl.org/pub/release-102/gtf/caenorhabditis_elegans/Caenorhabditis_elegans.WBcel235.102.gtf.gz"}
+
     with open(yaml_file) as file:
         default_config = yaml.load(file, Loader=yaml.FullLoader)
     default_config['readCountMinThreshold'] = readCountMinThreshold
@@ -63,6 +69,10 @@ def create_yaml(s_id, samples, yaml_file = 'config.yaml', ref_group = 0, readCou
     default_config['tutorialText'] = tutorialText
     default_config['Samples'] = samples
     default_config['referenceGroup'] = ref_group
+    default_config['organism'] = organism
+    default_config['genome_annotation'] = genome_annotation[organism]
+
+
     with open('users_file/%s/config.yaml'%s_id, 'w') as f:
         yaml.dump(default_config, f)
     os.mkdir('users_file/%s/Static'%s_id)
@@ -72,7 +82,7 @@ def create_yaml(s_id, samples, yaml_file = 'config.yaml', ref_group = 0, readCou
     return
 
 
-def run_minimap2(path='users_file/', s_id = 'Test_name_1618217069'):
+def run_minimap2(path='users_file/', s_id = 'Test_name_1618217069', organism = 'human'):
     if not os.path.exists('users_file/%s/Analysis'%s_id):
         os.mkdir('users_file/%s/Analysis'%s_id)
     path_minimap = 'users_file/%s/Analysis/Minimap'%s_id
@@ -84,9 +94,7 @@ def run_minimap2(path='users_file/', s_id = 'Test_name_1618217069'):
         for fastq_file in os.listdir('users_file/%s/fastq/%s'%(s_id, group)):
             path2 = '%s/fastq/%s/%s'%(path1, group, fastq_file)
             fastq_file1 = fastq_file.split('.')[0]
-            print(('minimap2 -t16 -ax splice -k14 -secondary=no /home/ag-rossi/ReferenceData/reference.mmi %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(path2, path_minimap, fastq_file1)))
-            print(('samtools flagstat %s/%s.bam>%s%s.txt'%(path_minimap, fastq_file1, path_flagstat, fastq_file1)))
-            os.system('minimap2 -t16 -ax splice -k14 -secondary=no /home/ag-rossi/ReferenceData/reference.mmi %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(path2, path_minimap, fastq_file1))
+            os.system('minimap2 -t16 -ax splice -k14 -secondary=no /home/ag-rossi/ReferenceData/reference_%s.mmi %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(organism, path2, path_minimap, fastq_file1))
             os.system('samtools flagstat %s/%s.bam>%s%s.txt'%(path_minimap, fastq_file1, path_flagstat, fastq_file1))
     return
 

@@ -17,7 +17,6 @@ suppressMessages(library(org.Hs.eg.db))
 suppressMessages(library(RColorBrewer))
 suppressMessages(library(PoiClaClu))
 suppressMessages(library(pheatmap))
-suppressMessages(library(vsn))
 suppressMessages(library(karyoploteR))
 suppressMessages(library(ensembldb))
 suppressMessages(library(viridis))
@@ -94,8 +93,7 @@ colnames(qcData) <- row.names(studyDesign)
 View(qcData)
 
 # Using the package knitr to create a noce and dynamic report
-knitr::kable(qcData, caption="Summary statistics for the cDNA libraries imported", booktabs=TRUE, table.envir='table*', linesep="")  %>%
-  kable_styling(latex_options=c("hold_position", font_size=9))
+
 # We can use the number of reads, overall read quality and GC content to get an impression about the differences of the samples. 
 # Huge differences may indicate technical differences and might be problematic for DE-analysis
 
@@ -114,8 +112,7 @@ lengthMatrixMelt <- reshape2::melt(lengthDataMatrix, na.rm=TRUE, measure.vars=ro
 lengthMatrixMelt <- cbind(lengthMatrixMelt, group=studyDesign[match(lengthMatrixMelt$variable,  rownames(studyDesign)), "group"])
 
 plot <- ggplot(lengthMatrixMelt, aes(x=variable, y=value, fill=group)) + geom_violin() + scale_y_continuous(limits=c(0, as.numeric(quantile(lengthMatrixMelt$value, probs=c(0.975))))) + xlab("study sample") +  ylab("Distribution of Read Lengths (bp)") + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + scale_fill_brewer(palette="Paired") + labs(title="Violin plot showing distribution of read lengths across samples")
-
-suppressWarnings(print(plot))
+ggsave("Analysis/Results/read_length.pdf")
 
 # Violin plot show the quality of reads----
 extractQualities <- function(rowname) {
@@ -132,8 +129,8 @@ qualityMatrixMelt <- reshape2::melt(qualityDataMatrix, na.rm=TRUE, measure.vars=
 qualityMatrixMelt <- cbind(qualityMatrixMelt, group=studyDesign[match(qualityMatrixMelt$variable,  rownames(studyDesign)), "group"])
 
 plotQ <- ggplot(qualityMatrixMelt, aes(x=variable, y=value, fill=group)) + geom_violin() + scale_y_continuous(limits=c(min(qualityMatrixMelt$value), max(qualityMatrixMelt$value))) + xlab("study sample") +  ylab("Distribution of Read Qualities (QV)") + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + scale_fill_brewer(palette="Paired") + labs(title="Violin plot showing distribution of read qualities across samples")
+ggsave("Analysis/Results/read_quality.pdf")
 
-suppressWarnings(print(plotQ))
 
 # Review of cDNA read mapping----
 # Read mappings correspond to the number of unique reads. In our worklflow we disabled secondary mappings.
@@ -170,11 +167,6 @@ flagstatRes[nrow(flagstatRes)+1,] <- round(as.numeric(flagstatRes["Mapped", ]) /
 flagstatRes <- flagstatRes[c(6,1,2,3,4,7),]
 rownames(flagstatRes)[6] <- "%mapping"
 
-#knitr::kable(flagstatRes, caption="Summary statistics from the Minimap2 long read spliced mapping.")
-
-knitr::kable(flagstatRes, caption="Summary statistics from the minimap2 long read spliced mapping.", booktabs=TRUE, table.envir='table*', linesep="")  %>%
-  kable_styling(latex_options=c("hold_position", font_size=11)) %>%
-  add_footnote(c("information from samtools flagstat"))
 
 # Analysis of reads mapped to genes----
 # Here we use the featureCount method from the package Rsubread
@@ -196,17 +188,12 @@ geneCounts <- featureCounts(files=readCountTargets,
                             largestOverlap=TRUE,
                             useMetaFeatures=TRUE,
                             nthreads = 16)$counts
-# largestOverlap sorts the multi-mapping challenge with long reads
-# reportReads="CORE" can be appended to get info on read status
 
 # Rename column headers for clarity
 colnames(geneCounts) <- rownames(studyDesign)
 
 # Creating a table with genes showing the highest number of counts----
 # Keep in mind that neither a normalization nor a transformation was performed 
-knitr::kable(geneCounts[order(rowSums(geneCounts), decreasing=TRUE)[1:10],], caption="Table showing the 10 annotated gene features with the highest number of mapped reads", booktabs=TRUE, table.envir='table*', linesep="") %>%
-  kable_styling(latex_options=c("hold_position", font_size=11)) %>%
-  add_footnote(c("This is raw count data and no normalisation or transformation has been performed"))
 
 # Convert the ENSEMBL ID into Gene symbols----
 # Removing those genes without a single read
@@ -229,15 +216,22 @@ write_xlsx(x = geneCounts_nonZeros, path = xlsExpressedGenes)
 # DESeq2 utilises the raw read count data to model between condition variability and to identify the differentially expressed genes. 
 # DESeq2 does not use normalized data, but corrects internally for the relative library size to assess measurement precision. 
 # Thresholds have been defined in the config.yaml-File
-
-deSeqRaw <- DESeqDataSetFromMatrix(countData=geneCounts, colData=studyDesign, design= ~group)
-
+group_size <-2
+for (group1 in unique(studyDesign$group)) {
+  if (group_size > sum(studyDesign$group== group1))
+      {group_size <-1}
+  }
+if (group_size >1) { 
+  deSeqRaw <- DESeqDataSetFromMatrix(countData=geneCounts, colData=studyDesign, design= ~group)
+} else {
+  deSeqRaw <- DESeqDataSetFromMatrix(countData=geneCounts, colData=studyDesign, design= ~ 1)  
+  }
 keep <- rowSums(counts(deSeqRaw)) > config$readCountMinThreshold
 deSeqRaw <- deSeqRaw[keep,]
 dds <- DESeq(deSeqRaw)
 # filter out the features that do not contain at least min threshold of expressed genes
 
-
+if (studyDesign$organism=='human'){
 vsd <- vst(object = deSeqRaw, blind = TRUE)
 topVarGenes <- head(order(rowVars(assay(vsd)), decreasing = TRUE), n = 50)
 mat <- assay(vsd)[topVarGenes,]
@@ -250,13 +244,20 @@ variance_heatmap <- pheatmap(mat,
          annotation_col = anno, 
          labels_row = mapIds(org.Hs.eg.db, keys = substr(rownames(mat),1,15), 
                              column = "SYMBOL", keytype = "ENSEMBL", multiVals = "first"),
-         labels_col = c(studyDesign$group, studyDesign$replicate), drop_levels = TRUE, filename='heatmap.pdf')
+         labels_col = c(studyDesign$group, studyDesign$replicate), drop_levels = TRUE, filename='Analysis/Results/heatmap.pdf')
+
+
 
 organism <- org.Hs.eg.db
+res_group01_group02.filtered <- res_group01_group02 %>%
+  as.data.frame() %>%
+  dplyr::filter(abs(log2FoldChange) > 2)
+
+geneList <- res_group01_group02.filtered$log2FoldChange
+names(geneList) <- rownames(res_group01_group02.filtered)
+geneList <- sort(geneList, decreasing = TRUE)
+
 options(repr.plot.width=12, repr.plot.height=15)
-
-
-
 
 gse <- gseGO(geneList = geneList,
              ont = "ALL",
@@ -269,19 +270,41 @@ gse <- gseGO(geneList = geneList,
              OrgDb = organism,
              pAdjustMethod = "none",
              eps =0.0,
-             filename = 'gseGO_pathway.pdf'
+             filename = 'Analysis/Results/gseGO_pathway.pdf'
             )
 
 dotplot(gse, showCategory = 35, split =".sign", orderBy = "x")+
   facet_grid(.~.sign)
 
+gse.df <- as.data.frame(gse)
+pathway <- file.path("Analysis/Results/pathway.xlsx")
+write_xlsx(x= gse.df, path = pathway)
 
-library(DOSE)
 data(geneList)
 de <- names(geneList)[abs(geneList) > 2]
 
 edo <- enrichDGN(de)
 library(enrichplot)
 barplot(edo, showCategory=20)
+ggsave("Analysis/Results/bar_plot.pdf")
+
+options(repr.plot.width=20, repr.plot.height=7)
+edox <- setReadable(edo, 'org.Hs.eg.db', 'ENTREZID')
+p1 <- cnetplot(edox, foldChange=geneList)
+## categorySize can be scaled by 'pvalue' or 'geneNum'
+p2 <- cnetplot(edox, categorySize="pvalue", foldChange=geneList)
+p3 <- cnetplot(edox, foldChange=geneList, circular = TRUE, colorEdge = TRUE)
+cowplot::plot_grid(p1, p2, p3, ncol=3, labels=LETTERS[1:3], rel_widths=c(.8, .8, 1.2))
+ggsave("Analysis/Results/cnet_plot1.pdf")
+
+options(repr.plot.width=20, repr.plot.height=12)
+p1 <- cnetplot(edox, node_label="category") 
+p2 <- cnetplot(edox, node_label="gene") 
+p3 <- cnetplot(edox, node_label="all") 
+p4 <- cnetplot(edox, node_label="none") 
+cowplot::plot_grid(p1, p2, p3, p4, ncol=2, labels=LETTERS[1:4])
+ggsave("Analysis/Results/cnet_plot2.pdf")
+
+}
 
 

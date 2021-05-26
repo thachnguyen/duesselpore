@@ -27,3 +27,6 @@ print('create rat reference genome indexes, please wait')
 os.system('minimap2 -t 4 -k14 -w5 -d ~/ReferenceData/reference_rat.mmi ~/ReferenceData/Rattus_norvegicus.Rnor_6.0.dna.toplevel.fa.gz')
 print('create zebrafish reference genome indexes, please wait')
 os.system('minimap2 -t 4 -k14 -w5 -d ~/ReferenceData/reference_zebrafish.mmi ~/ReferenceData/Danio_rerio.GRCz11.dna.toplevel.fa.gz')
+print('create C elegans reference genome indexes, please wait')
+os.system('minimap2 -t 4 -k14 -w5 -d ~/ReferenceData/reference_celegans.mmi ~/ReferenceData/Caenorhabditis_elegans.WBcel235.dna.toplevel.fa.gz')
+

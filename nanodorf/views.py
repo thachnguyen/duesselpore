@@ -23,6 +23,7 @@ def index(request):
                 t1 = time()
                 form = form.save(commit=False)
                 session_id = '%s_%s' %(form.name, str(int(time())))
+                organism = form.reference_genes
                 os.mkdir('users_file/%s' %session_id)
                 handle_uploaded_file(request.FILES['upfile_fastq'], s_id=session_id)
                 print(os.getcwd())
@@ -31,7 +32,7 @@ def index(request):
                 samples = manage_fastq_list(session_id)
                 t3 = time() 
                 print('Read time %i seconds' %(t3 - t2))
-                create_yaml(s_id=session_id, samples=samples, ref_group= form.reference_group, readCountMinThreshold=form.readCountMinThreshold, lfcThreshold=form.lfcThreshold, adjPValueThreshold=form.adjPValueThreshold)
+                create_yaml(s_id=session_id, samples=samples, ref_group= form.reference_group, readCountMinThreshold=form.readCountMinThreshold, lfcThreshold=form.lfcThreshold, adjPValueThreshold=form.adjPValueThreshold, organism=organism)
                 write_rscript(s_id=session_id)
                 #os.unlink('users_file/'+session_id)
                 run_minimap2(s_id=session_id)
@@ -44,7 +45,7 @@ def index(request):
                 # shutil.copyfile('users_file/%s/Rplots.pdf', 'users_file/%s/Analysis/Results/Rplots.pdf'%session_id)
                 shutil.make_archive('static/%s'%session_id, 'zip', 'users_file/%s/Analysis/Results/' %session_id)
                 context = {'file_id': session_id}
-                link = 'http://172.17.21.81:8000/static/%s.zip'%session_id
+                #link = 'http://172.17.21.81:8000/static/%s.zip'%session_id
                 # send email is not implemented in local mode
                 #send_result(str(form.name), link, form.email)
                 
