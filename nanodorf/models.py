@@ -6,11 +6,11 @@ from captcha.fields import ReCaptchaField
 # from .forms import FileFieldForm
 
 class Input(models.Model):
-    human = 'hg38'
+    human = 'human'
     zebrafish = 'zebrafish'
     mouse = 'mouse'
     rat = 'rat'
-    celegans = 'c_elegans'
+    celegans = 'celegans'
 
     Reference_gene = [
         (human, 'Human hg38 (Homo sapiens)'),
