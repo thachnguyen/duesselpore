@@ -231,7 +231,7 @@ deSeqRaw <- deSeqRaw[keep,]
 dds <- DESeq(deSeqRaw)
 # filter out the features that do not contain at least min threshold of expressed genes
 
-if (studyDesign$organism=='human'){
+if (config$organism=='human'){
 vsd <- vst(object = deSeqRaw, blind = TRUE)
 topVarGenes <- head(order(rowVars(assay(vsd)), decreasing = TRUE), n = 50)
 mat <- assay(vsd)[topVarGenes,]
@@ -245,8 +245,6 @@ variance_heatmap <- pheatmap(mat,
          labels_row = mapIds(org.Hs.eg.db, keys = substr(rownames(mat),1,15), 
                              column = "SYMBOL", keytype = "ENSEMBL", multiVals = "first"),
          labels_col = c(studyDesign$group, studyDesign$replicate), drop_levels = TRUE, filename='Analysis/Results/heatmap.pdf')
-
-
 
 organism <- org.Hs.eg.db
 res_group01_group02.filtered <- res_group01_group02 %>%
