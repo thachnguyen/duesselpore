@@ -23,6 +23,10 @@ f1 = open('/home/ag-rossi/projects/nanodorf/NGS_webserver/settings.py', 'w')
 f1.writelines(f)
 f1.close()
 
+#Config Swap
+os.system('')
+
+
 print('Downloading human reference genome')
 os.system('wget ftp://ftp.ensembl.org/pub/release-102/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz -P ~/ReferenceData/')
 print('Downloading mouse reference genome')

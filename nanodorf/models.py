@@ -37,11 +37,7 @@ class Input(models.Model):
     email = models.EmailField(verbose_name='Email address', default= 'thach.nguyen@iuf-duesseldorf.de')
     
 class InputForm(ModelForm):
-    # captcha = ReCaptchaField(public_key='6LesYJ4aAAAAAHDch9YM2xb0EeLDqAaT7zKTJZ4g',
-    # private_key='6LesYJ4aAAAAAAAaarJlC14fNcBPc9QzMu1FyXpx',)
-    # captcha = ReCaptchaField()
     class Meta:
         model = Input
-        # fields = ['name','upfile_fastq','upfile_barcode', 'gene_templates', 'gene_gene_templates_file', 'email']
         fields = ['name', 'upfile_fastq', 'upfile_fastq5', 'reference_group','reference_genes', 'readCountMinThreshold', 'lfcThreshold' , 'adjPValueThreshold', 'email']
         
