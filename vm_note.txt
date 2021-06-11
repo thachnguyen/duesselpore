@@ -1,13 +1,15 @@
-Compress the VDI volume.
+How to compress the VDI volume?
 - VDI must be the Dynamically allocated storage mode
 - Login ubuntu recovery mode (VM environment).
 - Select root and run those commands
  	systemctl stop systemd-journald.socket
 	systemctl stop systemd-journald.service
-	sudo swapoff -a
-	mount -n -o remount,ro -t ext2 /dev/sda1 
+	swapoff -a
+	mount -n -o remount,ro -t ext4 /dev/sda1 
 	zerofree -v /dev/sda1
+	zerofree -v /dev/sda2
 	halt (and turnoff Virtualbox)
 - On your host machine: 
 	VBoxManage modifymedium disk nanodorf-disk001.vdi --compact
+	(On window host run VboxManage.exe)
 - Export your OS to desire path ->completed

@@ -49,7 +49,7 @@ if __name__=="__main__":
 		os.system('wget ftp://ftp.ensembl.org/pub/release-104/gtf/caenorhabditis_elegans/Caenorhabditis_elegans.WBcel235.104.gtf.gz -P ~/ReferenceData/') 
 
 		print('creating mouse reference genome indexes, please wait')
-		os.system('minimap2 -t 4 -k14 -w5 -d ~/ReferenceData/reference_mouse.mmi ~/ReferenceData/Mus_musculus.GRCm38.dna.toplevel.fa.gz')
+		os.system('minimap2 -t 4 -k14 -w5 -d ~/ReferenceData/reference_mouse.mmi ~/ReferenceData/Mus_musculus.GRCm39.dna.toplevel.fa.gz')
 		print('creating rat reference genome indexes, please wait')
 		os.system('minimap2 -t 4 -k14 -w5 -d ~/ReferenceData/reference_rat.mmi ~/ReferenceData/Rattus_norvegicus.Rnor_6.0.dna.toplevel.fa.gz')
 		print('creating zebrafish reference genome indexes, please wait')
