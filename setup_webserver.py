@@ -26,7 +26,7 @@ if __name__=="__main__":
 	os.system('wget ftp://ftp.ensembl.org/pub/release-104/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz -P ~/ReferenceData/')
 	os.system('wget http://ftp.ensembl.org/pub/release-104/gtf/homo_sapiens/Homo_sapiens.GRCh38.104.gtf.gz -P ~/ReferenceData/')
 	print('creating human reference genome indexes, please wait')
-	os.system('minimap2 -t 4 -k14 -w5 -d ~/ReferenceData/reference_human.mmi ~/ReferenceData/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz')
+	os.system('minimap2 -t 4 -k14 -w10 -d ~/ReferenceData/reference_human.mmi ~/ReferenceData/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz')
 	install_cmd ='apt install fastqc'
 	sudo_pass = '123456'
 	os.system('echo %s|sudo -S %s'%(sudo_pass, install_cmd))
