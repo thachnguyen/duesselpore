@@ -35,9 +35,13 @@ def index(request):
                 create_yaml(s_id=session_id, samples=samples, ref_group= form.reference_group, readCountMinThreshold=form.readCountMinThreshold, lfcThreshold=form.lfcThreshold, adjPValueThreshold=form.adjPValueThreshold, organism=organism)
                 write_rscript(s_id=session_id)
                 #os.unlink('users_file/'+session_id)
-                run_minimap2(s_id=session_id)
-                t4 = time()
-                print('Run Minimap time %i seconds' %(t4-t3))
+                
+                #Run minimap for two first options
+                if form.gene_count_method in ['Rsubread', 'HTSeq']:
+                    run_minimap2(s_id=session_id)
+                    t4 = time()
+                    print('Run Minimap time %i seconds' %(t4-t3))
+
                 print('Start R Analyser')
                 os.system('R < users_file/%s/RNA.R --no-save'%session_id)
                 t5= time()
@@ -60,7 +64,7 @@ def index(request):
 
 def download_file(request):
     print(os.getcwd())
-    fl_path = 'nanodorf/static/test_result/test.zip'
+    fl_path = 'duesselpore/static/test_result/test.zip'
     filename = 'downloaded_file_name.extension'
 
     fl = open(fl_path, 'r')

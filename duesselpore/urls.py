@@ -1,7 +1,7 @@
 from django.urls import include, path
-from nanodorf import views
+from duesselpore import views
 from . import views
-app_name = 'nanodorf'
+app_name = 'duesselpore'
 
 urlpatterns = [
     path('', views.index, name='index'),

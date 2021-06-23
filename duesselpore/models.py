@@ -20,9 +20,23 @@ class Input(models.Model):
         (celegans, 'Caenorhabditis elegans'),
     ]
 
+    Rsubread = 'Rsubread'
+    HTSeq = 'HTSeq'
+    Salmon = 'Salmon'
+
+    gene_count_method = [
+        (Rsubread, 'Rsubread/featureCounts (Liao et. al. 2014) for gene counts'),
+        (HTSeq, 'HTSeq/htseq-counts (Ander et. al. 2014) for gene counts'),
+        (Salmon, 'Salmon (Patro et. al. 2017) for gene counts'),
+    ]
+
     name = models.CharField(max_length=100,  verbose_name='Your submission', default='Test_name')
-    upfile_fastq5 = models.FileField(verbose_name= 'Upload your fast5 files (very slow, not recommend)',  upload_to='users_file/', blank=True, null=True)
     upfile_fastq = models.FileField(verbose_name= 'Upload your fastq files (all-in zip format, group by study group required)',  upload_to='users_file/', blank=True, null=True)
+    gene_count_method = models.CharField(
+        max_length=100,
+        choices=gene_count_method,
+        default=Rsubread,
+    )
     # gene_templates = models.CharField(max_length=100,  verbose_name='Reference genome code', default='None')
     reference_genes = models.CharField(
         max_length=100,
@@ -39,5 +53,5 @@ class Input(models.Model):
 class InputForm(ModelForm):
     class Meta:
         model = Input
-        fields = ['name', 'upfile_fastq', 'upfile_fastq5', 'reference_group','reference_genes', 'readCountMinThreshold', 'lfcThreshold' , 'adjPValueThreshold', 'email']
+        fields = ['name', 'upfile_fastq', 'gene_count_method', 'reference_group','reference_genes', 'readCountMinThreshold', 'lfcThreshold' , 'adjPValueThreshold', 'email']
         

@@ -7,8 +7,8 @@ from zipfile import ZipFile
 import shutil
 import yaml
 
-class nanodorfConfig(AppConfig):
-    name = 'nanodorf'
+class duesselporeConfig(AppConfig):
+    name = 'duesselpore'
 
 def handle_uploaded_file(f, s_id, f_name = 'fastq.zip'):
     with open('users_file/%s/%s' %(s_id,f_name), 'wb+') as destination:
@@ -89,7 +89,7 @@ def run_minimap2(path='users_file/', s_id = 'Test_name_1618217069', organism = '
     return
 
 def write_rscript(path='users_file/', s_id = 'Test_name_1618217069/'):
-    new_R = 'setwd("/home/ag-rossi/projects/nanodorf/nanodorf/%s%s")\n'%(path, s_id)
+    new_R = 'setwd("/home/ag-rossi/projects/duesselpore/duesselpore/%s%s")\n'%(path, s_id)
     new_R += open('RNA.R', 'r').read()
     f = open(path+s_id+'/RNA.R', 'w')
     f.write(new_R)
