@@ -15,7 +15,7 @@ from time import time
 
 def index(request):
     os.chdir(os.path.dirname(__file__))
-    print(os.path.dirname(__file__))
+    #print(os.path.dirname(__file__))
     if request.method == 'POST':
         form = InputForm(request.POST, request.FILES)
         if form.is_valid():

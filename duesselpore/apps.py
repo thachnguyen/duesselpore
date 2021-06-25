@@ -38,7 +38,7 @@ def manage_fastq_list(s_id):
             group1[group.split('.')[0]] = 'fastq/%s/%s'%(each_group, group)
         stored_group[each_group] = group1
         samples_data[i] = stored_group
-    print(samples_data)
+    #print(samples_data)
     os.unlink(zipfilename)
 
     return samples_data    
@@ -73,6 +73,12 @@ def create_yaml(s_id, samples, yaml_file = 'config.yaml', ref_group = 0, readCou
     return
 
 def run_minimap2(path='users_file/', s_id = 'Test_name_1618217069', organism = 'human'):
+    file_org={'human':'Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz',
+                'rat': 'Rattus_norvegicus.Rnor_6.0.dna.toplevel.fa.gz',
+                'mouse':'Mus_musculus.GRCm38.dna.primary_assembly.fa.gz',
+                'zebrafish':'Danio_rerio.GRCz11.dna.primary_assembly.fa.gz',
+                'celegans':'Caenorhabditis_elegans.WBcel235.dna.toplevel.fa.gz'}
+
     if not os.path.exists('users_file/%s/Analysis'%s_id):
         os.mkdir('users_file/%s/Analysis'%s_id)
     path_minimap = 'users_file/%s/Analysis/Minimap'%s_id
@@ -84,7 +90,8 @@ def run_minimap2(path='users_file/', s_id = 'Test_name_1618217069', organism = '
         for fastq_file in os.listdir('users_file/%s/fastq/%s'%(s_id, group)):
             path2 = '%s/fastq/%s/%s'%(path1, group, fastq_file)
             fastq_file1 = fastq_file.split('.')[0]
-            os.system('minimap2 -t 16 -a -x map-ont --splice -k 15 -w 10 --secondary=no /home/ag-rossi/ReferenceData/reference_%s.mmi %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(organism, path2, path_minimap, fastq_file1))
+            #os.system('minimap2 -t 16 -a -x map-ont --splice -k 15 -w 10 --secondary=no /home/ag-rossi/ReferenceData/reference_%s.mmi %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(organism, path2, path_minimap, fastq_file1))
+            os.system('minimap2 -t 16 -ax map-ont --splice --secondary=no /home/ag-rossi/ReferenceData/%s %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(file_org[organism], path2, path_minimap, fastq_file1))
             os.system('samtools flagstat %s/%s.bam>%s%s.txt'%(path_minimap, fastq_file1, path_flagstat, fastq_file1))
     return
 
