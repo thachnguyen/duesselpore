@@ -20,16 +20,16 @@ if __name__=="__main__":
 	f1 = open('/home/ag-rossi/projects/duesselpore/NGS_webserver/settings.py', 'w')
 	f1.writelines(f)
 	f1.close()
-
-	if sys.argv[1]=='light':
-		print('Downloading human reference genome')
-		os.system('wget ftp://ftp.ensembl.org/pub/release-102/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz -P ~/ReferenceData/')
-		os.system('wget http://ftp.ensembl.org/pub/release-102/gtf/homo_sapiens/Homo_sapiens.GRCh38.102.gtf.gz -P ~/ReferenceData/')
+	if len(sys.argv) >1:
+		if sys.argv[1]=='light':
+			print('Downloading human reference genome')
+			os.system('wget ftp://ftp.ensembl.org/pub/release-102/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz -P ~/ReferenceData/')
+			os.system('wget http://ftp.ensembl.org/pub/release-102/gtf/homo_sapiens/Homo_sapiens.GRCh38.102.gtf.gz -P ~/ReferenceData/')
 		#print('creating human reference genome indexes, please wait')
 		#os.system('minimap2 -t 4 -k15 -w10 -d ~/ReferenceData/reference_human.mmi ~/ReferenceData/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz')
 		#os.system('echo %s|sudo -S %s'%(sudo_pass, install_cmd))
 		#os.unlink('~/ReferenceData/*.fa.gz')
-	if len(sys.argv) >1:
+	
 		if sys.argv[1]=='full':
 			print('Downloading human reference genome')
 			os.system('wget ftp://ftp.ensembl.org/pub/release-102/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz -P ~/ReferenceData/')
