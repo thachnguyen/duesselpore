@@ -10,7 +10,7 @@ import django
 
 class duesselporeConfig(AppConfig):
     name = 'duesselpore'
-    default_auto_field = django.db.models.BigAutoField
+    #default_auto_field = django.db.models.BigAutoField
 
 def handle_uploaded_file(f, s_id, f_name = 'fastq.zip'):
     with open('users_file/%s/%s' %(s_id,f_name), 'wb+') as destination:
