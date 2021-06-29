@@ -2,8 +2,7 @@
 from __future__ import unicode_literals
 from django.db import models
 from django.forms import ModelForm
-from captcha.fields import ReCaptchaField
-# from .forms import FileFieldForm
+
 
 class Input(models.Model):
     human = 'human'
@@ -27,7 +26,7 @@ class Input(models.Model):
     gene_count_method = [
         (Rsubread, 'Rsubread/featureCounts (Liao et. al. 2014) for gene counts'),
         (HTSeq, 'HTSeq/htseq-counts (Ander et. al. 2014) for gene counts'),
-        (Salmon, 'Salmon (Patro et. al. 2017) for gene counts'),
+        #(Salmon, 'Salmon (Patro et. al. 2017) for gene counts'),
     ]
 
     name = models.CharField(max_length=100,  verbose_name='Your submission', default='Test_name')
@@ -48,10 +47,9 @@ class Input(models.Model):
     lfcThreshold = models.FloatField(verbose_name='lfcThreshold (Optional)', default=1)
     adjPValueThreshold = models.FloatField(verbose_name='adjPValueThreshold (Optional)', default=0.05)
     # gene_gene_templates_file = models.FileField(verbose_name= 'Upload your reference genome',  upload_to='users_file/', blank=False, null=True)
-    email = models.EmailField(verbose_name='Email address', default= 'thach.nguyen@iuf-duesseldorf.de')
-    
+   
 class InputForm(ModelForm):
     class Meta:
         model = Input
-        fields = ['name', 'upfile_fastq', 'gene_count_method', 'reference_group','reference_genes', 'readCountMinThreshold', 'lfcThreshold' , 'adjPValueThreshold', 'email']
+        fields = ['name', 'upfile_fastq', 'gene_count_method', 'reference_group','reference_genes', 'readCountMinThreshold', 'lfcThreshold' , 'adjPValueThreshold']
         
