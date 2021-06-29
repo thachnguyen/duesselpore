@@ -10,6 +10,6 @@ How to compress the VDI volume?
 	zerofree -v /dev/sda2
 	halt (and turnoff Virtualbox)
 - On your host machine: 
-	VBoxManage modifymedium disk nanodorf-disk001.vdi --compact
+	VBoxManage modifymedium disk duesselpore-disk001.vdi --compact
 	(On window host run VboxManage.exe)
 - Export your OS to desire path ->completed
