@@ -1,3 +1,4 @@
+# Loading required packages
 suppressMessages(library(digest))
 suppressMessages(library(ShortRead))  
 suppressMessages(library(ggplot2))
@@ -8,11 +9,11 @@ suppressMessages(library(Rsubread))
 suppressMessages(library(DESeq2))
 suppressMessages(library(pcaMethods))
 suppressMessages(library(kableExtra))  
-suppressMessages(library(caTools))     # base64decode for embedded Snakefile
-suppressMessages(library(writexl))     # writing results to Excel files
+suppressMessages(library(caTools))     
+suppressMessages(library(writexl))     
 suppressMessages(library(yaml))
 suppressMessages(library(session))
-suppressMessages(library(AnnotationDbi)) # These packages are needed to convert the ENSEMBL ID into Gene symbols
+suppressMessages(library(AnnotationDbi)) 
 suppressMessages(library(org.Hs.eg.db))
 suppressMessages(library(RColorBrewer))
 suppressMessages(library(PoiClaClu))
@@ -26,47 +27,32 @@ suppressMessages(library(pathview))
 suppressMessages(library(clusterProfiler))
 suppressMessages(library(enrichplot))
 
-# Loading of a file with customized functions----
+# Custamized functions----
 source("Static/R/common.R")
 
-# Creating of a folder in which the results will be stored----
 resultDir <- file.path("Analysis", "Results")
-dir.create(resultDir, showWarnings = FALSE, recursive = TRUE) #recursive defines whether other folder of this path are supposd to be created
+dir.create(resultDir, showWarnings = FALSE, recursive = TRUE) 
 
-# Defining the configuration----
-# The configuration can be predefined in a .yaml-File
-# To use this, it has to be loaded before the analysis
+# Loading the config file----
 config <- yaml::yaml.load_file("config.yaml")
 
 # Defining the file where the session and other data will be saved----
 persistenceData <- file.path(resultDir, "NanoporeDESeq2.Rdata")
 
-# Create a study design by using the config.yaml-File
-studyDesign <- data.frame() # hierfür benötigen wir zunächst ein leeres DataFrame
-#To fill this DataFrame with some values, we create a for loop, which iterates through the config-file to obtain the data
+# Create a study design by using the config.yaml-file
+studyDesign <- data.frame()
 for (i in 1:length(config$Samples)) {
   studyDesign <- rbind(studyDesign,
                        data.frame(samples=names(config$Samples[[i]][[1]]), 
                                   filename=unlist(config$Samples[[i]][[1]]), 
                                   group=names(config$Samples[[i]])))
 }
-# With this function we add a new columns containing informations about the number of replicates
+
 studyDesign$replicate <- sapply(1:nrow(studyDesign), function(x)sum(studyDesign$group[1:x]==studyDesign$group[x]))
-
-
 studyDesign$md5 <- lapply(as.character(studyDesign$filename), md5sum)
-
-# Relevel the data according to our control group.
-#studyDesign$group <- relevel(studyDesign$group, ref=config$referenceGroup)
-
-# Removing the column "Samples" as it became redundant. Tidy data!!
 studyDesign <- studyDesign[,-which(colnames(studyDesign)=="samples")]
 
-# Alternatively a txt-File can be prepared in advanced to load in the study desing, but we want to automate as many steps as possible
-
 # Raw sequence review----
-# In this step we try to get a deeper view into the raw sequencing data.
-# For this we make use of the ShortRead-Package
 processQCFastq <- function(rowname) {
   row <- which(row.names(studyDesign)==rowname)
   file <- as.character(studyDesign[row, "filename"])
@@ -80,7 +66,7 @@ processQCFastq <- function(rowname) {
     median = round(median(width(fastq)), digits=0),
     qval = round(mean(alphabetScore(fastq) / width(fastq)), digits=1),
     gc = round(mean(letterFrequency(sread(fastq), "GC")  / width(fastq)) * 100, digits=1),
-    n50 = ncalc(width(fastq), n=0.5), # The ncalc function is defined in the common.R-File
+    n50 = ncalc(width(fastq), n=0.5),
     l50 = lcalc(width(fastq), n=0.5),
     n90 = ncalc(width(fastq), n=0.9),
     l90 = lcalc(width(fastq), n=0.9)
@@ -92,12 +78,7 @@ qcData <- data.frame(data)
 colnames(qcData) <- row.names(studyDesign)
 View(qcData)
 
-# Using the package knitr to create a noce and dynamic report
-
-# We can use the number of reads, overall read quality and GC content to get an impression about the differences of the samples. 
-# Huge differences may indicate technical differences and might be problematic for DE-analysis
-
-# Using a violin plot to show the distribution of read Lengths (bp)----
+# Distribution of read Lengths (bp)----
 extractLengths <- function(rowname) {
   row <- which(row.names(studyDesign)==rowname)
   file <- as.character(studyDesign[row, "filename"])
@@ -114,7 +95,7 @@ lengthMatrixMelt <- cbind(lengthMatrixMelt, group=studyDesign[match(lengthMatrix
 plot <- ggplot(lengthMatrixMelt, aes(x=variable, y=value, fill=group)) + geom_violin() + scale_y_continuous(limits=c(0, as.numeric(quantile(lengthMatrixMelt$value, probs=c(0.975))))) + xlab("study sample") +  ylab("Distribution of Read Lengths (bp)") + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + scale_fill_brewer(palette="Paired") + labs(title="Violin plot showing distribution of read lengths across samples")
 ggsave("Analysis/Results/read_length.pdf")
 
-# Violin plot show the quality of reads----
+# read quality----
 extractQualities <- function(rowname) {
   row <- which(row.names(studyDesign)==rowname)
   file <- as.character(studyDesign[row, "filename"])
@@ -148,8 +129,7 @@ flagstatRes <- data.frame(matrix(unlist(lapply(flagstatTargets, loadFlagstat)), 
 colnames(flagstatRes) <- rownames(studyDesign)
 rownames(flagstatRes) <- c("read mappings", "Secondary", "Supplementary", "Duplicates", "Mapped")
 
-# Read mappings are the product of all alignments. In this case the number of reads plus the Supplementary alignments.
-# The number of reads will also be included. These are the real read numbers.
+
 flagstatRes[nrow(flagstatRes)+1,] <- as.numeric(gsub(",","",t(qcData)[, "reads"]))
 rownames(flagstatRes)[6] <- "nreads"
 
@@ -169,8 +149,6 @@ rownames(flagstatRes)[6] <- "%mapping"
 
 
 # Analysis of reads mapped to genes----
-# Here we use the featureCount method from the package Rsubread
-# For this the .bam-Files are required. In a first step the path to this files will be defined.
 readCountTargets <- file.path("Analysis", "Minimap", 
                               paste(tools::file_path_sans_ext(basename(as.character(studyDesign$filename)), compression=TRUE), ".bam", sep=""))
 
@@ -178,7 +156,6 @@ readCountTargets <- file.path("Analysis", "Minimap",
 ExternalAnnotation = file.path("/home/ag-rossi/ReferenceData", basename(config$genome_annotation))
 
 # With the Method featureCounts, the reads will be mapped to genes
-# This step might take a while, Get a coffee!!
 geneCounts <- featureCounts(files=readCountTargets,
                             annot.ext=ExternalAnnotation,
                             isGTFAnnotationFile=TRUE,
@@ -193,10 +170,6 @@ geneCounts <- featureCounts(files=readCountTargets,
 colnames(geneCounts) <- rownames(studyDesign)
 
 # Creating a table with genes showing the highest number of counts----
-# Keep in mind that neither a normalization nor a transformation was performed 
-
-# Convert the ENSEMBL ID into Gene symbols----
-# Removing those genes without a single read
 geneCounts_nonZeros <- geneCounts[which(rowSums(geneCounts) > 0),] 
 
 # Using the AnnotationID package to convert the ENSEMBLE ID into Gene symbols. Therefore we use the org.Hs.eg.dg Database
@@ -216,12 +189,12 @@ write_xlsx(x = geneCounts_nonZeros, path = xlsExpressedGenes)
 # DESeq2 utilises the raw read count data to model between condition variability and to identify the differentially expressed genes. 
 # DESeq2 does not use normalized data, but corrects internally for the relative library size to assess measurement precision. 
 # Thresholds have been defined in the config.yaml-File
-group_size <-2
+group_size <- 2
 for (group1 in unique(studyDesign$group)) {
   if (group_size > sum(studyDesign$group== group1))
-      {group_size <-1}
+      {group_size <- 1}
   }
-if (group_size >1) { 
+if (group_size > 1) { 
   deSeqRaw <- DESeqDataSetFromMatrix(countData=geneCounts, colData=studyDesign, design= ~group)
 } else {
   deSeqRaw <- DESeqDataSetFromMatrix(countData=geneCounts, colData=studyDesign, design= ~ 1)  
@@ -289,6 +262,7 @@ ggsave("Analysis/Results/bar_plot.pdf")
 options(repr.plot.width=20, repr.plot.height=7)
 edox <- setReadable(edo, 'org.Hs.eg.db', 'ENTREZID')
 p1 <- cnetplot(edox, foldChange=geneList)
+
 ## categorySize can be scaled by 'pvalue' or 'geneNum'
 p2 <- cnetplot(edox, categorySize="pvalue", foldChange=geneList)
 p3 <- cnetplot(edox, foldChange=geneList, circular = TRUE, colorEdge = TRUE)

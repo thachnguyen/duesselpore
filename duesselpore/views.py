@@ -61,6 +61,12 @@ def index(request):
     return render(request, 'input_RNAseq.html',
             {'form': form })
 
+def processing_gene_counts():
+    '''
+    Fixed missing Genename from Bioconductor
+    '''
+    return
+
 
 def download_file(request):
     print(os.getcwd())
