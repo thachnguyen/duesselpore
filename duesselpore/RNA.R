@@ -27,6 +27,8 @@ suppressMessages(library(pathview))
 suppressMessages(library(clusterProfiler))
 suppressMessages(library(enrichplot))
 
+suppressMessages(library(EnsDb.Hsapiens.v86))
+
 # Custamized functions----
 source("Static/R/common.R")
 
@@ -174,7 +176,7 @@ geneCounts_nonZeros <- geneCounts[which(rowSums(geneCounts) > 0),]
 
 # Using the AnnotationID package to convert the ENSEMBLE ID into Gene symbols. Therefore we use the org.Hs.eg.dg Database
 ens.geneCounts_nonZeros <- rownames(geneCounts_nonZeros)
-Symbols <- mapIds(org.Hs.eg.db, keys = ens.geneCounts_nonZeros, column = "SYMBOL", keytype = "ENSEMBL", multiVals = "first")
+Symbols <- mapIds(EnsDb.Hsapiens.v86, keys = ens.geneCounts_nonZeros, column = "SYMBOL", keytype = "GENEID", multiVals = "first")
 
 # To add the Symbols in an additional column, the matrix needs to be converted into a DataFrame
 geneCounts_nonZeros <- as.data.frame(geneCounts_nonZeros)
@@ -216,8 +218,8 @@ anno$replicate <- factor(anno$replicate)
 variance_heatmap <- pheatmap(mat, 
          annotation_col = anno, 
          cluster_cols=config$cluster_col,
-         labels_row = mapIds(org.Hs.eg.db, keys = substr(rownames(mat),1,15), 
-                             column = "SYMBOL", keytype = "ENSEMBL", multiVals = "first"),
+         labels_row = mapIds(EnsDb.Hsapiens.v86, keys = substr(rownames(mat),1,15), 
+                             column = "SYMBOL", keytype = "GENEID", multiVals = "first"),
          labels_col = c(studyDesign$group, studyDesign$replicate), drop_levels = TRUE, filename='Analysis/Results/heatmap.pdf')
 
 organism <- org.Hs.eg.db
