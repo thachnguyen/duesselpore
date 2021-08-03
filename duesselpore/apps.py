@@ -24,10 +24,6 @@ def manage_fastq_list(s_id):
     '''
     zipfilename = 'users_file/%s/fastq.zip' %s_id 
     file1 = ZipFile(zipfilename)
-    os.mkdir('users_file/%s/fastq'%s_id)
-    os.mkdir('users_file/%s/Analysis/'%s_id)
-    os.mkdir('users_file/%s/Analysis/Results'%s_id)
-    os.mkdir('users_file/%s/Analysis/Results/QC'%s_id)
     path = 'users_file/%s/fastq'%s_id
     file1.extractall(path=path)
     samples_data = os.listdir('users_file/%s/fastq'%s_id)
@@ -45,7 +41,7 @@ def manage_fastq_list(s_id):
 
     return samples_data    
 
-def create_yaml(s_id, samples, yaml_file = 'config.yaml', ref_group = 0, readCountMinThreshold = 10, lfcThreshold =1,  adjPValueThreshold = 0.05, tutorialText=False, organism='human'):
+def create_yaml(s_id, samples, yaml_file = 'config.yaml', ref_group = 0, readCountMinThreshold = 10, lfcThreshold =1,  adjPValueThreshold = 0.05, tutorialText=False, organism='human', cluster_col = False):
     # '''
     # Create the user defined YAML from YAML template for RScript. The fastq files are separate into different groups as subfolders. Named by directory's name and file'sname.
     # '''   
@@ -65,6 +61,10 @@ def create_yaml(s_id, samples, yaml_file = 'config.yaml', ref_group = 0, readCou
     default_config['referenceGroup'] = ref_group
     default_config['organism'] = organism
     default_config['genome_annotation'] = genome_annotation[organism]
+    if cluster_col == False:
+        default_config['cluster_col'] = 'FALSE'
+    else:
+        default_config['cluster_col'] = 'TRUE' 
 
     with open('users_file/%s/config.yaml'%s_id, 'w') as f:
         yaml.dump(default_config, f)
@@ -94,7 +94,8 @@ def run_minimap2(path='users_file/', s_id = 'Test_name_1618217069', organism = '
             fastq_file1 = fastq_file.split('.')[0]
             #os.system('minimap2 -t 16 -a -x map-ont --splice -k 15 -w 10 --secondary=no /home/ag-rossi/ReferenceData/reference_%s.mmi %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(organism, path2, path_minimap, fastq_file1))
             #os.system('minimap2 -t 16 -ax map-ont --splice --secondary=no /home/ag-rossi/ReferenceData/%s %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(file_org[organism], path2, path_minimap, fastq_file1))
-            os.system('minimap2 -t 16 -ax splice -k14 --secondary=no /home/ag-rossi/ReferenceData/%s %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(file_org[organism], path2, path_minimap, fastq_file1))
+            os.system('minimap2 -t 16 -ax splice -k14 -uf --secondary=no /home/ag-rossi/ReferenceData/%s %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(file_org[organism], path2, path_minimap, fastq_file1))
+            #os.system('minimap2 -t 16 -ax splice -uf -k14 --secondary=no /home/ag-rossi/ReferenceData/reference.mmi %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(path2, path_minimap, fastq_file1))
             os.system('samtools flagstat %s/%s.bam>%s%s.txt'%(path_minimap, fastq_file1, path_flagstat, fastq_file1))
     return
 

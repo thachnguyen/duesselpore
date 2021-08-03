@@ -30,5 +30,5 @@ readCountMinThreshold: 10   # what is the minimum number of transcripts for a ge
 lfcThreshold : 1            # minimum required log2 fold change for differential expression analysis
 adjPValueThreshold: 0.05    # adjusted p-value threshold for differential expression analysis
 
-tutorialText: FALSE
+cluster_col: FALSE
 # please change the tutorialText: value to FALSE to mask the tutorial instructions

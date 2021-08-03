@@ -26,8 +26,9 @@ class Input(models.Model):
     gene_count_method = [
         (Rsubread, 'Rsubread/featureCounts (Liao et. al. 2014) for gene counts'),
         (HTSeq, 'HTSeq/htseq-counts (Ander et. al. 2014) for gene counts'),
-        #(Salmon, 'Salmon (Patro et. al. 2017) for gene counts'),
+        (Salmon, 'Salmon (Patro et. al. 2017) for gene counts'),
     ]
+    
 
     name = models.CharField(max_length=100,  verbose_name='Your submission', default='Test_name')
     upfile_fastq = models.FileField(verbose_name= 'Upload your fastq files (all-in zip format, group by study group required)',  upload_to='users_file/', blank=True, null=True)
@@ -46,10 +47,11 @@ class Input(models.Model):
     readCountMinThreshold = models.IntegerField(verbose_name='readCountMinThreshold (Optional)', default=10)
     lfcThreshold = models.FloatField(verbose_name='lfcThreshold (Optional)', default=1)
     adjPValueThreshold = models.FloatField(verbose_name='adjPValueThreshold (Optional)', default=0.05)
+    cluster_by_replica = models.CharField(max_length=10,  verbose_name='Cluster replicate', default='FALSE')
     # gene_gene_templates_file = models.FileField(verbose_name= 'Upload your reference genome',  upload_to='users_file/', blank=False, null=True)
    
 class InputForm(ModelForm):
     class Meta:
         model = Input
-        fields = ['name', 'upfile_fastq', 'gene_count_method', 'reference_group','reference_genes', 'readCountMinThreshold', 'lfcThreshold' , 'adjPValueThreshold']
+        fields = ['name', 'upfile_fastq', 'gene_count_method', 'reference_group','reference_genes', 'cluster_by_replica', 'readCountMinThreshold', 'lfcThreshold' , 'adjPValueThreshold']
         

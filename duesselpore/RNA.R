@@ -215,6 +215,7 @@ anno <- as.data.frame(colData(vsd)[, c("group","replicate")])
 anno$replicate <- factor(anno$replicate) 
 variance_heatmap <- pheatmap(mat, 
          annotation_col = anno, 
+         cluster_cols=config$cluster_col,
          labels_row = mapIds(org.Hs.eg.db, keys = substr(rownames(mat),1,15), 
                              column = "SYMBOL", keytype = "ENSEMBL", multiVals = "first"),
          labels_col = c(studyDesign$group, studyDesign$replicate), drop_levels = TRUE, filename='Analysis/Results/heatmap.pdf')
@@ -222,7 +223,7 @@ variance_heatmap <- pheatmap(mat,
 organism <- org.Hs.eg.db
 res_group01_group02.filtered <- res_group01_group02 %>%
   as.data.frame() %>%
-  dplyr::filter(abs(log2FoldChange) > 2)
+  dplyr::filter(abs(log2FoldChange) > 1.5)
 
 geneList <- res_group01_group02.filtered$log2FoldChange
 names(geneList) <- rownames(res_group01_group02.filtered)
@@ -234,18 +235,18 @@ gse <- gseGO(geneList = geneList,
              ont = "ALL",
              keyType = "ENSEMBL",
              #nPerm = 10000,
-             minGSSize = 3,
-             maxGSSize = 800,
+             #minGSSize = 5,
+             #maxGSSize = 500,
              pvalueCutoff = 0.05,
              verbose = TRUE,
              OrgDb = organism,
              pAdjustMethod = "none",
-             eps =0.0,
-             filename = 'Analysis/Results/gseGO_pathway.pdf'
-            )
+             #eps =0.0,
+)
 
 dotplot(gse, showCategory = 35, split =".sign", orderBy = "x")+
   facet_grid(.~.sign)
+ggsave("Analysis/Results/gseGO.pdf", width=20, height = 15)
 
 gse.df <- as.data.frame(gse)
 pathway <- file.path("Analysis/Results/pathway.xlsx")
@@ -257,7 +258,7 @@ de <- names(geneList)[abs(geneList) > 2]
 edo <- enrichDGN(de)
 library(enrichplot)
 barplot(edo, showCategory=20)
-ggsave("Analysis/Results/bar_plot.pdf")
+ggsave("Analysis/Results/bar_plot_enrichDGN.pdf")
 
 options(repr.plot.width=20, repr.plot.height=7)
 edox <- setReadable(edo, 'org.Hs.eg.db', 'ENTREZID')

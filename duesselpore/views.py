@@ -6,6 +6,7 @@ import os
 from django.conf import settings
 import requests
 from django.contrib import messages
+import sys
 
 from django.views.generic.edit import FormView
 from django import forms
@@ -25,6 +26,15 @@ def index(request):
                 session_id = '%s_%s' %(form.name, str(int(time())))
                 organism = form.reference_genes
                 os.mkdir('users_file/%s' %session_id)
+
+                #Write log file for each session
+                stdoutOrigin=sys.stdout 
+                os.mkdir('users_file/%s/fastq'%session_id)
+                os.mkdir('users_file/%s/Analysis/'%session_id)
+                os.mkdir('users_file/%s/Analysis/Results'%session_id)
+                os.mkdir('users_file/%s/Analysis/Results/QC'%session_id)
+                sys.stdout = open('users_file/%s/Analysis/Results/log.txt' %session_id, "w")
+
                 handle_uploaded_file(request.FILES['upfile_fastq'], s_id=session_id)
                 print(os.getcwd())
                 t2 = time() 
@@ -32,7 +42,7 @@ def index(request):
                 samples = manage_fastq_list(session_id)
                 t3 = time() 
                 print('Read time %i seconds' %(t3 - t2))
-                create_yaml(s_id=session_id, samples=samples, ref_group= form.reference_group, readCountMinThreshold=form.readCountMinThreshold, lfcThreshold=form.lfcThreshold, adjPValueThreshold=form.adjPValueThreshold, organism=organism)
+                create_yaml(s_id=session_id, samples=samples, ref_group= form.reference_group, readCountMinThreshold=form.readCountMinThreshold, lfcThreshold=form.lfcThreshold, adjPValueThreshold=form.adjPValueThreshold, organism=organism, cluster_col = form.cluster_by_replica)
                 write_rscript(s_id=session_id)
                 #os.unlink('users_file/'+session_id)
                 
@@ -46,6 +56,9 @@ def index(request):
                 os.system('R < users_file/%s/RNA.R --no-save'%session_id)
                 t5= time()
                 print('R Runtime %i seconds'%(t5-t4))
+                sys.stdout.close()
+                sys.stdout=stdoutOrigin
+
                 # shutil.copyfile('users_file/%s/Rplots.pdf', 'users_file/%s/Analysis/Results/Rplots.pdf'%session_id)
                 shutil.make_archive('static/%s'%session_id, 'zip', 'users_file/%s/Analysis/Results/' %session_id)
                 context = {'file_id': session_id}
