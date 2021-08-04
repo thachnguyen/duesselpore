@@ -56,6 +56,8 @@ def index(request):
                 os.system('R < users_file/%s/RNA.R --no-save'%session_id)
                 t5= time()
                 print('R Runtime %i seconds'%(t5-t4))
+                processing_gene_counts(excel_file='users_file/%s/Analysis/Results/ExpressedGenes.xlsx' %session_id)
+
                 sys.stdout.close()
                 sys.stdout=stdoutOrigin
 
@@ -74,10 +76,24 @@ def index(request):
     return render(request, 'input_RNAseq.html',
             {'form': form })
 
-def processing_gene_counts():
+def processing_gene_counts(excel_file = 'ExpressedGenes.xlsx'):
     '''
     Fixed missing Genename from Bioconductor
     '''
+    from pyensembl import EnsemblRelease
+    import pandas as pd
+
+    gene_list = EnsemblRelease(102)
+    new_list = []
+    countmat2 = pd.read_excel(excel_file)
+    for id1 in countmat2.gene_id:
+        try:
+            new_list.append(gene_list.gene_by_id(id1).gene_name)
+        except Exception:
+            new_list.append('not found')
+    countmat2['gene_name_full'] = new_list
+    countmat2.to_excel(excel_file)
+
     return
 
 

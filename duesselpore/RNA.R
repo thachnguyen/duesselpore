@@ -220,9 +220,11 @@ variance_heatmap <- pheatmap(mat,
          cluster_cols=config$cluster_col,
          labels_row = mapIds(EnsDb.Hsapiens.v86, keys = substr(rownames(mat),1,15), 
                              column = "SYMBOL", keytype = "GENEID", multiVals = "first"),
-         labels_col = c(studyDesign$group, studyDesign$replicate), drop_levels = TRUE, filename='Analysis/Results/heatmap.pdf')
+         labels_col = c(rownames(studyDesign)), drop_levels = TRUE, filename='Analysis/Results/heatmap.pdf')
 
 organism <- org.Hs.eg.db
+res_group01_group02 <- results(dds)
+
 res_group01_group02.filtered <- res_group01_group02 %>%
   as.data.frame() %>%
   dplyr::filter(abs(log2FoldChange) > 1.5)
