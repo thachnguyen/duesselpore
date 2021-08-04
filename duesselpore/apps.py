@@ -23,9 +23,10 @@ def manage_fastq_list(s_id):
     Run Quality
     '''
     zipfilename = 'users_file/%s/fastq.zip' %s_id 
-    file1 = ZipFile(zipfilename)
+    #file1 = ZipFile(zipfilename)
     path = 'users_file/%s/fastq'%s_id
-    file1.extractall(path=path)
+    #file1.extractall(path=path)
+    os.system('7z x users_file/%s/fastq.zip -ousers_file/%s/fastq'%(s_id,s_id))
     samples_data = os.listdir('users_file/%s/fastq'%s_id)
     for i, each_group in enumerate(samples_data):
         os.system('fastqc -o users_file/%s/Analysis/Results/QC/ users_file/%s/fastq/%s/*'%(s_id, s_id, each_group))
