@@ -43,11 +43,14 @@ class Input(models.Model):
         choices=Reference_gene,
         default=human,
     )
+
+    cluster_choices= (('Yes','Yes'), ('No', 'No'))
+
     reference_group = models.CharField(max_length=100,  verbose_name='your reference group (reference\'s directory name)', default='group01')
     readCountMinThreshold = models.IntegerField(verbose_name='readCountMinThreshold (Optional)', default=10)
     lfcThreshold = models.FloatField(verbose_name='lfcThreshold (Optional)', default=1)
     adjPValueThreshold = models.FloatField(verbose_name='adjPValueThreshold (Optional)', default=0.05)
-    cluster_by_replica = models.CharField(max_length=10,  verbose_name='Cluster replicate', default='FALSE')
+    cluster_by_replica = models.CharField(max_length=6, choices=cluster_choices, verbose_name='Cluster replicate', default='No')
     # gene_gene_templates_file = models.FileField(verbose_name= 'Upload your reference genome',  upload_to='users_file/', blank=False, null=True)
    
 class InputForm(ModelForm):

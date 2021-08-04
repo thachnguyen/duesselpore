@@ -61,10 +61,10 @@ def create_yaml(s_id, samples, yaml_file = 'config.yaml', ref_group = 0, readCou
     default_config['referenceGroup'] = ref_group
     default_config['organism'] = organism
     default_config['genome_annotation'] = genome_annotation[organism]
-    if cluster_col == False:
-        default_config['cluster_col'] = 'FALSE'
+    if cluster_col == 'No':
+        default_config['cluster_col'] = False
     else:
-        default_config['cluster_col'] = 'TRUE' 
+        default_config['cluster_col'] = True 
 
     with open('users_file/%s/config.yaml'%s_id, 'w') as f:
         yaml.dump(default_config, f)
