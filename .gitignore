@@ -111,6 +111,7 @@ env.bak/
 venv.bak/
 users_file/
 test_data/
+../NGS_webserver/settings.py
 
 
 # Spyder project settings
