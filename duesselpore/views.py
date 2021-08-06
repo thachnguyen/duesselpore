@@ -36,6 +36,7 @@ def index(request):
                 sys.stdout = open('users_file/%s/Analysis/Results/log.txt' %session_id, "w")
 
                 handle_uploaded_file(request.FILES['upfile_fastq'], s_id=session_id)
+
                 print(os.getcwd())
                 t2 = time() 
                 print('Upload time %i seconds' %(t2- t1))
@@ -47,15 +48,20 @@ def index(request):
                 #os.unlink('users_file/'+session_id)
                 
                 #Run minimap for two first options
-                if form.gene_count_method in ['Rsubread', 'HTSeq']:
+                if form.gene_count_method in ['Rsubread', 'HTSeq', 'Salmon']:
                     run_minimap2(s_id=session_id)
                     t4 = time()
                     print('Run Minimap time %i seconds' %(t4-t3))
 
-                print('Start R Analyser')
-                os.system('R < users_file/%s/RNA.R --no-save'%session_id)
-                t5= time()
-                print('R Runtime %i seconds'%(t5-t4))
+                if form.gene_count_method == 'Rsubread':
+                    print('Starting R Analyser Feature counts')
+                    os.system('R < users_file/%s/RNA.R --no-save'%session_id)
+                    t5= time()
+                    print('R Runtime Feature counts in %i seconds'%(t5-t4))
+
+                elif form.gene_count_method == 'HTSeq':
+                    print('Starting HTSeq counts')
+
                 processing_gene_counts(excel_file='users_file/%s/Analysis/Results/ExpressedGenes.xlsx' %session_id)
 
                 sys.stdout.close()

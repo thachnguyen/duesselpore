@@ -12,7 +12,7 @@ class duesselporeConfig(AppConfig):
     name = 'duesselpore'
     #default_auto_field = django.db.models.BigAutoField
 
-def handle_uploaded_file(f, s_id, f_name = 'fastq.zip'):
+def handle_uploaded_file(f, s_id, f_name = 'fastq1'):
     with open('users_file/%s/%s' %(s_id,f_name), 'wb+') as destination:
         for chunk in f.chunks():
             destination.write(chunk)
@@ -22,11 +22,11 @@ def manage_fastq_list(s_id):
     Read user upload files in zip format and return the list of fastq entries for later process, pass it in to YAML file
     Run Quality
     '''
-    zipfilename = 'users_file/%s/fastq.zip' %s_id 
+    zipfilename = 'users_file/%s/fastq1' %s_id 
     #file1 = ZipFile(zipfilename)
     path = 'users_file/%s/fastq'%s_id
     #file1.extractall(path=path)
-    os.system('7z x users_file/%s/fastq.zip -ousers_file/%s/fastq'%(s_id,s_id))
+    os.system('7z x users_file/%s/fastq1 -ousers_file/%s/fastq'%(s_id,s_id))
     samples_data = os.listdir('users_file/%s/fastq'%s_id)
     for i, each_group in enumerate(samples_data):
         os.system('fastqc -o users_file/%s/Analysis/Results/QC/ users_file/%s/fastq/%s/*'%(s_id, s_id, each_group))
@@ -99,6 +99,25 @@ def run_minimap2(path='users_file/', s_id = 'Test_name_1618217069', organism = '
             print('minimap2 -t 16 -ax splice -k14 -uf --secondary=no /home/ag-rossi/ReferenceData/%s %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(file_org[organism], path2, path_minimap, fastq_file1))
             #os.system('minimap2 -t 16 -ax splice -uf -k14 --secondary=no /home/ag-rossi/ReferenceData/reference.mmi %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(path2, path_minimap, fastq_file1))
             os.system('samtools flagstat %s/%s.bam>%s%s.txt'%(path_minimap, fastq_file1, path_flagstat, fastq_file1))
+    return
+
+def run_htseq_count(path='users_file/', s_id = 'Test_name_1618217069'):
+    import pandas as pd
+    bam_path= 'users_file/%s/Analysis/Minimap/'%s_id
+    hts_out_path = 'users_file/%s/Analysis/'%s_id
+
+    for i, bamfile in enumerate(os.listdir('users_file/%s/Analysis/Minimap/'%s_id)):
+        os.system('samtools index %s%s'%(bam_path, bamfile))
+        os.system('htseq-count -s no -a 5 --nonunique=all %s%s ~/ReferenceData/Homo_sapiens.GRCh38.104.gtf>%s%s.csv'%(bam_path, bamfile, hts_out_path, bamfile[:-4]))
+        if i ==0:
+            df = pd.read_csv('%s%s'%(bamfile, hts_out_path), delimiter='\t', header=None)
+            df.columns=['Geneid', bamfile[:-4]]
+        else:
+            df1 = pd.read_csv('%s%s'%(bamfile, hts_out_path), delimiter='\t', header=None)
+            df[bamfile[:-4]] = df1[1]
+
+    df = df[:-5]
+    df.to_excel('users_file/%s/Analysis/Results/Expressed_gene_HTS.xlxs'%s_id)
     return
 
 def write_rscript(path='users_file/', s_id = 'Test_name_1618217069/'):
