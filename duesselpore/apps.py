@@ -101,30 +101,116 @@ def run_minimap2(path='users_file/', s_id = 'Test_name_1618217069', organism = '
             os.system('samtools flagstat %s/%s.bam>%s%s.txt'%(path_minimap, fastq_file1, path_flagstat, fastq_file1))
     return
 
+def run_minimap2_transcriptome(path='users_file/', s_id = 'Test_name_1618217069', organism = 'human'):
+    file_org={'human':'Homo_sapiens.GRCh38.cdna.all.fa.gz',
+                'rat': 'Rattus_norvegicus.Rnor_6.0.dna.toplevel.fa.gz',
+                'mouse':'Mus_musculus.GRCm38.dna.primary_assembly.fa.gz',
+                'zebrafish':'Danio_rerio.GRCz11.dna.primary_assembly.fa.gz',
+                'celegans':'Caenorhabditis_elegans.WBcel235.dna.toplevel.fa.gz'}
+
+    if not os.path.exists('users_file/%s/Analysis'%s_id):
+        os.mkdir('users_file/%s/Analysis'%s_id)
+    path_minimap = 'users_file/%s/Analysis/Minimap'%s_id
+    os.mkdir(path_minimap)
+    path_flagstat = 'users_file/%s/Analysis/flagstat/'%s_id
+    os.mkdir(path_flagstat)
+    path1 = '%s%s'%(path,s_id)
+    for group in os.listdir('users_file/%s/fastq/'%s_id):
+        for fastq_file in os.listdir('users_file/%s/fastq/%s'%(s_id, group)):
+            path2 = '%s/fastq/%s/%s'%(path1, group, fastq_file)
+            fastq_file1 = fastq_file.split('.')[0]
+            #os.system('minimap2 -t 16 -a -x map-ont --splice -k 15 -w 10 --secondary=no /home/ag-rossi/ReferenceData/reference_%s.mmi %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(organism, path2, path_minimap, fastq_file1))
+            #os.system('minimap2 -t 16 -ax map-ont --splice --secondary=no /home/ag-rossi/ReferenceData/%s %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(file_org[organism], path2, path_minimap, fastq_file1))
+            os.system('minimap2 -t 16 -ax splice -k14 -uf --secondary=no /home/ag-rossi/ReferenceData/%s %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(file_org[organism], path2, path_minimap, fastq_file1))
+            print('Run minimap2 for transcriptome. Organism: %s'%organism)
+            print('minimap2 -t 16 -ax splice -k14 -uf --secondary=no /home/ag-rossi/ReferenceData/%s %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(file_org[organism], path2, path_minimap, fastq_file1))
+            #os.system('minimap2 -t 16 -ax splice -uf -k14 --secondary=no /home/ag-rossi/ReferenceData/reference.mmi %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(path2, path_minimap, fastq_file1))
+            os.system('samtools flagstat %s/%s.bam>%s%s.txt'%(path_minimap, fastq_file1, path_flagstat, fastq_file1))
+    return
+
 def run_htseq_count(path='users_file/', s_id = 'Test_name_1618217069'):
     import pandas as pd
-    bam_path= 'users_file/%s/Analysis/Minimap/'%s_id
-    hts_out_path = 'users_file/%s/Analysis/'%s_id
+    import glob
+    #bam_path= 'users_file/%s/Analysis/Minimap/'%s_id
+    #hts_out_path = 'users_file/%s/Analysis/'%s_id
 
-    for i, bamfile in enumerate(os.listdir('users_file/%s/Analysis/Minimap/'%s_id)):
-        os.system('samtools index %s%s'%(bam_path, bamfile))
-        os.system('htseq-count -s no -a 5 --nonunique=all %s%s ~/ReferenceData/Homo_sapiens.GRCh38.104.gtf>%s%s.csv'%(bam_path, bamfile, hts_out_path, bamfile[:-4]))
+    for i, bamfile in enumerate(glob.glob('users_file/%s/Analysis/Minimap/*.bam'%s_id)):
+        os.system('samtools index %s'%(bamfile))
+        os.system('htseq-count -s no -a 5 --nonunique=all %s ~/ReferenceData/Homo_sapiens.GRCh38.104.gtf>%s.csv'%(bamfile, bamfile[:-4]))
         if i ==0:
-            df = pd.read_csv('%s%s'%(bamfile, hts_out_path), delimiter='\t', header=None)
+            df = pd.read_csv('%s.csv'%(bamfile[:-4]), delimiter='\t', header=None)
+            df.columns=['gene_id', bamfile[:-4]]
+        else:
+            df1 = pd.read_csv('%s.csv'%(bamfile[:-4]), delimiter='\t', header=None)
+            df[bamfile[:-4]] = df1[1]
+
+    df = df[:-5]
+    df.to_excel('users_file/%s/Analysis/Results/ExpressedGenes.xlsx'%s_id)
+    return
+
+def run_htseq_count_parallel(path='users_file/', s_id = 'Test_name_1618217069'):
+    import pandas as pd
+    import glob
+    bam_files= glob.glob('users_file/%s/Analysis/Minimap/*.bam'%s_id)
+    hts_out_path = 'users_file/%s/Analysis/'%s_id
+    data_columns = [s.split('/')[-1][:-4] for s in glob.glob('users_file/%s/Analysis/Minimap/*.bam'%s_id)]
+    data_columns.insert(0, 'gene_id')
+    for i, bamfile in enumerate(glob.glob('users_file/%s/Analysis/Minimap/*.bam'%s_id)):
+        os.system('samtools index %s'%(bamfile))
+    os.system('htseq-count -s no -a 5 -n %i --nonunique=all %s ~/ReferenceData/Homo_sapiens.GRCh38.104.gtf>%sHTSeq_counts.csv'%(len(bam_files), " ".join(bam_files), hts_out_path))
+    
+    df1 = pd.read_csv('%sHTSeq_counts.csv'%hts_out_path, delimiter='\t', header=None)
+    df1 = df1[:-5]    
+    df1.columns = data_columns
+    df1.to_excel('users_file/%s/Analysis/Results/ExpressedGenes.xlsx'%s_id)
+    return
+
+
+def run_salmon_count(path='users_file/', s_id = 'Test_name_1618217069'):
+    import pandas as pd
+    import glob
+    #bam_path= 'users_file/%s/Analysis/Minimap/'%s_id
+    #hts_out_path = 'users_file/%s/Analysis/'%s_id
+
+    for i, bamfile in enumerate(glob.glob('users_file/%s/Analysis/Minimap/*.bam'%s_id)):
+        os.system('samtools index %s'%(bamfile))
+        os.system('htseq-count -s no -a 5 --nonunique=all %s ~/ReferenceData/Homo_sapiens.GRCh38.104.gtf>%s.csv'%(bamfile, bamfile[:-4]))
+        if i ==0:
+            df = pd.read_csv('%s.csv'%(bamfile[:-4]), delimiter='\t', header=None)
             df.columns=['Geneid', bamfile[:-4]]
         else:
-            df1 = pd.read_csv('%s%s'%(bamfile, hts_out_path), delimiter='\t', header=None)
+            df1 = pd.read_csv('%s.csv'%(bamfile[:-4]), delimiter='\t', header=None)
             df[bamfile[:-4]] = df1[1]
 
     df = df[:-5]
     df.to_excel('users_file/%s/Analysis/Results/Expressed_gene_HTS.xlxs'%s_id)
     return
 
-def write_rscript(path='users_file/', s_id = 'Test_name_1618217069/'):
+
+def write_rscript(path='users_file/', s_id = 'Test_name_1618217069/', method= 'Rsubread'):
     new_R = 'setwd("/home/ag-rossi/projects/duesselpore/duesselpore/%s%s")\n'%(path, s_id)
-    new_R += open('RNA.R', 'r').read()
-    f = open(path+s_id+'/RNA.R', 'w')
-    f.write(new_R)
-    f.close()
+    if method == 'Rsubread':
+        new_R += open('R/RNA1.R', 'r').read()
+        new_R += open('R/RNA2_subread.R', 'r').read()
+        new_R += open('R/RNA3.R', 'r').read()
+        f = open(path+s_id+'/RNA.R', 'w')
+        f.write(new_R)
+        f.close()
+
+    elif method == 'HTSeq':
+        new_R += open('R/RNA1.R', 'r').read()
+        new_R += open('R/RNA2_HTSeq.R', 'r').read()
+        new_R += open('R/RNA3.R', 'r').read()
+        f = open(path+s_id+'/RNA.R', 'w')
+        f.write(new_R)
+        f.close()
+
+    elif method == 'Salmon':
+        new_R += open('RNA.R', 'r').read()
+        f = open(path+s_id+'/RNA.R', 'w')
+        f.write(new_R)
+        f.close()
+    else:
+        print('Method is not support')
     return
         

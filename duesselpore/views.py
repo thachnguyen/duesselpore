@@ -44,23 +44,33 @@ def index(request):
                 t3 = time() 
                 print('Read time %i seconds' %(t3 - t2))
                 create_yaml(s_id=session_id, samples=samples, ref_group= form.reference_group, readCountMinThreshold=form.readCountMinThreshold, lfcThreshold=form.lfcThreshold, adjPValueThreshold=form.adjPValueThreshold, organism=organism, cluster_col = form.cluster_by_replica)
-                write_rscript(s_id=session_id)
                 #os.unlink('users_file/'+session_id)
                 
                 #Run minimap for two first options
-                if form.gene_count_method in ['Rsubread', 'HTSeq', 'Salmon']:
+                if form.gene_count_method in ['Rsubread', 'HTSeq']:
                     run_minimap2(s_id=session_id)
                     t4 = time()
                     print('Run Minimap time %i seconds' %(t4-t3))
 
-                if form.gene_count_method == 'Rsubread':
-                    print('Starting R Analyser Feature counts')
-                    os.system('R < users_file/%s/RNA.R --no-save'%session_id)
-                    t5= time()
-                    print('R Runtime Feature counts in %i seconds'%(t5-t4))
+                    if form.gene_count_method == 'Rsubread':
+                        print('Starting R Analyser Feature counts')
+                        write_rscript(s_id=session_id, method = 'Rsubread')
+                        os.system('R < users_file/%s/RNA.R --no-save'%session_id)
+                        t5= time()
+                        print('R Runtime Feature counts in %i seconds'%(t5-t4))
 
-                elif form.gene_count_method == 'HTSeq':
-                    print('Starting HTSeq counts')
+                    elif form.gene_count_method == 'HTSeq':
+                        print('Starting HTSeq counts')
+                        run_htseq_count_parallel(s_id=session_id)
+                        write_rscript(s_id=session_id, method = 'HTSeq')
+                        os.system('R < users_file/%s/RNA.R --no-save'%session_id)
+                        t5= time()
+                        print('R Runtime HTSeq in %i seconds'%(t5-t4))
+                
+                elif form.gene_count_method == 'Salmon':
+                    run_minimap2_transcriptome(s_id=session_id)
+                    t4 = time()
+                    print('Run Minimap time %i seconds' %(t4-t3))
 
                 processing_gene_counts(excel_file='users_file/%s/Analysis/Results/ExpressedGenes.xlsx' %session_id)
 
