@@ -153,9 +153,9 @@ def run_htseq_count_parallel(path='users_file/', s_id = 'Test_name_1618217069'):
     import glob
     bam_files= glob.glob('users_file/%s/Analysis/Minimap/*.bam'%s_id)
     hts_out_path = 'users_file/%s/Analysis/'%s_id
-    data_columns = [s.split('/')[-1][:-4] for s in glob.glob('users_file/%s/Analysis/Minimap/*.bam'%s_id)]
+    data_columns = [s.split('/')[-1][:-4] for s in bam_files]
     data_columns.insert(0, 'gene_id')
-    for i, bamfile in enumerate(glob.glob('users_file/%s/Analysis/Minimap/*.bam'%s_id)):
+    for bamfile in bam_files:
         os.system('samtools index %s'%(bamfile))
     os.system('htseq-count -s no -a 5 -n %i --nonunique=all %s ~/ReferenceData/Homo_sapiens.GRCh38.104.gtf>%sHTSeq_counts.csv'%(len(bam_files), " ".join(bam_files), hts_out_path))
     
@@ -169,20 +169,13 @@ def run_htseq_count_parallel(path='users_file/', s_id = 'Test_name_1618217069'):
 def run_salmon_count(path='users_file/', s_id = 'Test_name_1618217069'):
     import pandas as pd
     import glob
-    #bam_path= 'users_file/%s/Analysis/Minimap/'%s_id
-    #hts_out_path = 'users_file/%s/Analysis/'%s_id
-
-    for i, bamfile in enumerate(glob.glob('users_file/%s/Analysis/Minimap/*.bam'%s_id)):
-        os.system('samtools index %s'%(bamfile))
-        os.system('htseq-count -s no -a 5 --nonunique=all %s ~/ReferenceData/Homo_sapiens.GRCh38.104.gtf>%s.csv'%(bamfile, bamfile[:-4]))
-        if i ==0:
-            df = pd.read_csv('%s.csv'%(bamfile[:-4]), delimiter='\t', header=None)
-            df.columns=['Geneid', bamfile[:-4]]
-        else:
-            df1 = pd.read_csv('%s.csv'%(bamfile[:-4]), delimiter='\t', header=None)
-            df[bamfile[:-4]] = df1[1]
-
-    df = df[:-5]
+    bam_path= 'users_file/%s/Analysis/Minimap/'%s_id
+    os.mkdir('users_file/%s/Analysis/Salmon/'%s_id)
+    bam_files= glob.glob('users_file/%s/Analysis/Minimap/*.bam'%s_id)
+    #for bamfile in bam_files:
+        #os.system('samtools index %s'%(bamfile))
+    os.system('salmon quant --ont -p 8 -t ~/ReferenceData/Homo_sapiens.GRCh38.cdna.all.fa.gz -l U -a %s -o users_file/%s/Analysis/Salmon/'%(' '.join(bam_files), s_id))
+    #df = df[:-5]
     df.to_excel('users_file/%s/Analysis/Results/Expressed_gene_HTS.xlxs'%s_id)
     return
 

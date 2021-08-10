@@ -71,6 +71,8 @@ def index(request):
                     run_minimap2_transcriptome(s_id=session_id)
                     t4 = time()
                     print('Run Minimap time %i seconds' %(t4-t3))
+                    print('Starting Salmon counts')
+                    
 
                 processing_gene_counts(excel_file='users_file/%s/Analysis/Results/ExpressedGenes.xlsx' %session_id)
 
