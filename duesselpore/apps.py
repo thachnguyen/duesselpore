@@ -172,11 +172,17 @@ def run_salmon_count(path='users_file/', s_id = 'Test_name_1618217069'):
     bam_path= 'users_file/%s/Analysis/Minimap/'%s_id
     os.mkdir('users_file/%s/Analysis/Salmon/'%s_id)
     bam_files= glob.glob('users_file/%s/Analysis/Minimap/*.bam'%s_id)
-    #for bamfile in bam_files:
+    for i, bamfile in enumerate(bam_files):
+        file_name = bamfile.split('/')[-1][:-4]
         #os.system('samtools index %s'%(bamfile))
-    os.system('salmon quant --ont -p 8 -t ~/ReferenceData/Homo_sapiens.GRCh38.cdna.all.fa.gz -l U -a %s -o users_file/%s/Analysis/Salmon/'%(' '.join(bam_files), s_id))
-    #df = df[:-5]
-    df.to_excel('users_file/%s/Analysis/Results/Expressed_gene_HTS.xlxs'%s_id)
+        os.system('salmon quant --ont -p 8 -t ~/ReferenceData/Homo_sapiens.GRCh38.cdna.all.fa.gz -l U -a %s -o users_file/%s/Analysis/Salmon/%s'%(bamfile, s_id, file_name))
+        if i == 0:
+            df = pd.read_csv('users_file/%s/Analysis/Salmon/%s/quant.sf'%(s_id, file_name), delimiter='\t')
+            df = df.rename(columns={'NumReads':file_name})
+        else:
+            df1 = pd.read_csv('users_file/%s/Analysis/Salmon/%s/quant.sf'%(s_id, file_name), delimiter='\t')  
+            df[file_name]= df1['NumReads']                  
+    df.to_excel('users_file/%s/Analysis/Results/ExpressedTranscriptome.xlsx'%s_id)
     return
 
 

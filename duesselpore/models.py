@@ -26,9 +26,18 @@ class Input(models.Model):
     gene_count_method = [
         (Rsubread, 'Rsubread/featureCounts (Liao et. al. 2014) for gene counts'),
         (HTSeq, 'HTSeq/htseq-counts (Ander et. al. 2014) for gene counts'),
-        (Salmon, 'Salmon (Patro et. al. 2017) for gene counts'),
+        (Salmon, 'Salmon (Patro et. al. 2017) for transcriptome counts'),
     ]
     
+    DESeq2 = 'DESeq2'
+    limma = 'limma'
+    edgeR = 'edgeR'
+
+    Differential_expression_analysis_method = [
+        (DESeq2, 'DESeq2 (Love et. al. 2014)'),
+        (limma, 'limma (Ritchie et. al. 2015)'),
+        (edgeR, 'edgeR (Robinson et. al. 2010)'),
+    ]
 
     name = models.CharField(max_length=100,  verbose_name='Your submission', default='Test_name')
     upfile_fastq = models.FileField(verbose_name= 'Upload your fastq files (all-in zip format, group by study group required)',  upload_to='users_file/', blank=True, null=True)
@@ -37,6 +46,13 @@ class Input(models.Model):
         choices=gene_count_method,
         default=Rsubread,
     )
+
+    Differential_expression_method = models.CharField(
+        max_length=100,
+        choices=Differential_expression_analysis_method,
+        default=DESeq2,
+    )
+
     # gene_templates = models.CharField(max_length=100,  verbose_name='Reference genome code', default='None')
     reference_genes = models.CharField(
         max_length=100,
@@ -46,7 +62,7 @@ class Input(models.Model):
 
     cluster_choices= (('Yes','Yes'), ('No', 'No'))
 
-    reference_group = models.CharField(max_length=100,  verbose_name='your reference group (reference\'s directory name)', default='group01')
+    reference_group = models.CharField(max_length=100,  verbose_name='Reference group (reference\'s sub-directory name)', default='group01')
     readCountMinThreshold = models.IntegerField(verbose_name='readCountMinThreshold (Optional)', default=10)
     lfcThreshold = models.FloatField(verbose_name='lfcThreshold (Optional)', default=1)
     adjPValueThreshold = models.FloatField(verbose_name='adjPValueThreshold (Optional)', default=0.05)
@@ -56,5 +72,5 @@ class Input(models.Model):
 class InputForm(ModelForm):
     class Meta:
         model = Input
-        fields = ['name', 'upfile_fastq', 'gene_count_method', 'reference_group','reference_genes', 'cluster_by_replica', 'readCountMinThreshold', 'lfcThreshold' , 'adjPValueThreshold']
+        fields = ['name', 'upfile_fastq', 'gene_count_method', 'Differential_expression_method','reference_group','reference_genes', 'cluster_by_replica', 'readCountMinThreshold', 'lfcThreshold' , 'adjPValueThreshold']
         

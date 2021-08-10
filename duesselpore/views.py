@@ -72,7 +72,7 @@ def index(request):
                     t4 = time()
                     print('Run Minimap time %i seconds' %(t4-t3))
                     print('Starting Salmon counts')
-                    
+                    run_salmon_count()
 
                 processing_gene_counts(excel_file='users_file/%s/Analysis/Results/ExpressedGenes.xlsx' %session_id)
 
