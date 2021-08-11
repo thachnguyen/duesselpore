@@ -52,7 +52,7 @@ for (i in 1:length(config$Samples)) {
 
 studyDesign$replicate <- sapply(1:nrow(studyDesign), function(x)sum(studyDesign$group[1:x]==studyDesign$group[x]))
 studyDesign$md5 <- lapply(as.character(studyDesign$filename), md5sum)
-studyDesign <- studyDesign[,-which(colnames(studyDesign)=="samples")]
+#studyDesign <- studyDesign[,-which(colnames(studyDesign)=="samples")]
 
 # Raw sequence review----
 processQCFastq <- function(rowname) {

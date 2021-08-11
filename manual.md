@@ -6,30 +6,32 @@
     * Memory: 8 GB or higher
     * Diskdrive: 200 GB free space
     * Window 10, Linux (Ubuntu) or Mac
+
 ### 1.2. Installation:
-#### Download and install VMWare:
-Note: For inexperienced Linux user our software are tested with current version pipeline. We do not recommend to upgrade the version on Linux Virtual machine. The webserver may crash when new software is updated
-- Download and install Virtualbox (VB) installation and VirtualBox 6.1.22 Oracle VM VirtualBox Extension Pack from https://www.virtualbox.org/wiki/Downloads. Already tested Virtualbox version 6.1.22 on Ubuntu 18.04 and Window 10.
-- Download the webserver.ova image file from this address
+#### 1.2.1 Download and install VMWare:
+Note: For inexperienced Linux user our software are tested with current version pipeline. We do not recommend to upgrade the version on Linux Virtual machine. The webserver may crash when new software is updated<br>
+* Download and install Virtualbox (VB) installation and VirtualBox 6.1.22 Oracle VM VirtualBox Extension Pack from https://www.virtualbox.org/wiki/Downloads. Already tested Virtualbox version 6.1.22 on Ubuntu 18.04 and Window 10.<br>
+* Download the webserver.ova image file from this address<br>
 
 After install VB and its Extension Pack open VB >File> Import Appliance to select  webserver.ova downloaded file then setup configuration based on your machine configuration.
 By default our webserver uses 4 cores CPU, 8 GB RAM. We recommend use 8 CPUs, 16 GB RAM, HDD is auto allocated, therefore when your data is increase, the image file is increase also. We recommend to deploy VB image in the partition has at least 200 GB (depend on the number of users and datasize TB volume are recommended).
 Configure the network interface on your host site (your primary OS):
 Before we start the Virtual machine in Virtual box configuration panel, we configure two network interface as in the figure below. The first network interface to internet (NAT) and the second interface to our host machine.
-## 2. Use Webserver:
-### 2.1. Login and configure webserver
-After booting up our guest OS, login your Virtual machine with:<br> 
-* user name: ag-rossi (preset)
-* password 123456<br>
 
-Open the terminal and we can get our webserver IP address by this command on the guest terminal. When you want to use only Human genome.
+### 1.2.2. Login and configure webserver
+After booting up our guest OS, login your Virtual Machine (VM) with this credential:<br> 
 ```
+* user name: ag-rossi (preset)
+* password 123456
+```
+Open the terminal and we can get our webserver IP address by this command on the guest terminal. When you want to use only Human genome.
+```console
 $setup_webserver light
 $runserver
 ```
 If you want to use RNASeq for other organism: 
 
-```
+```console
 $setup_webserver full
 $runserver
 ```
@@ -55,15 +57,14 @@ fastq/(folder)
 ```
 How to merge multiple fastq file into one:<br>
 On Linux terminal:
-```
+```console
 $ cat /path/to/fastq/files/*.fastq > /your/new/location/output.fastq
 ```   
 On Window command prompt (path syntax is different):
-```
+```console
 $ type \path\to\fastq\files\*.fastq> \your\new\location\output.fastq
 ```
 #### 2.2.3. Setup running parameter:
-Select one group among your groups as the reference group.
-Setting up other parameter of analysis function (optional) : ReadCountMinThreshold, Logfold, adjPValueThreshold  
-
+First, select one group among your groups as the reference group. Select gene (transcriptome) counting method, then select the differential expression algorithm which you want to analyse. 
+Setting up other parameter of analysis function. There are some optional parameters e.g. ReadCountMinThreshold, Logfold, adjPValueThreshold.  
 Advance user can customized the RNA.R code to develop a new workflow.
