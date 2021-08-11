@@ -42,7 +42,7 @@ def manage_fastq_list(s_id):
 
     return samples_data    
 
-def create_yaml(s_id, samples, yaml_file = 'config.yaml', ref_group = 0, readCountMinThreshold = 10, lfcThreshold =1,  adjPValueThreshold = 0.05, tutorialText=False, organism='human', cluster_col = False):
+def create_yaml(s_id, samples, yaml_file = 'config.yaml', NumberOfTopGene=30 ,ref_group = 0, readCountMinThreshold = 10, lfcThreshold =1,  adjPValueThreshold = 0.05, tutorialText=False, organism='human', cluster_col = False):
     # '''
     # Create the user defined YAML from YAML template for RScript. The fastq files are separate into different groups as subfolders. Named by directory's name and file'sname.
     # '''   
@@ -58,6 +58,7 @@ def create_yaml(s_id, samples, yaml_file = 'config.yaml', ref_group = 0, readCou
     default_config['lfcThreshold'] = lfcThreshold
     default_config['adjPValueThreshold'] = adjPValueThreshold
     default_config['tutorialText'] = tutorialText
+    default_config['NumberOfTopGene'] = NumberOfTopGene
     default_config['Samples'] = samples
     default_config['referenceGroup'] = ref_group
     default_config['organism'] = organism
@@ -174,7 +175,7 @@ def run_salmon_count(path='users_file/', s_id = 'Test_name_1618217069'):
     for i, bamfile in enumerate(bam_files):
         file_name = bamfile.split('/')[-1][:-4]
         #os.system('samtools index %s'%(bamfile))
-        os.system('salmon quant -p 8 -t ~/ReferenceData/Homo_sapiens.GRCh38.cdna.all.fa.gz -l U -a %s -o users_file/%s/Analysis/Salmon/%s'%(bamfile, s_id, file_name))
+        os.system('salmon quant -p 4 -t ~/ReferenceData/Homo_sapiens.GRCh38.cdna.all.fa.gz -l U -a %s -o users_file/%s/Analysis/Salmon/%s'%(bamfile, s_id, file_name))
         if i == 0:
             df = pd.read_csv('users_file/%s/Analysis/Salmon/%s/quant.sf'%(s_id, file_name), delimiter='\t')
             df = df.rename(columns={'NumReads':file_name})

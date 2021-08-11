@@ -1,8 +1,59 @@
 #########################################################
-# Analyzing the differential expression using DESeq2
-# DESeq2 utilises the raw read count data to model between condition variability and to identify the differentially expressed genes. 
-# DESeq2 does not use normalized data, but corrects internally for the relative library size to assess measurement precision. 
+# Analyzing the differential expression using limma
 # Thresholds have been defined in the config.yaml-File
+
+library(limma)
+library(edgeR)
+
+y <- DGEList(geneCounts, group=studyDesign$group, genes=rownames(geneCounts))
+options(digits=3)
+y$samples
+
+group <- factor(studyDesign$group)
+design <- model.matrix(~0+group)
+colnames(design) <- levels(group)
+
+keep <- filterByExpr(y, design)
+table(keep)
+y <- y[keep, , keep.lib.sizes=FALSE]
+AveLogCPM <- aveLogCPM(y)
+
+y <- calcNormFactors(y)
+
+logCPM <- cpm(y, prior.count=2, log=TRUE)
+
+colnames(logCPM) <- paste(y$samples$samples)
+
+#Estimate dispersion
+y <- estimateDisp(y, design, robust=TRUE)
+fit <- glmQLFit(y, design, robust=TRUE)
+
+logCPM <- logCPM[o[1:config$NumberOfTopGene],]
+
+plotQLDisp(fit)
+summary(fit$df.prior)
+group1vs2<-makeContrasts(paste(levels(group)[2], levels(group)[1], sep = '-'), levels=design)
+
+res <- glmQLFTest(fit, contrast=group1vs2)
+topTags(res)
+tr <- glmTreat(fit, contrast=group1vs2, lfc=log2(1.5))
+topTags(tr)
+
+logCPM <- cpm(y, prior.count=2, log=TRUE)
+colnames(logCPM) <- paste(y$samples$group, 1:3, sep="-")
+o <- order(tr$table$PValue)
+
+logCPM <- logCPM - rowMeans(logCPM)
+logCPM <- logCPM[o[1:config$NumberOfTopGene],]
+
+variance_heatmap <- pheatmap(logCPM, 
+               annotation_col = anno, 
+               cluster_cols=config$cluster_col,
+               labels_row = mapIds(EnsDb.Hsapiens.v86, keys = substr(rownames(logCPM),1,15), 
+                                   column = "SYMBOL", keytype = "GENEID", multiVals = "first"),
+              labels_col = c(rownames(studyDesign)), drop_levels = FALSE, filename='Analysis/Results/heatmap.pdf')
+
+
 group_size <- 2
 for (group1 in unique(studyDesign$group)) {
   if (group_size > sum(studyDesign$group== group1))
@@ -20,7 +71,7 @@ dds <- DESeq(deSeqRaw)
 
 if (config$organism=='human'){
 vsd <- vst(object = deSeqRaw, blind = TRUE)
-topVarGenes <- head(order(rowVars(assay(vsd)), decreasing = TRUE), n = config$NumberOfTopGene)
+topVarGenes <- head(order(rowVars(assay(vsd)), decreasing = TRUE), n = 50)
 mat <- assay(vsd)[topVarGenes,]
 mat <- mat - rowMeans(mat)
 
@@ -30,7 +81,7 @@ anno$replicate <- factor(anno$replicate)
 variance_heatmap <- pheatmap(mat, 
          annotation_col = anno, 
          cluster_cols=config$cluster_col,
-         labels_row = mapIds(refdb, keys = substr(rownames(mat),1,15), 
+         labels_row = mapIds(EnsDb.Hsapiens.v86, keys = substr(rownames(mat),1,15), 
                              column = "SYMBOL", keytype = "GENEID", multiVals = "first"),
          labels_col = c(rownames(studyDesign)), drop_levels = TRUE, filename='Analysis/Results/heatmap.pdf')
 
@@ -39,7 +90,7 @@ res_group01_group02 <- results(dds)
 
 res_group01_group02.filtered <- res_group01_group02 %>%
   as.data.frame() %>%
-  dplyr::filter(abs(log2FoldChange) > config$lfcThreshold)
+  dplyr::filter(abs(log2FoldChange) > 1.5)
 
 geneList <- res_group01_group02.filtered$log2FoldChange
 names(geneList) <- rownames(res_group01_group02.filtered)

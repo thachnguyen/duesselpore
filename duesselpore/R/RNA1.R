@@ -28,6 +28,7 @@ suppressMessages(library(clusterProfiler))
 suppressMessages(library(enrichplot))
 
 suppressMessages(library(EnsDb.Hsapiens.v86))
+refdb<-EnsDb.Hsapiens.v86
 
 # Custamized functions----
 source("Static/R/common.R")

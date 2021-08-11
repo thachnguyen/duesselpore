@@ -63,6 +63,7 @@ class Input(models.Model):
     cluster_choices= (('Yes','Yes'), ('No', 'No'))
 
     reference_group = models.CharField(max_length=100,  verbose_name='Reference group (reference\'s sub-directory name)', default='group01')
+    NumberOfTopGene = models.IntegerField(verbose_name='Number of top variance genes', default=30)
     readCountMinThreshold = models.IntegerField(verbose_name='readCountMinThreshold (Optional)', default=10)
     lfcThreshold = models.FloatField(verbose_name='lfcThreshold (Optional)', default=1)
     adjPValueThreshold = models.FloatField(verbose_name='adjPValueThreshold (Optional)', default=0.05)
@@ -72,5 +73,5 @@ class Input(models.Model):
 class InputForm(ModelForm):
     class Meta:
         model = Input
-        fields = ['name', 'upfile_fastq', 'gene_count_method', 'Differential_expression_method','reference_group','reference_genes', 'cluster_by_replica', 'readCountMinThreshold', 'lfcThreshold' , 'adjPValueThreshold']
+        fields = ['name', 'upfile_fastq', 'gene_count_method', 'Differential_expression_method', 'NumberOfTopGene','reference_group','reference_genes', 'cluster_by_replica', 'readCountMinThreshold', 'lfcThreshold' , 'adjPValueThreshold']
         

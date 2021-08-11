@@ -43,7 +43,7 @@ def index(request):
                 samples = manage_fastq_list(session_id)
                 t3 = time() 
                 print('Read time %i seconds' %(t3 - t2))
-                create_yaml(s_id=session_id, samples=samples, ref_group= form.reference_group, readCountMinThreshold=form.readCountMinThreshold, lfcThreshold=form.lfcThreshold, adjPValueThreshold=form.adjPValueThreshold, organism=organism, cluster_col = form.cluster_by_replica)
+                create_yaml(s_id=session_id, samples=samples, NumberOfTopGene=form.NumberOfTopGene ,ref_group= form.reference_group, readCountMinThreshold=form.readCountMinThreshold, lfcThreshold=form.lfcThreshold, adjPValueThreshold=form.adjPValueThreshold, organism=organism, cluster_col = form.cluster_by_replica)
                 #os.unlink('users_file/'+session_id)
                 
                 #Run minimap for two first options
@@ -66,7 +66,8 @@ def index(request):
                         os.system('R < users_file/%s/RNA.R --no-save'%session_id)
                         t5= time()
                         print('R Runtime HTSeq in %i seconds'%(t5-t4))
-                
+                    processing_gene_counts(excel_file='users_file/%s/Analysis/Results/ExpressedGenes.xlsx' %session_id)
+
                 elif form.gene_count_method == 'Salmon':
                     run_minimap2_transcriptome(s_id=session_id)
                     t4 = time()
@@ -74,7 +75,7 @@ def index(request):
                     print('Starting Salmon counts')
                     run_salmon_count(s_id=session_id)
 
-                processing_gene_counts(excel_file='users_file/%s/Analysis/Results/ExpressedGenes.xlsx' %session_id)
+                
 
                 sys.stdout.close()
                 sys.stdout=stdoutOrigin
