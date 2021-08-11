@@ -29,7 +29,7 @@ def manage_fastq_list(s_id):
     os.system('7z x users_file/%s/fastq1 -ousers_file/%s/fastq'%(s_id,s_id))
     samples_data = os.listdir('users_file/%s/fastq'%s_id)
     for i, each_group in enumerate(samples_data):
-        os.system('fastqc -o users_file/%s/Analysis/Results/QC/ users_file/%s/fastq/%s/*'%(s_id, s_id, each_group))
+        #os.system('fastqc -o users_file/%s/Analysis/Results/QC/ users_file/%s/fastq/%s/*'%(s_id, s_id, each_group))
         stored_group = {}
         each_group_list = os.listdir('users_file/%s/fastq/%s'%(s_id, each_group))
         group1 = {}
@@ -165,7 +165,6 @@ def run_htseq_count_parallel(path='users_file/', s_id = 'Test_name_1618217069'):
     df1.to_excel('users_file/%s/Analysis/Results/ExpressedGenes.xlsx'%s_id)
     return
 
-
 def run_salmon_count(path='users_file/', s_id = 'Test_name_1618217069'):
     import pandas as pd
     import glob
@@ -175,7 +174,7 @@ def run_salmon_count(path='users_file/', s_id = 'Test_name_1618217069'):
     for i, bamfile in enumerate(bam_files):
         file_name = bamfile.split('/')[-1][:-4]
         #os.system('samtools index %s'%(bamfile))
-        os.system('salmon quant --ont -p 8 -t ~/ReferenceData/Homo_sapiens.GRCh38.cdna.all.fa.gz -l U -a %s -o users_file/%s/Analysis/Salmon/%s'%(bamfile, s_id, file_name))
+        os.system('salmon quant -p 8 -t ~/ReferenceData/Homo_sapiens.GRCh38.cdna.all.fa.gz -l U -a %s -o users_file/%s/Analysis/Salmon/%s'%(bamfile, s_id, file_name))
         if i == 0:
             df = pd.read_csv('users_file/%s/Analysis/Salmon/%s/quant.sf'%(s_id, file_name), delimiter='\t')
             df = df.rename(columns={'NumReads':file_name})
@@ -184,7 +183,6 @@ def run_salmon_count(path='users_file/', s_id = 'Test_name_1618217069'):
             df[file_name]= df1['NumReads']                  
     df.to_excel('users_file/%s/Analysis/Results/ExpressedTranscriptome.xlsx'%s_id)
     return
-
 
 def write_rscript(path='users_file/', s_id = 'Test_name_1618217069/', method= 'Rsubread'):
     new_R = 'setwd("/home/ag-rossi/projects/duesselpore/duesselpore/%s%s")\n'%(path, s_id)
