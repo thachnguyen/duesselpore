@@ -185,12 +185,15 @@ def run_salmon_count(path='users_file/', s_id = 'Test_name_1618217069'):
     df.to_excel('users_file/%s/Analysis/Results/ExpressedTranscriptome.xlsx'%s_id)
     return
 
-def write_rscript(path='users_file/', s_id = 'Test_name_1618217069/', method= 'Rsubread'):
+def write_rscript(path='users_file/', s_id = 'Test_name_1618217069/', method= 'Rsubread', DESeq = 'DESeq2'):
     new_R = 'setwd("/home/ag-rossi/projects/duesselpore/duesselpore/%s%s")\n'%(path, s_id)
     if method == 'Rsubread':
         new_R += open('R/RNA1.R', 'r').read()
         new_R += open('R/RNA2_subread.R', 'r').read()
-        new_R += open('R/RNA3.R', 'r').read()
+        if DESeq == 'DESeq2':
+            new_R += open('R/RNA3.R', 'r').read()
+        else:
+            new_R += open('R/RNA3_limma.R', 'r').read()
         f = open(path+s_id+'/RNA.R', 'w')
         f.write(new_R)
         f.close()
@@ -198,7 +201,10 @@ def write_rscript(path='users_file/', s_id = 'Test_name_1618217069/', method= 'R
     elif method == 'HTSeq':
         new_R += open('R/RNA1.R', 'r').read()
         new_R += open('R/RNA2_HTSeq.R', 'r').read()
-        new_R += open('R/RNA3.R', 'r').read()
+        if DESeq == 'DESeq2':
+            new_R += open('R/RNA3.R', 'r').read()
+        else:
+            new_R += open('R/RNA3_limma.R', 'r').read()
         f = open(path+s_id+'/RNA.R', 'w')
         f.write(new_R)
         f.close()

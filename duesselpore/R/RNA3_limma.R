@@ -54,46 +54,16 @@ variance_heatmap <- pheatmap(logCPM,
               labels_col = c(rownames(studyDesign)), drop_levels = FALSE, filename='Analysis/Results/heatmap.pdf')
 
 
-group_size <- 2
-for (group1 in unique(studyDesign$group)) {
-  if (group_size > sum(studyDesign$group== group1))
-      {group_size <- 1}
-  }
-if (group_size > 1) { 
-  deSeqRaw <- DESeqDataSetFromMatrix(countData=geneCounts, colData=studyDesign, design= ~group)
-} else {
-  deSeqRaw <- DESeqDataSetFromMatrix(countData=geneCounts, colData=studyDesign, design= ~ 1)  
-  }
-keep <- rowSums(counts(deSeqRaw)) > config$readCountMinThreshold
-deSeqRaw <- deSeqRaw[keep,]
-dds <- DESeq(deSeqRaw)
-# filter out the features that do not contain at least min threshold of expressed genes
-
-if (config$organism=='human'){
-vsd <- vst(object = deSeqRaw, blind = TRUE)
-topVarGenes <- head(order(rowVars(assay(vsd)), decreasing = TRUE), n = 50)
-mat <- assay(vsd)[topVarGenes,]
-mat <- mat - rowMeans(mat)
-
-mat_breaks <- seq(min(mat), max(mat), length.out = 10)
-anno <- as.data.frame(colData(vsd)[, c("group","replicate")])
-anno$replicate <- factor(anno$replicate) 
-variance_heatmap <- pheatmap(mat, 
-         annotation_col = anno, 
-         cluster_cols=config$cluster_col,
-         labels_row = mapIds(EnsDb.Hsapiens.v86, keys = substr(rownames(mat),1,15), 
-                             column = "SYMBOL", keytype = "GENEID", multiVals = "first"),
-         labels_col = c(rownames(studyDesign)), drop_levels = TRUE, filename='Analysis/Results/heatmap.pdf')
 
 organism <- org.Hs.eg.db
-res_group01_group02 <- results(dds)
+res_group01_group02 <- tr
 
 res_group01_group02.filtered <- res_group01_group02 %>%
   as.data.frame() %>%
-  dplyr::filter(abs(log2FoldChange) > 1.5)
+  dplyr::filter(abs(logFC) > 1.5)
 
-geneList <- res_group01_group02.filtered$log2FoldChange
-names(geneList) <- rownames(res_group01_group02.filtered)
+geneList <- res_group01_group02.filtered$logFC
+names(geneList) <- res_group01_group02.filtered$genes
 geneList <- sort(geneList, decreasing = TRUE)
 
 options(repr.plot.width=12, repr.plot.height=15)
@@ -145,4 +115,3 @@ p4 <- cnetplot(edox, node_label="none")
 cowplot::plot_grid(p1, p2, p3, p4, ncol=2, labels=LETTERS[1:4])
 ggsave("Analysis/Results/cnet_plot2.pdf")
 
-}
