@@ -88,10 +88,27 @@ gse.df <- as.data.frame(gse)
 pathway <- file.path("Analysis/Results/pathway.xlsx")
 write_xlsx(x= gse.df, path = pathway)
 
-data(geneList)
-de <- names(geneList)[abs(geneList) > 2]
+de <- geneList1[abs(geneList1) > 1]
+de <-as.data.frame(de)
 
-edo <- enrichDGN(de)
+##################
+#ensembl to entrez
+library("AnnotationDbi")
+library("org.Hs.eg.db")
+entr1 = mapIds(org.Hs.eg.db,
+               keys=row.names(de), 
+               column="ENTREZID",
+               keytype="ENSEMBL",
+               multiVals="first")
+entr1 <-as.data.frame(entr1)
+de$entrez <-entr1$entr1
+de <-na.omit(de)
+row.names(de) <-de$entrez
+de <- de[c('de')]
+
+#################
+
+edo <- enrichDGN(row.names(de))
 library(enrichplot)
 barplot(edo, showCategory=20)
 ggsave("Analysis/Results/bar_plot_enrichDGN.pdf")
@@ -99,13 +116,13 @@ ggsave("Analysis/Results/bar_plot_enrichDGN.pdf")
 ############
 options(repr.plot.width=40, repr.plot.height=12)
 edox <- setReadable(edo, 'org.Hs.eg.db', keyType = 'auto')
-p1 <- cnetplot(edox, foldChange=geneList)
+p1 <- cnetplot(edox, foldChange=de$de)
 ## categorySize can be scaled by 'pvalue' or 'geneNum'
-p2 <- cnetplot(edox, categorySize="pvalue", foldChange=geneList)
-p3 <- cnetplot(edox, foldChange=geneList, circular = TRUE, colorEdge = TRUE)
+p2 <- cnetplot(edox, categorySize="pvalue", foldChange=de$de)
+p3 <- cnetplot(edox, foldChange=de$de, circular = TRUE, colorEdge = TRUE)
 cowplot::plot_grid(p1, p2, p3, ncol=3, labels=LETTERS[1:3], rel_widths=c(.8, .8, 1.2))
 
-cowplot::ggsave2("Analysis/Results/cnet_plot1.pdf", width = 20, height = 10)
+cowplot::ggsave2("Analysis/Results/cnet_plot1.pdf", width = 20, height = 8)
 
 p1 <- cnetplot(edox, node_label="category") 
 p2 <- cnetplot(edox, node_label="gene") 
@@ -115,13 +132,6 @@ cowplot::plot_grid(p1, p2, p3, p4, ncol=2, labels=LETTERS[1:4])
 cowplot::ggsave2("Analysis/Results/cnet_plot2.pdf", width = 20, height = 14)
 
 p1 <- heatplot(edox)
-p2 <- heatplot(edox, foldChange=geneList)
+p2 <- heatplot(edox, foldChange=de$de)
 cowplot::plot_grid(p1, p2, ncol=1, labels=LETTERS[1:2])
 cowplot::ggsave2("Analysis/Results/heatmap_functional_classification.pdf", width = 20, height = 14)
-
-library("pathview")
-hsa04110 <- pathview(gene.data  = geneList,
-                     pathway.id = "hsa04110",
-                     species    = "hsa",
-                     kegg.dir="Analysis/Results/",
-                     limit      = list(gene=max(abs(geneList)), cpd=1))
