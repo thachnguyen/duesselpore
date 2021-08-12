@@ -25,10 +25,12 @@ if __name__=="__main__":
 			print('Downloading human reference genome')
 			os.system('wget ftp://ftp.ensembl.org/pub/release-102/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz -P ~/ReferenceData/')
 			os.system('wget http://ftp.ensembl.org/pub/release-102/gtf/homo_sapiens/Homo_sapiens.GRCh38.102.gtf.gz -P ~/ReferenceData/')
+			os.system('wget ftp://ftp.ensembl.org/pub/release-104/fasta/homo_sapiens/cdna/Homo_sapiens.GRCh38.cdna.all.fa.gz -P ~/ReferenceData/')
 		#print('creating human reference genome indexes, please wait')
 		#os.system('minimap2 -t 4 -k15 -w10 -d ~/ReferenceData/reference_human.mmi ~/ReferenceData/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz')
 		#os.system('echo %s|sudo -S %s'%(sudo_pass, install_cmd))
 		#os.unlink('~/ReferenceData/*.fa.gz')
+		
 	
 		if sys.argv[1]=='full':
 			print('Downloading human reference genome')

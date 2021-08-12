@@ -76,22 +76,34 @@ library(enrichplot)
 barplot(edo, showCategory=20)
 ggsave("Analysis/Results/bar_plot_enrichDGN.pdf")
 
-options(repr.plot.width=20, repr.plot.height=7)
-edox <- setReadable(edo, 'org.Hs.eg.db', 'ENTREZID')
+############
+options(repr.plot.width=40, repr.plot.height=12)
+edox <- setReadable(edo, 'org.Hs.eg.db', keyType = 'auto')
 p1 <- cnetplot(edox, foldChange=geneList)
-
 ## categorySize can be scaled by 'pvalue' or 'geneNum'
 p2 <- cnetplot(edox, categorySize="pvalue", foldChange=geneList)
 p3 <- cnetplot(edox, foldChange=geneList, circular = TRUE, colorEdge = TRUE)
 cowplot::plot_grid(p1, p2, p3, ncol=3, labels=LETTERS[1:3], rel_widths=c(.8, .8, 1.2))
-ggsave("Analysis/Results/cnet_plot1.pdf")
 
-options(repr.plot.width=20, repr.plot.height=12)
+cowplot::ggsave2("Analysis/Results/cnet_plot1.pdf", width = 20, height = 10)
+
 p1 <- cnetplot(edox, node_label="category") 
 p2 <- cnetplot(edox, node_label="gene") 
 p3 <- cnetplot(edox, node_label="all") 
 p4 <- cnetplot(edox, node_label="none") 
 cowplot::plot_grid(p1, p2, p3, p4, ncol=2, labels=LETTERS[1:4])
-ggsave("Analysis/Results/cnet_plot2.pdf")
+cowplot::ggsave2("Analysis/Results/cnet_plot2.pdf", width = 20, height = 14)
+
+p1 <- heatplot(edox)
+p2 <- heatplot(edox, foldChange=geneList)
+cowplot::plot_grid(p1, p2, ncol=1, labels=LETTERS[1:2])
+cowplot::ggsave2("Analysis/Results/heatmap_functional_classification.pdf", width = 20, height = 14)
+
+library("pathview")
+hsa04110 <- pathview(gene.data  = geneList,
+                     pathway.id = "hsa04110",
+                     species    = "hsa",
+                     kegg.dir="Analysis/Results/",
+                     limit      = list(gene=max(abs(geneList)), cpd=1))
 
 }
