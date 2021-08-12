@@ -54,7 +54,7 @@ def index(request):
 
                     if form.gene_count_method == 'Rsubread':
                         print('Starting R Analyser Feature counts')
-                        write_rscript(s_id=session_id, method = 'Rsubread')
+                        write_rscript(s_id=session_id, method = 'Rsubread', DESeq=form.Differential_expression_method)
                         os.system('R < users_file/%s/RNA.R --no-save'%session_id)
                         t5= time()
                         print('R Runtime Feature counts in %i seconds'%(t5-t4))
@@ -62,7 +62,7 @@ def index(request):
                     elif form.gene_count_method == 'HTSeq':
                         print('Starting HTSeq counts')
                         run_htseq_count_parallel(s_id=session_id)
-                        write_rscript(s_id=session_id, method = 'HTSeq')
+                        write_rscript(s_id=session_id, method = 'HTSeq', DESeq=form.Differential_expression_method)
                         os.system('R < users_file/%s/RNA.R --no-save'%session_id)
                         t5= time()
                         print('R Runtime HTSeq in %i seconds'%(t5-t4))

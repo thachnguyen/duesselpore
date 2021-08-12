@@ -48,6 +48,7 @@ anno$replicate <- factor(anno$replicate)
 variance_heatmap <- pheatmap(logCPM, 
                              annotation_col = anno, 
                              cluster_cols=config$cluster_col,
+                             clustering_distance_cols = "correlation",
                              labels_row = mapIds(refdb, keys = substr(rownames(logCPM),1,15), 
                                                  column = "SYMBOL", keytype = "GENEID", multiVals = "first"),
                              labels_col = c(rownames(studyDesign)), drop_levels = TRUE, filename='Analysis/Results/heatmap.pdf')
