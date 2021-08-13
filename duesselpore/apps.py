@@ -42,7 +42,7 @@ def manage_fastq_list(s_id):
 
     return samples_data    
 
-def create_yaml(s_id, samples, yaml_file = 'config.yaml', NumberOfTopGene=30 ,ref_group = 0, readCountMinThreshold = 10, lfcThreshold =1,  adjPValueThreshold = 0.05, tutorialText=False, organism='human', cluster_col = False):
+def create_yaml(s_id, samples, yaml_file = 'config.yaml', NumberOfTopGene=30 ,ref_group = 0, readCountMinThreshold = 10, lfcThreshold =1,  adjPValueThreshold = 0.05, tutorialText=False, organism='human', cluster_col = False, pathway_ID='hsa05034'):
     # '''
     # Create the user defined YAML from YAML template for RScript. The fastq files are separate into different groups as subfolders. Named by directory's name and file'sname.
     # '''   
@@ -63,6 +63,7 @@ def create_yaml(s_id, samples, yaml_file = 'config.yaml', NumberOfTopGene=30 ,re
     default_config['referenceGroup'] = ref_group
     default_config['organism'] = organism
     default_config['genome_annotation'] = genome_annotation[organism]
+    default_config['pathway_ID'] = pathway_ID
     if cluster_col == 'No':
         default_config['cluster_col'] = False
     else:

@@ -43,7 +43,7 @@ def index(request):
                 samples = manage_fastq_list(session_id)
                 t3 = time() 
                 print('Read time %i seconds' %(t3 - t2))
-                create_yaml(s_id=session_id, samples=samples, NumberOfTopGene=form.NumberOfTopGene ,ref_group= form.reference_group, readCountMinThreshold=form.readCountMinThreshold, lfcThreshold=form.lfcThreshold, adjPValueThreshold=form.adjPValueThreshold, organism=organism, cluster_col = form.cluster_by_replica)
+                create_yaml(s_id=session_id, samples=samples, NumberOfTopGene=form.NumberOfTopGene ,ref_group= form.reference_group, readCountMinThreshold=form.readCountMinThreshold, lfcThreshold=form.lfcThreshold, adjPValueThreshold=form.adjPValueThreshold, organism=organism, cluster_col = form.cluster_by_replica, pathway_ID=form.pathway_ID)
                 #os.unlink('users_file/'+session_id)
                 
                 #Run minimap for two first options
