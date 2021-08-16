@@ -22,6 +22,7 @@ Before we start the Virtual machine in Virtual box configuration panel, we confi
 ![Network interface configuration](img/network_interface.pdf)
 
 #### 1.2.2. Login and configure webserver
+
 After booting up our guest OS, login your Virtual Machine (VM) with this credential:<br> 
 ```
 * user name: ag-rossi (preset)
@@ -45,6 +46,7 @@ The program will download all reference genomes, genome annotation and other req
 Now you can use your webserver within your Local Area Network (LAN) with normal web browser (e.g. Firefox or Google Chrome) http://{Your IP address}:8000/duesselpore.
 
 #### 2.2.2. Data preparation
+
 Normal users can upload fastq files as ONE compressed zip file: each subfolder contains several replicas with one experimental condition.
 NOTE: files and folders’ name must contain only alphabetic and numeric characters.
 Below is an example of data separated in two different conditions ‘condition1’ and ‘condition2’.
@@ -68,10 +70,12 @@ On Window command prompt (path syntax is different):
 $ type \path\to\fastq\files\*.fastq> \your\new\location\output.fastq
 ```
 #### 2.2.3. Setup running parameter:
+
 First, select one group among your groups as the reference group. Select gene (transcriptome) counting method, then select the differential expression algorithm which you want to analyse. 
 Setting up other parameter of analysis function. There are some optional parameters e.g. ReadCountMinThreshold, Logfold, adjPValueThreshold. Submit and wait for the result. 
 Advance user can customized the RNA.R code to develop a new workflow.
 
 
 #### 2.2.4. Get the results:
+
 After computation completed, all the result are downloaded from browser. We export the interactive html file for some plots.

@@ -38,11 +38,13 @@ variance_heatmap <- pheatmap(mat,
 organism <- org.Hs.eg.db
 
 #####################
-if (config$referenceGroup %in% levels(group)&(config$studyGroup %in% levels(group))){
+group <-factor(studyDesign$group)
+if (config$referenceGroup %in% studyDesign$group&(config$studyGroup %in% studyDesign$group)){
   res_group01_group02 <- results(dds, contrast = c("group", config$studyGroup, config$referenceGroup))
 }else{
   res_group01_group02 <- results(dds, contrast = c("group", levels(group)[2], levels(group)[1]))}
 #####################
+
 
 res_group01_group02.filtered <- res_group01_group02 %>%
   as.data.frame() %>%
@@ -128,8 +130,8 @@ hsa05321 <- pathview(gene.data  = de1,
                      min.nnodes=3,
                      expand.node=TRUE,
                      )
-pathway_file <- list.files('.','.png$')
-file.copy(pathway_file, 'Analysis/Results/')
+pathway_file <- list.files('.','.png$')[1]
+file.copy(pathway_file, 'Analysis/Results/pathway.png')
 
 
 }

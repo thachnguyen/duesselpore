@@ -69,7 +69,7 @@ class Input(models.Model):
     lfcThreshold = models.FloatField(verbose_name='lfcThreshold (Optional)', default=1)
     adjPValueThreshold = models.FloatField(verbose_name='adjPValueThreshold (Optional)', default=0.05)
     cluster_by_replica = models.CharField(max_length=6, choices=cluster_choices, verbose_name='Cluster replicate', default='Yes')
-    pathway_ID = models.CharField(max_length=10, verbose_name='KEGG id (for pathview)', default='hsa05034')
+    pathway_ID = models.CharField(max_length=10, verbose_name='KEGG id (for pathview)', default='hsa04110')
     # gene_gene_templates_file = models.FileField(verbose_name= 'Upload your reference genome',  upload_to='users_file/', blank=False, null=True)
    
 class InputForm(ModelForm):

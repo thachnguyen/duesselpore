@@ -150,5 +150,5 @@ hsa05321 <- pathview(gene.data  = de1,
                      min.nnodes=3,
                      expand.node=TRUE,
                      )
-pathway_file <- list.files('.','.png$')
-file.copy(pathway_file, 'Analysis/Results/')
+pathway_file <- list.files('.','.png$')[1]
+file.copy(pathway_file, 'Analysis/Results/pathway.png')
