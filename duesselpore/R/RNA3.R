@@ -69,6 +69,7 @@ gse.df <- as.data.frame(gse)
 pathway <- file.path("Analysis/Results/pathway.xlsx")
 write_xlsx(x= gse.df, path = pathway)
 
+geneList1<-geneList
 de_ens <- geneList1[abs(geneList1) > 1]
 de <-as.data.frame(de_ens)
 
