@@ -5,9 +5,12 @@
     <meta charset="UTF-8">
     <title>Webserver for NGS analysis. </title>
 </head>
+
 <body>
 <h1>Duesselpore: Integrated Webserver for RNAseq analysis. </h1>
-<h4>Before submission, please read <a href="/static/instruction_duesselpore.md"> the instruction</a>  carefully </h4>
+{% load static %}
+
+<h4>Before submission, please read <a href="/static/manual.pdf"> the instruction</a>  carefully </h4>
 
 <form enctype="multipart/form-data" method=post action="">{% csrf_token %}
 <table>
@@ -21,7 +24,12 @@
 </table>
 <p><input type=submit value=Submit></form></p>
 
+
+
 <p>
+ 
+
+     
 {% if result != None %}
 {% load static %}
 <img src="{% get_static_prefix %}{{ result }}" width=500>
@@ -38,7 +46,10 @@
       <img src="https://iuf-duesseldorf.de/wp-content/uploads/2021/01/logo.png" width="70px" height="70px">
           <div class="foot">2021 © All rights reserved.</div>
   </div>
+
+  
 </div>
+
 
 
 </body>

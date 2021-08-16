@@ -36,7 +36,13 @@ variance_heatmap <- pheatmap(mat,
          labels_col = c(rownames(studyDesign)), drop_levels = TRUE, filename='Analysis/Results/heatmap.pdf')
 
 organism <- org.Hs.eg.db
-res_group01_group02 <- results(dds)
+
+#####################
+if (config$referenceGroup %in% levels(group)&(config$studyGroup %in% levels(group))){
+  res_group01_group02 <- results(dds, contrast = c("group", config$studyGroup, config$referenceGroup))
+}else{
+  res_group01_group02 <- results(dds, contrast = c("group", levels(group)[2], levels(group)[1]))}
+#####################
 
 res_group01_group02.filtered <- res_group01_group02 %>%
   as.data.frame() %>%

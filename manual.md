@@ -2,13 +2,14 @@
 
 ## 1. Install and configure webserver
 ### 1.1. System requirement
-    * CPU: 2.5 GHz 8 core or higher
+    * CPU: 2.5 GHz 8 cores or higher
     * Memory: 8 GB or higher
     * Diskdrive: 200 GB free space
     * Window 10, Linux (Ubuntu) or Mac
 
 ### 1.2. Installation
 #### 1.2.1 Download and install VMWare
+
 Note: For inexperienced Linux user our software are tested with current version pipeline. We do not recommend upgrading the version on Linux Virtual machine. The webserver may crash when new software is updated<br>
 
 * Download and install Virtualbox (VB) installation and VirtualBox 6.1.22 Oracle VM VirtualBox Extension Pack from https://www.virtualbox.org/wiki/Downloads. Already tested Virtualbox version 6.1.22 on Ubuntu 18.04 and Window 10.<br>

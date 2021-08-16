@@ -13,6 +13,7 @@ from django import forms
 
 import mimetypes
 from time import time
+from distutils.dir_util import copy_tree
 
 def index(request):
     os.chdir(os.path.dirname(__file__))
@@ -75,13 +76,13 @@ def index(request):
                     print('Starting Salmon counts')
                     run_salmon_count(s_id=session_id)
 
-                
-
+            
                 sys.stdout.close()
                 sys.stdout=stdoutOrigin
 
                 # shutil.copyfile('users_file/%s/Rplots.pdf', 'users_file/%s/Analysis/Results/Rplots.pdf'%session_id)
-                shutil.make_archive('static/%s'%session_id, 'zip', 'users_file/%s/Analysis/Results/' %session_id)
+                shutil.make_archive('static/results/%s'%session_id, 'zip', 'users_file/%s/Analysis/Results/' %session_id)
+                copy_tree('users_file/%s/Analysis/Results/'%session_id, 'static/results/%s'%session_id)
                 context = {'file_id': session_id}
                 #link = 'http://172.17.21.81:8000/static/%s.zip'%session_id
                 # send email is not implemented in local mode

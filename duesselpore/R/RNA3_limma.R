@@ -30,7 +30,15 @@ fit <- glmQLFit(y, design, robust=TRUE)
 
 plotQLDisp(fit)
 summary(fit$df.prior)
-group1vs2<-makeContrasts(paste(levels(group)[2], levels(group)[1], sep = '-'), levels=design)
+
+if (config$referenceGroup %in% levels(group)&(config$studyGroup %in% levels(group))){
+  i <- match(config$referenceGroup, levels(group))
+  j <-match(config$studyGroup, levels(group))
+}else{
+  i <-1
+j <-2}
+
+group1vs2<-makeContrasts(paste(levels(group)[j], levels(group)[i], sep = '-'), levels=design)
 
 res <- glmQLFTest(fit, contrast=group1vs2)
 topTags(res)
