@@ -112,7 +112,10 @@ venv.bak/
 users_file/
 test_data/
 ../NGS_webserver/settings.py
-static/results/
+static/
+!static/instruction_duesselpore.md.gitkeep
+!static/manual.pdf.gitkeep
+
 
 # Spyder project settings
 .spyderproject

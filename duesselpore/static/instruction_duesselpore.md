@@ -5,7 +5,7 @@
     * CPU: 2.5 GHz 8 cores or higher
     * Memory: 8 GB or higher
     * Diskdrive: 200 GB free space
-    * Window 10, Linux (Ubuntu) or Mac
+    * Window 10, Linux (Ubuntu) or Mac 
 
 ### 1.2. Installation
 #### 1.2.1 Download and install VMWare
