@@ -1,14 +1,29 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
+
+
 <head>
     <meta charset="UTF-8">
     <title>Webserver for NGS analysis. </title>
+    <style>
+      .myDiv {
+        
+        border: 2px outset rgb(19, 1, 1);
+        background-color: rgb(230, 240, 243);
+        text-align: left;
+        background-image: url('/static/background.jpeg');
+      }
+      </style>
+
 </head>
 
 <body>
+  <div class="myDiv"> 
 <h1>Duesselpore: Integrated Webserver for RNAseq analysis. </h1>
 {% load static %}
+
 
 <h4>Before submission, please read <a href="/static/manual.pdf"> the instruction</a>  carefully </h4>
 
@@ -17,19 +32,14 @@
   {% for field in form %}
     <tr>
     <td>{{ field.label }}</td>
-    <td>{{ field }}</td>
+    <td>{{ field }}</td> 
     <td></td>
     </tr>
   {% endfor %}
 </table>
 <p><input type=submit value=Submit></form></p>
-
-
-
 <p>
  
-
-     
 {% if result != None %}
 {% load static %}
 <img src="{% get_static_prefix %}{{ result }}" width=500>
@@ -50,7 +60,7 @@
   
 </div>
 
-
+  </div>
 
 </body>
 </html>

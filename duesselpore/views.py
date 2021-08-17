@@ -14,6 +14,7 @@ from django import forms
 import mimetypes
 from time import time
 from distutils.dir_util import copy_tree
+import shutil
 
 def index(request):
     os.chdir(os.path.dirname(__file__))
@@ -80,7 +81,7 @@ def index(request):
                 sys.stdout.close()
                 sys.stdout=stdoutOrigin
                 copy_tree('users_file/%s/Analysis/Results/'%session_id, 'static/results/%s'%session_id)
-                copy_tree('templates/report.html', 'static/results/%s'%session_id)
+                shutil.copyfile('templates/report.html', 'static/results/%s'%session_id)
                 # shutil.copyfile('users_file/%s/Rplots.pdf', 'users_file/%s/Analysis/Results/Rplots.pdf'%session_id)
                 shutil.make_archive('static/results/%s'%session_id, 'zip', 'users_file/%s/Analysis/Results/' %session_id)
 

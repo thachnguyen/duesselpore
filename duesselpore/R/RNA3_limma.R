@@ -126,17 +126,17 @@ p1 <- cnetplot(edox, foldChange=de1)
 ## categorySize can be scaled by 'pvalue' or 'geneNum'
 p2 <- cnetplot(edox, categorySize="pvalue", foldChange=de1)
 p3 <- cnetplot(edox, foldChange=de1, circular = TRUE, colorEdge = TRUE)
-try(cowplot::plot_grid(p1, p2, p3, ncol=3, labels=LETTERS[1:3], rel_widths=c(.8, .8, 1.2)), silent = TRUE)
+cowplot::plot_grid(p2, p3, ncol=2, labels=LETTERS[1:3], rel_widths=c(.8, 1.2))
 #cowplot::plot_grid(p1, p2, p3, ncol=3, labels=LETTERS[1:3], rel_widths=c(.8, .8, 1.2))
 
-try(cowplot::ggsave2("Analysis/Results/cnet_plot1.pdf", width = 20, height = 8), silent = TRUE)
+cowplot::ggsave2("Analysis/Results/cnet_plot1.pdf", width = 20, height = 8)
 
 p1 <- cnetplot(edox, node_label="category") 
 p2 <- cnetplot(edox, node_label="gene") 
 p3 <- cnetplot(edox, node_label="all") 
 p4 <- cnetplot(edox, node_label="none") 
 cowplot::plot_grid(p1, p2, p3, p4, ncol=2, labels=LETTERS[1:4])
-try(cowplot::ggsave2("Analysis/Results/cnet_plot2.pdf", width = 20, height = 14), silent = TRUE)
+cowplot::ggsave2("Analysis/Results/cnet_plot2.pdf", width = 20, height = 14)
 
 p1 <- heatplot(edox)
 p2 <- heatplot(edox, foldChange=de1)
