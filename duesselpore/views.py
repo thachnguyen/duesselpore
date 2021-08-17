@@ -79,10 +79,11 @@ def index(request):
             
                 sys.stdout.close()
                 sys.stdout=stdoutOrigin
-
+                copy_tree('users_file/%s/Analysis/Results/'%session_id, 'static/results/%s'%session_id)
+                copy_tree('templates/report.html', 'static/results/%s'%session_id)
                 # shutil.copyfile('users_file/%s/Rplots.pdf', 'users_file/%s/Analysis/Results/Rplots.pdf'%session_id)
                 shutil.make_archive('static/results/%s'%session_id, 'zip', 'users_file/%s/Analysis/Results/' %session_id)
-                copy_tree('users_file/%s/Analysis/Results/'%session_id, 'static/results/%s'%session_id)
+
                 context = {'file_id': session_id}
                 #link = 'http://172.17.21.81:8000/static/%s.zip'%session_id
                 # send email is not implemented in local mode
