@@ -15,7 +15,7 @@
         Your RNASeq results
       </h1>
 
-      <a  href="/static/results/{{file_id}}.zip" download> Download results </a>
+      Your RNASeq analysis is completed, you can download full result here <a href="/static/results/{{file_id}}.zip" download> Download results </a>
 
       {% autoescape off %}
       {{ plot_div }}
@@ -25,61 +25,61 @@
     </div>
  
 <h2>
-  Read quality
-  <iframe src="/static/results/{{file_id}}/read_quality.pdf#toolbar=0" width="750" height="750"
+  Read quality<br><br>
+  <iframe src="/static/results/{{file_id}}/read_quality.pdf#toolbar=0" width="660" height="660"
   frameborder="0" scrolling="no">
   </iframe>
 </h2>
 
 <h2>
-  Read length
-  <iframe src="/static/results/{{file_id}}/read_length.pdf#toolbar=0" width="750" height="750"
+  Read length<br><br>
+  <iframe src="/static/results/{{file_id}}/read_length.pdf#toolbar=0" width="660" height="660"
   frameborder="0" scrolling="no">  </iframe>
 </h2>
 <h2>
-  Expression heatmap
-  <iframe src="/static/results/{{file_id}}/heatmap.pdf#toolbar=0" width="750" height="750"
+  Expression heatmap<br><br>
+  <iframe src="/static/results/{{file_id}}/heatmap.pdf#toolbar=0" width="660" height="660"
   frameborder="0" scrolling="no">
   </iframe>
 </h2> 
 
 <h2>
-  Heatmap function classification
-  <iframe src="/static/results/{{file_id}}/heatmap_functional_classification.pdf#toolbar=0" width="1500" height="1200"
+  Heatmap function classification<br><br>
+  <iframe src="/static/results/{{file_id}}/heatmap_functional_classification.pdf#toolbar=0" width="1500" height="1050"
   frameborder="0" scrolling="no">
   </iframe>
 </h2> 
 
 <h2>
-  Dot plot Gene Ontology
-  <iframe src="/static/results/{{file_id}}/gseGO.pdf#toolbar=0" width="1500" height="1300"
+  Dotplot Gene Ontology<br><br>
+  <iframe src="/static/results/{{file_id}}/gseGO.pdf#toolbar=0" width="1500" height="1100"
   frameborder="0" scrolling="no">
   </iframe>
 </h2> 
 
 <h2>
-  Bar plot Disease Ontology
-  <iframe src="/static/results/{{file_id}}/bar_plot_enrichDGN.pdf#toolbar=0" width="800" height="800"
+  Barplot Disease Ontology<br><br>
+  <iframe src="/static/results/{{file_id}}/bar_plot_enrichDGN.pdf#toolbar=0" width="800" height="650"
   frameborder="0" scrolling="no">
   </iframe>
 </h2> 
 
 <h2>
-  Gene-Concept Network 1
-  <iframe src="/static/results/{{file_id}}/cnet_plot1.pdf#toolbar=0" width="1500" height="800"
+  Gene-Concept Network 1<br><br>
+  <iframe src="/static/results/{{file_id}}/cnet_plot1.pdf#toolbar=0" width="1500" height="600"
   frameborder="0" scrolling="no">
   </iframe>
 </h2>
 
 <h2>
-  Gene-Concept Network 2
-  <iframe src="/static/results/{{file_id}}/cnet_plot2.pdf#toolbar=0" width="1500" height="1200"
+  Gene-Concept Network 2<br><br>
+  <iframe src="/static/results/{{file_id}}/cnet_plot2.pdf#toolbar=0" width="1500" height="1050"
   frameborder="0" scrolling="no">
   </iframe>
 </h2>
 
 <h2>
-  Pathview
+  Pathview<br><br>
   <iframe src="/static/results/{{file_id}}/pathway.png#toolbar=0" width="1500" height="1500"
   frameborder="0" scrolling="no">
   </iframe>
