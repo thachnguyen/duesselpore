@@ -66,7 +66,7 @@ class Input(models.Model):
     study_group = models.CharField(max_length=100,  verbose_name='Study group (study groups\'s sub-directory name)', default='second group', help_text='Your study group (must be one of your subfolder name)')
     NumberOfTopGene = models.IntegerField(verbose_name='Number of top variance genes (For Gene Ontology)', default=30)
     readCountMinThreshold = models.IntegerField(verbose_name='readCountMinThreshold (Optional)', default=10)
-    lfcThreshold = models.FloatField(verbose_name='lfcThreshold (Optional)', default=1)
+    lfcThreshold = models.FloatField(verbose_name='lfcThreshold (Optional)', default=1.0)
     adjPValueThreshold = models.FloatField(verbose_name='adjPValueThreshold (Optional)', default=0.05)
     cluster_by_replica = models.CharField(max_length=6, choices=cluster_choices, verbose_name='Cluster replicate', default='Yes')
     pathway_ID = models.CharField(max_length=10, verbose_name='KEGG id (for pathview)', default='hsa04110')

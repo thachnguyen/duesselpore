@@ -10,10 +10,10 @@
     <style>
       .myDiv {
         
-        border: 2px outset rgb(19, 1, 1);
-        background-color: rgb(230, 240, 243);
+        background-color: rgb(244, 250, 250);
         text-align: left;
-        background-image: url('/static/background.jpeg');
+        font-weight: bold;
+        font-style: oblique;
       }
       </style>
 
@@ -21,7 +21,7 @@
 
 <body>
   <div class="myDiv"> 
-<h1>Duesselpore: Integrated Webserver for RNAseq analysis. </h1>
+<h1> Duesselpore: Integrated Webserver for RNAseq analysis. </h1>
 {% load static %}
 
 
@@ -39,7 +39,8 @@
 </table>
 <p><input type=submit value=Submit></form></p>
 <p>
- 
+  <img src="/static/Rheinturm_preview.png" align="right" width="250px" height="250px" style="opacity:0.4;filter:alpha(opacity=40)"/>
+
 {% if result != None %}
 {% load static %}
 <img src="{% get_static_prefix %}{{ result }}" width=500>
@@ -52,12 +53,27 @@
     <h6>IUF – Leibniz Research Institute for Environmental Medicine</h6>
 <div>Auf’m Hennekamp 50</div>
 <div>D-40225 Düsseldorf</div>
+      <span style="float:left;">
 
-      <img src="https://iuf-duesseldorf.de/wp-content/uploads/2021/01/logo.png" width="70px" height="70px">
-          <div class="foot">2021 © All rights reserved.</div>
+      <img src="https://iuf-duesseldorf.de/wp-content/uploads/2021/01/logo.png" width="70px" height="70px"> </span> <br>
+      <div class="foot">2021 © All rights reserved.</div>
+     
+
+
+          
   </div>
 
   
+</div>
+
+
+
+  
+
+ 
+
+
+
 </div>
 
   </div>

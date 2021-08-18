@@ -79,7 +79,7 @@ processQCFastq <- function(rowname) {
 data <- lapply(row.names(studyDesign), processQCFastq)
 qcData <- data.frame(data)
 colnames(qcData) <- row.names(studyDesign)
-pdf("Analysis/Results/sample_sumary.pdf")       # Export PDF
+pdf("Analysis/Results/sample_summary.pdf")       # Export PDF
 grid.table(qcData)
 dev.off()
 
