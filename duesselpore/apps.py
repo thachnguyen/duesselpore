@@ -131,15 +131,20 @@ def run_minimap2_transcriptome(path='users_file/', s_id = 'Test_name_1618217069'
             os.system('samtools flagstat %s/%s.bam>%s%s.txt'%(path_minimap, fastq_file1, path_flagstat, fastq_file1))
     return
 
-def run_htseq_count(path='users_file/', s_id = 'Test_name_1618217069'):
+def run_htseq_count(path='users_file/', s_id = 'Test_name_1618217069', organism = 'human'):
     import pandas as pd
     import glob
     #bam_path= 'users_file/%s/Analysis/Minimap/'%s_id
     #hts_out_path = 'users_file/%s/Analysis/'%s_id
+    file_org={'human':'Homo_sapiens.GRCh38.102.gtf.gz',
+                'rat': 'Rattus_norvegicus.Rnor_6.0.102.gtf.gz',
+                'mouse':'Mus_musculus.GRCm38.102.gtf.gz',
+                'zebrafish':'Danio_rerio.GRCz11.102.gtf.gz',
+                'celegans':'Caenorhabditis_elegans.WBcel235.102.gtf.gz'}
 
     for i, bamfile in enumerate(glob.glob('users_file/%s/Analysis/Minimap/*.bam'%s_id)):
         os.system('samtools index %s'%(bamfile))
-        os.system('htseq-count -s no -a 5 --nonunique=all %s ~/ReferenceData/Homo_sapiens.GRCh38.104.gtf>%s.csv'%(bamfile, bamfile[:-4]))
+        os.system('htseq-count -s no -a 5 --nonunique=all %s ~/ReferenceData/%s>%s.csv'%(bamfile, file_org[organism], bamfile[:-4]))
         if i ==0:
             df = pd.read_csv('%s.csv'%(bamfile[:-4]), delimiter='\t', header=None)
             df.columns=['gene_id', bamfile[:-4]]
