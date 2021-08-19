@@ -29,7 +29,7 @@ def manage_fastq_list(s_id):
     os.system('7z x users_file/%s/fastq1 -ousers_file/%s/fastq'%(s_id,s_id))
     samples_data = os.listdir('users_file/%s/fastq'%s_id)
     for i, each_group in enumerate(samples_data):
-        #os.system('fastqc -o users_file/%s/Analysis/Results/QC/ users_file/%s/fastq/%s/*'%(s_id, s_id, each_group))
+        os.system('fastqc -o users_file/%s/Analysis/Results/QC/ users_file/%s/fastq/%s/*'%(s_id, s_id, each_group))
         stored_group = {}
         each_group_list = os.listdir('users_file/%s/fastq/%s'%(s_id, each_group))
         group1 = {}
