@@ -2,9 +2,16 @@
 
 ## 1. Install and configure webserver
 ### 1.1. System requirement
-    * CPU: 2.5 GHz 8 cores or higher
+#### Minimum requirement
+    * CPU: 2.0 GHz (64bits) 4 cores or higher
     * Memory: 8 GB or higher
     * Diskdrive: 200 GB free space
+    * Window 10, Linux (Ubuntu) or Mac
+
+#### Recommend configuration
+    * CPU: 3.0 GHz (64bits) 8 cores or higher
+    * Memory: 16 GB or higher
+    * Diskdrive: 1000 GB free space
     * Window 10, Linux (Ubuntu) or Mac
 
 ### 1.2. Installation
@@ -30,16 +37,21 @@ After booting up our guest OS, login your Virtual Machine (VM) with this credent
 Open the terminal, and we can get our webserver IP address by this command on the guest terminal. When you want to use only the Human genome.
 ```console
 $setup_webserver light
-$runserver
+$run_server
 ```
 If you want to use RNASeq for other organisms: 
 
 ```console
 $setup_webserver full
-$runserver
+$run_server
 ```
 The program will download all reference genomes, genome annotation and other required packages. It also sets your IP address into allowed IP list of webserver. IP address is printed out from the printout messages.
+---
 
+**NOTE**
+If you cannot access your webserver, please check the IP address. You may have to update your new IP address when your webserver IP address changed. <br>
+Open /home/ag-rossi/projects/duesselpore/NGS_webserver/settings.py and add your webserver IP address in ALLOW_HOSTS list
+---
 ### 2.2. Using webserver
 #### 2.2.1. Access webserver
 Now you can use your webserver within your Local Area Network (LAN) with normal web browser (e.g. Firefox or Google Chrome) http://{Your IP address}:8000/duesselpore.

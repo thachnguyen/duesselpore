@@ -2,6 +2,7 @@ How to compress the VDI volume?
 - VDI must be the Dynamically allocated storage mode
 - Login ubuntu recovery mode (VM environment).
 - Select root and run those commands
+clean first
  	systemctl stop systemd-journald.socket
 	systemctl stop systemd-journald.service
 	swapoff -a

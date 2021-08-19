@@ -115,7 +115,7 @@ test_data/
 static/
 !static/instruction_duesselpore.md.gitkeep
 !static/manual.pdf.gitkeep
-
+!static/Rheinturm_preview.png.gitkeep
 
 # Spyder project settings
 .spyderproject
@@ -142,7 +142,6 @@ dmypy.json
 *.Rhistory
 *.bam
 *.fai
-*.png
 *.bai
 *.fastq
 *.fastq.gz
