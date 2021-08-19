@@ -115,7 +115,7 @@ DEFAULT_FROM_EMAIL = 'your@email.com'
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'MEZ'
 
 USE_I18N = True
 
