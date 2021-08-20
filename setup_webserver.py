@@ -20,6 +20,9 @@ if __name__=="__main__":
 	f1 = open('/home/ag-rossi/projects/duesselpore/NGS_webserver/settings.py', 'w')
 	f1.writelines(f)
 	f1.close()
+	print('Updating duesselpore')
+	os.system('git -C ~/projects/duesselpore pull')
+
 	if len(sys.argv) >1:
 		if sys.argv[1]=='light':
 			print('Downloading human reference genome')
