@@ -68,7 +68,7 @@ processQCFastq <- function(rowname) {
     mean = round(mean(width(fastq)), digits=1),
     median = round(median(width(fastq)), digits=0),
     qval = round(mean(alphabetScore(fastq) / width(fastq)), digits=1),
-    gc = round(mean(letterFrequency(sread(fastq), "GC")  / width(fastq)) * 100, digits=1),
+    gc = round(mean(letterFrequency(sread(fastq), "GC")  / width(fastq)) * 100, digits=1)
     #n50 = ncalc(width(fastq), n=0.5),
     #l50 = lcalc(width(fastq), n=0.5),
     #n90 = ncalc(width(fastq), n=0.9),
