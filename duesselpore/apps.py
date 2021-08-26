@@ -79,11 +79,11 @@ def create_yaml(s_id, samples, yaml_file = 'config.yaml', NumberOfTopGene=30 ,re
     return
 
 def run_minimap2(path='users_file/', s_id = 'Test_name_1618217069', organism = 'human'):
-    file_org={'human':'Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz',
-                'rat': 'Rattus_norvegicus.Rnor_6.0.dna.toplevel.fa.gz',
-                'mouse':'Mus_musculus.GRCm38.dna.primary_assembly.fa.gz',
-                'zebrafish':'Danio_rerio.GRCz11.dna.primary_assembly.fa.gz',
-                'celegans':'Caenorhabditis_elegans.WBcel235.dna.toplevel.fa.gz'}
+    file_org={'human':'reference_human.mmi',
+                'rat': 'Rattus_norvegicus.mmi',
+                'mouse':'Mus_musculus.mmi',
+                'zebrafish':'Danio_rerio.mmi',
+                'celegans':'Caenorhabditis_elegans.mmi'}
 
     if not os.path.exists('users_file/%s/Analysis'%s_id):
         os.mkdir('users_file/%s/Analysis'%s_id)
@@ -98,8 +98,8 @@ def run_minimap2(path='users_file/', s_id = 'Test_name_1618217069', organism = '
             fastq_file1 = fastq_file.split('.')[0]
             #os.system('minimap2 -t 16 -a -x map-ont --splice -k 15 -w 10 --secondary=no /home/ag-rossi/ReferenceData/reference_%s.mmi %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(organism, path2, path_minimap, fastq_file1))
             #os.system('minimap2 -t 16 -ax map-ont --splice --secondary=no /home/ag-rossi/ReferenceData/%s %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(file_org[organism], path2, path_minimap, fastq_file1))
-            os.system('minimap2 -t 16 -ax splice -k14 -uf --secondary=no /home/ag-rossi/ReferenceData/%s %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(file_org[organism], path2, path_minimap, fastq_file1))
-            print('minimap2 -t 16 -ax splice -k14 -uf --secondary=no /home/ag-rossi/ReferenceData/%s %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(file_org[organism], path2, path_minimap, fastq_file1))
+            os.system('minimap2 -t 4 -ax splice -k14 -uf --secondary=no /home/ag-rossi/ReferenceData/%s %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(file_org[organism], path2, path_minimap, fastq_file1))
+            print('minimap2 -t 4 -ax splice -k14 -uf --secondary=no /home/ag-rossi/ReferenceData/%s %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(file_org[organism], path2, path_minimap, fastq_file1))
             #os.system('minimap2 -t 16 -ax splice -uf -k14 --secondary=no /home/ag-rossi/ReferenceData/reference.mmi %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(path2, path_minimap, fastq_file1))
             os.system('samtools flagstat %s/%s.bam>%s%s.txt'%(path_minimap, fastq_file1, path_flagstat, fastq_file1))
     return
@@ -124,9 +124,9 @@ def run_minimap2_transcriptome(path='users_file/', s_id = 'Test_name_1618217069'
             fastq_file1 = fastq_file.split('.')[0]
             #os.system('minimap2 -t 16 -a -x map-ont --splice -k 15 -w 10 --secondary=no /home/ag-rossi/ReferenceData/reference_%s.mmi %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(organism, path2, path_minimap, fastq_file1))
             #os.system('minimap2 -t 16 -ax map-ont --splice --secondary=no /home/ag-rossi/ReferenceData/%s %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(file_org[organism], path2, path_minimap, fastq_file1))
-            os.system('minimap2 -t 16 -ax splice -k14 -uf --secondary=no /home/ag-rossi/ReferenceData/%s %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(file_org[organism], path2, path_minimap, fastq_file1))
+            os.system('minimap2 -t 4 -ax splice -k14 -uf --secondary=no /home/ag-rossi/ReferenceData/%s %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(file_org[organism], path2, path_minimap, fastq_file1))
             print('Run minimap2 for transcriptome. Organism: %s'%organism)
-            print('minimap2 -t 16 -ax splice -k14 -uf --secondary=no /home/ag-rossi/ReferenceData/%s %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(file_org[organism], path2, path_minimap, fastq_file1))
+            print('minimap2 -t 4 -ax splice -k14 -uf --secondary=no /home/ag-rossi/ReferenceData/%s %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(file_org[organism], path2, path_minimap, fastq_file1))
             #os.system('minimap2 -t 16 -ax splice -uf -k14 --secondary=no /home/ag-rossi/ReferenceData/reference.mmi %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(path2, path_minimap, fastq_file1))
             os.system('samtools flagstat %s/%s.bam>%s%s.txt'%(path_minimap, fastq_file1, path_flagstat, fastq_file1))
     return

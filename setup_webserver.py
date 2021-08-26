@@ -29,10 +29,10 @@ if __name__=="__main__":
 			os.system('wget ftp://ftp.ensembl.org/pub/release-102/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz -P ~/ReferenceData/')
 			os.system('wget http://ftp.ensembl.org/pub/release-102/gtf/homo_sapiens/Homo_sapiens.GRCh38.102.gtf.gz -P ~/ReferenceData/')
 			os.system('wget ftp://ftp.ensembl.org/pub/release-104/fasta/homo_sapiens/cdna/Homo_sapiens.GRCh38.cdna.all.fa.gz -P ~/ReferenceData/')
-		#print('creating human reference genome indexes, please wait')
-		#os.system('minimap2 -t 4 -k15 -w10 -d ~/ReferenceData/reference_human.mmi ~/ReferenceData/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz')
+		print('creating human reference genome indexes, please wait')
+		os.system('minimap2 -t 4 -k14 -w10 -d ~/ReferenceData/reference_human.mmi ~/ReferenceData/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz')
 		#os.system('echo %s|sudo -S %s'%(sudo_pass, install_cmd))
-		#os.unlink('~/ReferenceData/*.fa.gz')
+		os.unlink('~/ReferenceData/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz')
 		
 	
 		if sys.argv[1]=='full':
@@ -40,37 +40,60 @@ if __name__=="__main__":
 			os.system('wget ftp://ftp.ensembl.org/pub/release-102/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz -P ~/ReferenceData/')
 			os.system('wget http://ftp.ensembl.org/pub/release-102/gtf/homo_sapiens/Homo_sapiens.GRCh38.102.gtf.gz -P ~/ReferenceData/')
 			os.system('wget ftp://ftp.ensembl.org/pub/release-104/fasta/homo_sapiens/cdna/Homo_sapiens.GRCh38.cdna.all.fa.gz -P ~/ReferenceData/')
-			# print('creating human reference genome indexes, please wait')
-			# os.system('minimap2 -t 4 -k15 -w10 -d ~/ReferenceData/reference_human.mmi ~/ReferenceData/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz')
+			print('creating human reference genome indexes, please wait')
+			os.system('minimap2 -t 4 -k15 -w10 -d ~/ReferenceData/reference_human.mmi ~/ReferenceData/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz')
 			# install_cmd ='apt install fastqc'
 			# sudo_pass = '123456'
 			# os.system('echo %s|sudo -S %s'%(sudo_pass, install_cmd))
-			# os.unlink('~/ReferenceData/*.fa.gz')
+			os.unlink('~/ReferenceData/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz')
 
 
 			print('Downloading mouse reference genome')
 			os.system('wget ftp://ftp.ensembl.org/pub/release-102/fasta/mus_musculus/dna/Mus_musculus.GRCm38.dna.primary_assembly.fa.gz -P ~/ReferenceData/')
 			os.system('wget ftp://ftp.ensembl.org/pub/release-102/gtf/mus_musculus/Mus_musculus.GRCm38.102.gtf.gz -P ~/ReferenceData/')
 			os.system('wget http://ftp.ensembl.org/pub/release-102/fasta/mus_musculus/cdna/Mus_musculus.GRCm38.cdna.all.fa.gz -P ~/ReferenceData/')
+			print('creating mouse reference genome indexes, please wait')
+			os.system('minimap2 -t 4 -k15 -w10 -d ~/ReferenceData/Mus_musculus.mmi ~/ReferenceData/Mus_musculus.GRCm38.dna.primary_assembly.fa.gz')
+			# install_cmd ='apt install fastqc'
+			# sudo_pass = '123456'
+			# os.system('echo %s|sudo -S %s'%(sudo_pass, install_cmd))
+			os.unlink('~/ReferenceData/Mus_musculus.GRCm38.dna.primary_assembly.fa.gz')
 			
 
 			print('Downloading rat reference genome')
 			os.system('wget ftp://ftp.ensembl.org/pub/release-102/fasta/rattus_norvegicus/dna/Rattus_norvegicus.Rnor_6.0.dna.toplevel.fa.gz -P ~/ReferenceData/')
 			os.system('wget ftp://ftp.ensembl.org/pub/release-102/gtf/rattus_norvegicus/Rattus_norvegicus.Rnor_6.0.102.gtf.gz -P ~/ReferenceData/')
 			os.system('wget http://ftp.ensembl.org/pub/release-102/fasta/rattus_norvegicus/cdna/Rattus_norvegicus.Rnor_6.0.cdna.all.fa.gz -P ~/ReferenceData/')
-
+			print('creating rat reference genome indexes, please wait')
+			os.system('minimap2 -t 4 -k15 -w10 -d ~/ReferenceData/Rattus_norvegicus.mmi ~/ReferenceData/Rattus_norvegicus.Rnor_6.0.dna.toplevel.fa.gz')
+			# install_cmd ='apt install fastqc'
+			# sudo_pass = '123456'
+			# os.system('echo %s|sudo -S %s'%(sudo_pass, install_cmd))
+			os.unlink('~/ReferenceData/Rattus_norvegicus.Rnor_6.0.dna.toplevel.fa.gz')
 
 			print('Downloading zebrafish reference genome')
 			os.system('wget ftp://ftp.ensembl.org/pub/release-102/fasta/danio_rerio/dna/Danio_rerio.GRCz11.dna.primary_assembly.fa.gz -P ~/ReferenceData/')
 			os.system('wget ftp://ftp.ensembl.org/pub/release-102/gtf/danio_rerio/Danio_rerio.GRCz11.102.gtf.gz -P ~/ReferenceData/')
 			os.system('wget http://ftp.ensembl.org/pub/release-102/fasta/danio_rerio/cdna/Danio_rerio.GRCz11.cdna.all.fa.gz -P ~/ReferenceData/')
-
+			print('creating zebrafish reference genome indexes, please wait')
+			os.system('minimap2 -t 4 -k15 -w10 -d ~/ReferenceData/Danio_rerio.mmi ~/ReferenceData/Danio_rerio.GRCz11.dna.primary_assembly.fa.gz')
+			# install_cmd ='apt install fastqc'
+			# sudo_pass = '123456'
+			# os.system('echo %s|sudo -S %s'%(sudo_pass, install_cmd))
+			os.unlink('~/ReferenceData/Danio_rerio.GRCz11.dna.primary_assembly.fa.gz')
 
 			print('Downloading C elegans reference genome')
 			os.system('wget ftp://ftp.ensembl.org/pub/release-102/fasta/caenorhabditis_elegans/dna/Caenorhabditis_elegans.WBcel235.dna.toplevel.fa.gz -P ~/ReferenceData/')
 			os.system('wget ftp://ftp.ensembl.org/pub/release-102/gtf/caenorhabditis_elegans/Caenorhabditis_elegans.WBcel235.102.gtf.gz -P ~/ReferenceData/') 
 			os.system('wget http://ftp.ensembl.org/pub/release-104/fasta/caenorhabditis_elegans/cdna/Caenorhabditis_elegans.WBcel235.cdna.all.fa.gz -P ~/ReferenceData/')
-	
+			print('creating Celegans reference genome indexes, please wait')
+			os.system('minimap2 -t 4 -k15 -w10 -d ~/ReferenceData/Caenorhabditis_elegans.mmi ~/ReferenceData/Caenorhabditis_elegans.WBcel235.dna.toplevel.fa.gz')
+			# install_cmd ='apt install fastqc'
+			# sudo_pass = '123456'
+			# os.system('echo %s|sudo -S %s'%(sudo_pass, install_cmd))
+			os.unlink('~/ReferenceData/Caenorhabditis_elegans.WBcel235.dna.toplevel.fa.gz')
+
+
 			# print('creating mouse reference genome indexes, please wait')
 			# os.system('minimap2 -t 4 -k15 -w10 -d ~/ReferenceData/reference_mouse.mmi ~/ReferenceData/Mus_musculus.GRCm39.dna.toplevel.fa.gz')
 			# print('creating rat reference genome indexes, please wait')
