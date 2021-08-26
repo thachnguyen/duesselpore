@@ -165,7 +165,7 @@ def run_htseq_count_parallel(path='users_file/', s_id = 'Test_name_1618217069'):
     data_columns.insert(0, 'gene_id')
     for bamfile in bam_files:
         os.system('samtools index %s'%(bamfile))
-    os.system('htseq-count -s no -a 5 -n %i --nonunique=all %s ~/ReferenceData/Homo_sapiens.GRCh38.102.gtf>%sHTSeq_counts.csv'%(len(bam_files), " ".join(bam_files), hts_out_path))
+    os.system('htseq-count -s no -a 5 -n %i --nonunique=all %s ~/ReferenceData/Homo_sapiens.GRCh38.102.gtf.gz>%sHTSeq_counts.csv'%(len(bam_files), " ".join(bam_files), hts_out_path))
     
     df1 = pd.read_csv('%sHTSeq_counts.csv'%hts_out_path, delimiter='\t', header=None)
     df1 = df1[:-5]    
