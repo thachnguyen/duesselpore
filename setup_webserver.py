@@ -45,7 +45,7 @@ if __name__=="__main__":
 			# install_cmd ='apt install fastqc'
 			# sudo_pass = '123456'
 			# os.system('echo %s|sudo -S %s'%(sudo_pass, install_cmd))
-			os.unlink('~/ReferenceData/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz')
+			os.unlink('/home/ag-rossi/ReferenceData/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz')
 
 
 			print('Downloading mouse reference genome')
@@ -57,7 +57,7 @@ if __name__=="__main__":
 			# install_cmd ='apt install fastqc'
 			# sudo_pass = '123456'
 			# os.system('echo %s|sudo -S %s'%(sudo_pass, install_cmd))
-			os.unlink('~/ReferenceData/Mus_musculus.GRCm38.dna.primary_assembly.fa.gz')
+			os.unlink('/home/ag-rossi/ReferenceData/Mus_musculus.GRCm38.dna.primary_assembly.fa.gz')
 			
 
 			print('Downloading rat reference genome')
@@ -69,7 +69,7 @@ if __name__=="__main__":
 			# install_cmd ='apt install fastqc'
 			# sudo_pass = '123456'
 			# os.system('echo %s|sudo -S %s'%(sudo_pass, install_cmd))
-			os.unlink('~/ReferenceData/Rattus_norvegicus.Rnor_6.0.dna.toplevel.fa.gz')
+			os.unlink('/home/ag-rossi/ReferenceData/Rattus_norvegicus.Rnor_6.0.dna.toplevel.fa.gz')
 
 			print('Downloading zebrafish reference genome')
 			os.system('wget ftp://ftp.ensembl.org/pub/release-102/fasta/danio_rerio/dna/Danio_rerio.GRCz11.dna.primary_assembly.fa.gz -P ~/ReferenceData/')
@@ -80,7 +80,7 @@ if __name__=="__main__":
 			# install_cmd ='apt install fastqc'
 			# sudo_pass = '123456'
 			# os.system('echo %s|sudo -S %s'%(sudo_pass, install_cmd))
-			os.unlink('~/ReferenceData/Danio_rerio.GRCz11.dna.primary_assembly.fa.gz')
+			os.unlink('/home/ag-rossi/ReferenceData/Danio_rerio.GRCz11.dna.primary_assembly.fa.gz')
 
 			print('Downloading C elegans reference genome')
 			os.system('wget ftp://ftp.ensembl.org/pub/release-102/fasta/caenorhabditis_elegans/dna/Caenorhabditis_elegans.WBcel235.dna.toplevel.fa.gz -P ~/ReferenceData/')
@@ -91,7 +91,7 @@ if __name__=="__main__":
 			# install_cmd ='apt install fastqc'
 			# sudo_pass = '123456'
 			# os.system('echo %s|sudo -S %s'%(sudo_pass, install_cmd))
-			os.unlink('~/ReferenceData/Caenorhabditis_elegans.WBcel235.dna.toplevel.fa.gz')
+			os.unlink('/home/ag-rossi/ReferenceData/Caenorhabditis_elegans.WBcel235.dna.toplevel.fa.gz')
 
 
 			# print('creating mouse reference genome indexes, please wait')
