@@ -32,7 +32,7 @@ if __name__=="__main__":
 		print('creating human reference genome indexes, please wait')
 		os.system('minimap2 -t 4 -k14 -w10 -d ~/ReferenceData/reference_human.mmi ~/ReferenceData/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz')
 		#os.system('echo %s|sudo -S %s'%(sudo_pass, install_cmd))
-		os.unlink('~/ReferenceData/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz')
+		os.unlink('/home/ag-rossi/ReferenceData/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz')
 		
 	
 		if sys.argv[1]=='full':
