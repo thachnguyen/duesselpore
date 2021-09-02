@@ -79,7 +79,7 @@ processQCFastq <- function(rowname) {
 data <- lapply(row.names(studyDesign), processQCFastq)
 qcData <- data.frame(data)
 colnames(qcData) <- row.names(studyDesign)
-pdf("Analysis/Results/sample_summary.pdf")       # Export PDF
+pdf("Analysis/Results/sample_summary.pdf", width=12, height = 7)       # Export PDF
 grid.table(qcData)
 dev.off()
 
@@ -152,6 +152,6 @@ flagstatRes[nrow(flagstatRes)+1,] <- round(as.numeric(flagstatRes["Mapped", ]) /
 flagstatRes <- flagstatRes[c(6,1,2,3,4,7),]
 rownames(flagstatRes)[6] <- "%mapping"
 
-pdf("Analysis/Results/cDNA_mapping_summary.pdf")       # Export PDF
+pdf("Analysis/Results/cDNA_mapping_summary.pdf", width=12, height = 7)       # Export PDF
 grid.table(flagstatRes)
 dev.off()

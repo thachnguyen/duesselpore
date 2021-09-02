@@ -82,6 +82,7 @@ def index(request):
                 sys.stdout=stdoutOrigin
                 copy_tree('users_file/%s/Analysis/Results/'%session_id, 'static/results/%s'%session_id)
                 shutil.copyfile('templates/report.html', 'static/results/%s/report.html'%session_id)
+                shutil.copyfile('templates/report.html', 'users_file/%s/Analysis/Results/report.html'%session_id)
                 # shutil.copyfile('users_file/%s/Rplots.pdf', 'users_file/%s/Analysis/Results/Rplots.pdf'%session_id)
                 shutil.make_archive('static/results/%s'%session_id, 'zip', 'users_file/%s/Analysis/Results/' %session_id)
 
