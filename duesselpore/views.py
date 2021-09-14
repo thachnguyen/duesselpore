@@ -46,7 +46,7 @@ def index(request):
                 t3 = time() 
                 print('Read time %i seconds' %(t3 - t2))
                 create_yaml(s_id=session_id, samples=samples, NumberOfTopGene=form.NumberOfTopGene ,ref_group= form.reference_group, study_group=form.study_group, readCountMinThreshold=form.readCountMinThreshold, lfcThreshold=form.lfcThreshold, adjPValueThreshold=form.adjPValueThreshold, organism=organism, cluster_col = form.cluster_by_replica, pathway_ID=form.pathway_ID)
-                #os.unlink('users_file/'+session_id)
+
                 
                 #Run minimap for two first options
                 if form.gene_count_method in ['Rsubread', 'HTSeq']:
@@ -85,6 +85,11 @@ def index(request):
                 shutil.copyfile('templates/report.html', 'users_file/%s/Analysis/Results/report.html'%session_id)
                 # shutil.copyfile('users_file/%s/Rplots.pdf', 'users_file/%s/Analysis/Results/Rplots.pdf'%session_id)
                 shutil.make_archive('static/results/%s'%session_id, 'zip', 'users_file/%s/Analysis/Results/' %session_id)
+                try:
+                    shutil.rmtree('users_file/%s/fastq/'%session_id)
+                except OSError as e:
+                    print ("Error: %s - %s." % (e.filename, e.strerror))
+                #os.unlink('users_file/'+session_id)
 
                 context = {'file_id': session_id}
                 #link = 'http://172.17.21.81:8000/static/%s.zip'%session_id

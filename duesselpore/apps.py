@@ -98,7 +98,7 @@ def run_minimap2(path='users_file/', s_id = 'Test_name_1618217069', organism = '
             fastq_file1 = fastq_file.split('.')[0]
             #os.system('minimap2 -t 16 -a -x map-ont --splice -k 15 -w 10 --secondary=no /home/ag-rossi/ReferenceData/reference_%s.mmi %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(organism, path2, path_minimap, fastq_file1))
             #os.system('minimap2 -t 16 -ax map-ont --splice --secondary=no /home/ag-rossi/ReferenceData/%s %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(file_org[organism], path2, path_minimap, fastq_file1))
-            os.system('minimap2 -t 4 -ax splice -k14 -uf --secondary=no /home/ag-rossi/ReferenceData/%s %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(file_org[organism], path2, path_minimap, fastq_file1))
+            os.system('minimap2 -t 16 -ax splice -k14 -uf --secondary=no /home/ag-rossi/ReferenceData/%s %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(file_org[organism], path2, path_minimap, fastq_file1))
             print('minimap2 -t 4 -ax splice -k14 -uf --secondary=no /home/ag-rossi/ReferenceData/%s %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(file_org[organism], path2, path_minimap, fastq_file1))
             #os.system('minimap2 -t 16 -ax splice -uf -k14 --secondary=no /home/ag-rossi/ReferenceData/reference.mmi %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(path2, path_minimap, fastq_file1))
             os.system('samtools flagstat %s/%s.bam>%s%s.txt'%(path_minimap, fastq_file1, path_flagstat, fastq_file1))
