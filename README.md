@@ -1,9 +1,9 @@
 # DUESSELPORE Webserver manual
 Duesselpore is a full stack, light weigh webserver for Nanopore RNAseq.
-* Duesselpore framework is writen using Django Python 3.8, NGS data analysis is written using R and Python
+* Duesselpore web framework is writen using Django Python 3.8.5, NGS data analysis function were written using R and Python
 * Duesselpore can run locally on your virtual machine (Virtualbox)
 * Most of functional analysis can work without internet connection.
-  
+
 ### System requirement
 #### Minimum requirement
     * CPU: 2.0 GHz (64bits) 4 cores or higher
@@ -16,10 +16,10 @@ Duesselpore is a full stack, light weigh webserver for Nanopore RNAseq.
     * CPU: 3.0 GHz (64bits) 8 cores or higher
     * Memory: 16 GB or higher
     * Diskdrive: 1000 GB free space
-    * Window 10, Linux (Ubuntu) or Mac
+    * Window 10, Linux (Ubuntu) or Mac (64 Operating system)
 
-### Installation and using
-See manual.pdf or manual.md file
+### Installation and manual
+See manual.pdf (manual.md) file or our instruction video
 
 ### Dependancies
 Duesselpore use 

@@ -77,9 +77,9 @@ $ type \path\to\fastq\files\*.fastq> \your\new\location\output.fastq
 ```
 #### 2.2.3. Setup running parameter:
 First, select one group among your groups as the reference group. Select the gene (transcriptome) counting method, then select the differential expression algorithm you want to analyze. 
-To run the analysis, we have to set up other parameters of the analysis function. There are some optional parameters, e.g., ReadCountMinThreshold, Logfold change threshold, adjPValueThreshold. Submit and wait for the result. 
-Advanced users can customize the RNA.R code to develop a new workflow.
+To run the analysis, we have to set up other parameters of the analysis function. There are some optional parameters, e.g., ReadCountMinThreshold, Logfold change threshold, adjPValueThreshold. After submit we can wait for the result. 
+Advanced users can customize the RNA.R code to develop a new workflow. The figure bellow exlain the web input form. 
 
 #### 2.2.4. Collecting the results:
-The run time depends on the your data size and the system speed. For our dataset which contains 6 replica, approximate totals 16 million reads, the run time is 6.5 hours. After the computation is completed, all the results are downloaded from the browser. We export the interactive HTML file for some plots.
-Users can continue offline analysis on the Linux virtual machine directory at /home/ag-rossi/duesselpore/users_file/{your session id}. Experienced users can continue the further analysis by editing the R script. NGS data is high volume, therefore we recommend erasing the data on the virtual machine regularly. The Sample result is in the Support Information.
+The run time depends on the your data size and the system speed. For our dataset which contains 6 replicates, approximate totals 16 million reads, the run time is 6.5 hours. After the computation is completed, all the results are downloaded from the browser. We export the interactive HTML file for some plots.
+Users can continue offline analysis on the Linux virtual machine directory at /home/ag-rossi/duesselpore/users_file/{your session id}. Experienced users can continue the further analysis by editing the R script. NGS data is high volume, therefore we recommend erasing the data on the virtual machine regularly. The Sample result is in the Support Information, or sample_result.pdf.
