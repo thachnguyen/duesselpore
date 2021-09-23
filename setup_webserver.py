@@ -105,3 +105,4 @@ if __name__=="__main__":
 			# os.unlink('~/ReferenceData/*.fa.gz')
 
 	print('Your webserver IP address is %s, please use http://%s:8000/duesselpore/ on your browser:'%(iplist[-1], iplist[-1]))
+	print('Other alternative address', iplist)
