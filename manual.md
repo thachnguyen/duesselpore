@@ -1,4 +1,4 @@
-# <center>DUESSELPORE Webserver manual </center>
+# DUESSELPORE Webserver manual 
 
 This is the instruction of using Duesselpore webserver. Video of instruction can be found at: 
 
@@ -24,6 +24,7 @@ By default, our web server uses 4 cores CPU, 8 GB RAM. We recommend using 8 CPUs
 Configure the network interface on your host site (your primary OS):
 Before we start the Virtual machine in the Virtual box configuration panel, we configure two network interfaces as in the figure below. The first network interface to the host machine via VirtualBox Host-Only Ethernet adapter and the second interface the internet via one of your host machine network interface. Network configuration is critical important for our webserver.
 <br>
+
 ![Network interface configuration](img/network_interface.pdf)
 
 #### 1.2.2. Login and configure webserver
@@ -79,6 +80,8 @@ $ type \path\to\fastq\files\*.fastq> \your\new\location\output.fastq
 First, select one group among your groups as the reference group. Select the gene (transcriptome) counting method, then select the differential expression algorithm you want to analyze. 
 To run the analysis, we have to set up other parameters of the analysis function. There are some optional parameters, e.g., ReadCountMinThreshold, Logfold change threshold, adjPValueThreshold. After submit we can wait for the result. 
 Advanced users can customize the RNA.R code to develop a new workflow. The figure bellow exlain the web input form. 
+
+![Input web form explaination](img/web_interface_explanation.pdf)
 
 #### 2.2.4. Collecting the results:
 The run time depends on the your data size and the system speed. For our dataset which contains 6 replicates, approximate totals 16 million reads, the run time is 6.5 hours. After the computation is completed, all the results are downloaded from the browser. We export the interactive HTML file for some plots.

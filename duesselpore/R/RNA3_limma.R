@@ -38,7 +38,8 @@ if (config$referenceGroup %in% levels(group)&(config$studyGroup %in% levels(grou
   i <-1
 j <-2}
 
-group1vs2<-makeContrasts(paste(levels(group)[j], levels(group)[i], sep = '-'), levels=design)
+s1 <-paste(levels(group)[j], levels(group)[i], sep = '-')
+group1vs2<-makeContrasts(s1, levels=design)
 
 res <- glmQLFTest(fit, contrast=group1vs2)
 topTags(res)
