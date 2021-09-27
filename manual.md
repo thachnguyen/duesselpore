@@ -1,6 +1,13 @@
-# DUESSELPORE Webserver manual 
+# DUESSELPORE^TM Webserver manual 
 
-This is the instruction of using Duesselpore webserver. Video of instruction can be found at: 
+This is the instruction of using Duesselpore webserver to process RNAseq data. Video of instruction can be found at: 
+
+## Data availability:
+* Virtualbox image at:
+https://iufduesseldorf-my.sharepoint.com/:u:/g/personal/thach_nguyen_iuf-duesseldorf_de/ET7zomuFVRBBheV-S3TZ6soBH7GiduAEWkp_XF0foxYI3A 
+* Light weight testdata at
+* Full test data.
+* Sample result.
 
 ## 1. Install and configure webserver
 ### 1.1. System requirement
@@ -13,11 +20,10 @@ This is the instruction of using Duesselpore webserver. Video of instruction can
 ### 1.2. Installation
 #### 1.2.1 Download and install VMWare<br>
 
-Note: For inexperienced Linux user our software are tested with current version pipeline. We do not recommend upgrading the version on Linux Virtual machine. The webserver may crash when new software is updated<br>
+Note: For inexperienced Linux user our software are tested with current version pipeline. We do not recommend upgrading the version on Linux Virtual machine. The webserver may crash when new software is updated. The webserver is in virtual environment which is isolated from your host.<br>
 
-* Download and install Virtualbox (VB) installation and VirtualBox 6.1.22 Oracle VM VirtualBox Extension Pack from https://www.virtualbox.org/wiki/Downloads. Already tested Virtualbox version 6.1.22 on Ubuntu 18.04 and Window 10.<br>
-* Download the webserver.ova image file from this address <br>
-https://iufduesseldorf-my.sharepoint.com/:u:/g/personal/thach_nguyen_iuf-duesseldorf_de/ET7zomuFVRBBheV-S3TZ6soBH7GiduAEWkp_XF0foxYI3A <br>
+* Download and install Virtualbox (VB) installation and VirtualBox 6.1.22 Oracle VM VirtualBox Extension Pack from https://www.virtualbox.org/wiki/Downloads. Already tested Virtualbox version 6.1.22 on 64 bit Ubuntu (18.04, 20.04), MacOs and Window 10.<br>
+* Download the webserver.ova image file from address above
 
 After installing VB and its Extension Pack, open VirtualBox GUI and open File > Import Appliance to select webserver.ova downloaded file, then set up configuration based on your machine configuration.
 By default, our web server uses 4 cores CPU, 8 GB RAM. We recommend using 8 CPUs, 16 GB RAM, or more. A 30 GB partition for swap, which extends your virtual memory. This configuration keeps the Minimap2 program running in a low memory machine. However, hard disk read/write speed is much slower than RAM. So to speed up the program you should use higher memory. Hard disk data is dynamically allocated. Therefore when your data increases, the image file size also increases. We recommend deploying a VB image in the partition with at least 200 GB (depends on the number of users and data size, TB volume is highly recommended).
@@ -30,16 +36,16 @@ Before we start the Virtual machine in the Virtual box configuration panel, we c
 #### 1.2.2. Login and configure webserver
 After booting up our guest OS, log in to your Virtual Machine (VM) with this default credential:<br> 
 ```
-* user name: ag-rossi (preset)
-* password 123456
+* user name: ag-rossi (default)
+* password: 123456
 ```
-Open the terminal, and we can get our web server IP address by this command on the guest terminal. The light configuration is for only the Human genome. The program will download all reference genomes, genome annotation, and other required packages. It also sets your IP address into the allowed IP list of the webserver then the IP address is printed out from the printout messages. The configuration step required internet connection, therefore you should configure webserver before field work.
+Open the terminal, and we can get our web server IP address by this command on the guest terminal. The light configuration is for only the Human genome. The program will download all reference genomes, genome annotation, reference transcriptome (cDNA) and other required packages. It also sets your IP address into the allowed IP list of the webserver then the IP address is printed out from the printout messages. The configuration step required internet connection, therefore you should configure webserver before field work.
 
 ```console
 $setup_webserver light
 $runserver
 ```
-If you want to use RNASeq for other organisms, use this command (beta version): 
+If you want to use RNASeq for other organisms (Rat, Mouse, Zebrafish, C-elegans). These genome is much bigger than Human genome. Therefore, you have to extent your hard drive to at least 1 TB to use this command (beta version): 
 
 ```console
 $setup_webserver full
@@ -48,12 +54,12 @@ $runserver
 
 ### 2.2. Using webserver
 #### 2.2.1. Access webserver
-Now you can use your webserver within your Local Area Network (LAN) with a regular web browser (e.g., Firefox or Google Chrome port: 8000) http://{Your IP address}:8000/duesselpore.
-The webserver can access via three ways: first way is your local network interface (normally start with 192.168.x.x), the second way your LAN IP address (depend on your LAN network), third way is on the Virtual machine (address: localhost)
+Now you can use your webserver within your Local Area Network (LAN) with a regular web browser (e.g., Firefox or Google Chrome HTTP port: 8000) http://{Your IP address}:8000/duesselpore.
+The webserver can access via three ways: the first way is your local network interface (normally start with 192.168.x.x), the second way your LAN IP address (depend on your LAN network for example 10.x.x.x), third way is directly on the Virtual machine (address: localhost or 127.0.0.1)
 
 #### 2.2.2. Data preparation
 
-Users can upload fastq files as ONE compressed zip file: each subfolder contains several replicas with one experimental condition.
+Users can upload fastq files as ONE compressed zip file: each subfolder contains several replicas with one experimental condition. Your decompressor support most common compression program in Window and Linux such as zip, gunzip, 7z etc
 NOTE: files and folders’ names must contain only alphabetic and numeric characters.
 Below is an example of data separated into two conditions, ‘condition1’ and ‘condition2’. Please check the structure and the director name of your data carefully, all the name of analysis are generated by directory and file names.
 
@@ -86,3 +92,4 @@ Advanced users can customize the RNA.R code to develop a new workflow. The figur
 #### 2.2.4. Collecting the results:
 The run time depends on the your data size and the system speed. For our dataset which contains 6 replicates, approximate totals 16 million reads, the run time is 6.5 hours. After the computation is completed, all the results are downloaded from the browser. We export the interactive HTML file for some plots.
 Users can continue offline analysis on the Linux virtual machine directory at /home/ag-rossi/duesselpore/users_file/{your session id}. Experienced users can continue the further analysis by editing the R script. NGS data is high volume, therefore we recommend erasing the data on the virtual machine regularly. The Sample result is in the Support Information, or sample_result.pdf.
+
