@@ -1,21 +1,21 @@
-# DUESSELPORE^TM Webserver manual 
+# DUESSELPORE Webserver manual 
 
 This is the instruction of using Duesselpore webserver to process RNAseq data. Video of instruction can be found at: 
 
 ## Data availability:
 * Virtualbox image at:
-https://iufduesseldorf-my.sharepoint.com/:u:/g/personal/thach_nguyen_iuf-duesseldorf_de/ET7zomuFVRBBheV-S3TZ6soBH7GiduAEWkp_XF0foxYI3A 
-* Light weight testdata at
-* Full test data.
+https://iufduesseldorf-my.sharepoint.com/:u:/g/personal/thach_nguyen_iuf-duesseldorf_de/EXyr1Dzs2mpCq83v9r32p30BV2Or2JP2ubjoxCnt4mNn-Q?e=yEDh7K 
+* Light weight testdata at https://iufduesseldorf-my.sharepoint.com/:u:/g/personal/thach_nguyen_iuf-duesseldorf_de/ES4BsdfJSKNHl-mDUR3BogcBEmdOawVTRy-eRXU3-XeG2A?e=Kq9O2e 
+* Full test data. https://iufduesseldorf-my.sharepoint.com/:u:/g/personal/thach_nguyen_iuf-duesseldorf_de/EWIk4CLauThHk61_5rItjEcBOP4CJstbyCN9yN3ty36A7g?e=zRUf1T
 * Sample result.
 
 ## 1. Install and configure webserver
 ### 1.1. System requirement
+* CPU: 2.0 GHz (Intel architecture, acceleration support) 4 cores or higher (8 cores recommended)
+* System memory (RAM): 8 GB or higher (16 GB recommended)
+* Diskdrive: 200 GB free space (1TB recommended)
+* Host operating system Window 10, Linux (Ubuntu >=18.04 or Fedora) or MacOS (Intel)
 
-    * CPU: 2.5 GHz 8 cores or higher
-    * System memory: 8 GB or higher
-    * Diskdrive: 200 GB free space
-    * Host operating system Window 10, Linux (Ubuntu >=18.04 or Fedora) or MacOS
 
 ### 1.2. Installation
 #### 1.2.1 Download and install VMWare<br>
@@ -90,6 +90,7 @@ Advanced users can customize the RNA.R code to develop a new workflow. The figur
 ![Input web form explaination](img/web_interface_explanation.pdf)
 
 #### 2.2.4. Collecting the results:
-The run time depends on the your data size and the system speed. For our dataset which contains 6 replicates, approximate totals 16 million reads, the run time is 6.5 hours. After the computation is completed, all the results are downloaded from the browser. We export the interactive HTML file for some plots.
-Users can continue offline analysis on the Linux virtual machine directory at /home/ag-rossi/duesselpore/users_file/{your session id}. Experienced users can continue the further analysis by editing the R script. NGS data is high volume, therefore we recommend erasing the data on the virtual machine regularly. The Sample result is in the Support Information, or sample_result.pdf.
+The run time depends on your data size and the system speed.   For our standard dataset, which contains 6 replicates, approximate totals 16 million reads (around 15 Gb), the run time is around 6 hours.  For lightweight test data, running time is 1.5 hours.  After the computation is completed, all the results are downloaded from the browser.  The interactive HTML file is exported with different plots.  Users can continue the offline analysis on the Linux virtual machine directory at /home/ag-rossi/duesselpore/users_file/{your session id}.  Experienced users will be able to further analyze their data by editing the R script.  NGS data will occupy high volume space, therefore we recommend erasing the data on the virtual machine regularly.  The Sample result is in the Support Information, or sample_result/report.html in sample_result.zip.
+Please note that while most of the analysis do not require an internet connection, gene ontology and disease pathway will require an internet connection.
+
 
