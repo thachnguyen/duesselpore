@@ -10,6 +10,7 @@ class Input(models.Model):
     mouse = 'mouse'
     rat = 'rat'
     celegans = 'celegans'
+    covid19 = 'covid19'
 
     Reference_gene = [
         (human, 'Human hg38 (Homo sapiens)'),
@@ -17,6 +18,7 @@ class Input(models.Model):
         (rat, 'Rat (Rattus norvegicus)'),
         (zebrafish, 'Zebrafish (Danio rerio)'),
         (celegans, 'Caenorhabditis elegans'),
+        (covid19, 'SARS-CoV-2'),
     ]
 
     Rsubread = 'Rsubread'
