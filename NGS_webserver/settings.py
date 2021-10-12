@@ -25,7 +25,7 @@ SECRET_KEY = 'k@jhql!-r4os#ggh+=ekgw0nu_=_likm+xdo0iilpdnv623^kh'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','172.17.21.172', '172.17.21.81','127.0.0.1', '172.17.21.81', '172.18.0.1','192.168.0.4']
+ALLOWED_HOSTS = ['localhost','172.18.0.2','172.17.21.172', '172.17.21.81','127.0.0.1', '172.17.21.81', '172.18.0.1','192.168.0.4']
 
 
 # Application definition
