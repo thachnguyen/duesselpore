@@ -1,4 +1,4 @@
-from netifaces import interfaces, ifaddresses, AF_INET
+#from netifaces import interfaces, ifaddresses, AF_INET
 import os, sys
 
 
@@ -13,13 +13,13 @@ def ip4_addresses():
     return ip_list
 
 if __name__=="__main__":
-	print('setup IP address')
-	iplist = ip4_addresses()
-	f = open('/home/ag-rossi/projects/duesselpore/NGS_webserver/settings.py', 'r').readlines()
-	f[27] = f[27][:-2]+','+ str(iplist)[1:] + '\n'
-	f1 = open('/home/ag-rossi/projects/duesselpore/NGS_webserver/settings.py', 'w')
-	f1.writelines(f)
-	f1.close()
+	#print('setup IP address')
+	# iplist = ip4_addresses()
+	# f = open('/home/ag-rossi/projects/duesselpore/NGS_webserver/settings.py', 'r').readlines()
+	# f[27] = f[27][:-2]+','+ str(iplist)[1:] + '\n'
+	# f1 = open('/home/ag-rossi/projects/duesselpore/NGS_webserver/settings.py', 'w')
+	# f1.writelines(f)
+	# f1.close()
 	print('Updating duesselpore')
 	os.system('git -C /home/ag-rossi/projects/duesselpore pull')
 
