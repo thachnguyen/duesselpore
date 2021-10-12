@@ -18,7 +18,7 @@ RUN ln -s /home/ag-rossi/salmon-1.5.2_linux_x86_64/bin/salmon /bin/salmon
 RUN pip install django==3.2.8 requests==2.26.0 biopython==1.78 HTSeq==0.13.5
 
 #Install decompressor
-RUN apt-get update; apt-get install p7zip-full
+RUN apt-get update; apt-get install p7zip-full; apt install fastqc
 
 #Install R packages
 RUN R < /home/ag-rossi/duesselpore/R.txt --no-save
