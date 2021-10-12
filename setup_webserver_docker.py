@@ -31,10 +31,8 @@ if __name__=="__main__":
 			os.system('wget ftp://ftp.ensembl.org/pub/release-104/fasta/homo_sapiens/cdna/Homo_sapiens.GRCh38.cdna.all.fa.gz -P ~/ReferenceData/')
 		print('creating human reference genome indexes, please wait')
 		os.system('minimap2 -t 4 -k14 -w10 -d ~/ReferenceData/reference_human.mmi ~/ReferenceData/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz')
-		#os.system('echo %s|sudo -S %s'%(sudo_pass, install_cmd))
 		os.unlink('/home/ag-rossi/ReferenceData/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz')
 		
-	
 		if sys.argv[1]=='full':
 			print('Downloading human reference genome')
 			os.system('wget ftp://ftp.ensembl.org/pub/release-102/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz -P ~/ReferenceData/')
@@ -42,9 +40,7 @@ if __name__=="__main__":
 			os.system('wget ftp://ftp.ensembl.org/pub/release-104/fasta/homo_sapiens/cdna/Homo_sapiens.GRCh38.cdna.all.fa.gz -P ~/ReferenceData/')
 			print('creating human reference genome indexes, please wait')
 			os.system('minimap2 -t 4 -k15 -w10 -d ~/ReferenceData/reference_human.mmi ~/ReferenceData/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz')
-			# install_cmd ='apt install fastqc'
-			# sudo_pass = '123456'
-			# os.system('echo %s|sudo -S %s'%(sudo_pass, install_cmd))
+
 			os.unlink('/home/ag-rossi/ReferenceData/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz')
 
 
@@ -54,9 +50,7 @@ if __name__=="__main__":
 			os.system('wget http://ftp.ensembl.org/pub/release-102/fasta/mus_musculus/cdna/Mus_musculus.GRCm38.cdna.all.fa.gz -P ~/ReferenceData/')
 			print('creating mouse reference genome indexes, please wait')
 			os.system('minimap2 -t 4 -k15 -w10 -d ~/ReferenceData/Mus_musculus.mmi ~/ReferenceData/Mus_musculus.GRCm38.dna.primary_assembly.fa.gz')
-			# install_cmd ='apt install fastqc'
-			# sudo_pass = '123456'
-			# os.system('echo %s|sudo -S %s'%(sudo_pass, install_cmd))
+
 			os.unlink('/home/ag-rossi/ReferenceData/Mus_musculus.GRCm38.dna.primary_assembly.fa.gz')
 			
 
@@ -66,9 +60,7 @@ if __name__=="__main__":
 			os.system('wget http://ftp.ensembl.org/pub/release-102/fasta/rattus_norvegicus/cdna/Rattus_norvegicus.Rnor_6.0.cdna.all.fa.gz -P ~/ReferenceData/')
 			print('creating rat reference genome indexes, please wait')
 			os.system('minimap2 -t 4 -k15 -w10 -d ~/ReferenceData/Rattus_norvegicus.mmi ~/ReferenceData/Rattus_norvegicus.Rnor_6.0.dna.toplevel.fa.gz')
-			# install_cmd ='apt install fastqc'
-			# sudo_pass = '123456'
-			# os.system('echo %s|sudo -S %s'%(sudo_pass, install_cmd))
+
 			os.unlink('/home/ag-rossi/ReferenceData/Rattus_norvegicus.Rnor_6.0.dna.toplevel.fa.gz')
 
 			print('Downloading zebrafish reference genome')
@@ -77,9 +69,7 @@ if __name__=="__main__":
 			os.system('wget http://ftp.ensembl.org/pub/release-102/fasta/danio_rerio/cdna/Danio_rerio.GRCz11.cdna.all.fa.gz -P ~/ReferenceData/')
 			print('creating zebrafish reference genome indexes, please wait')
 			os.system('minimap2 -t 4 -k15 -w10 -d ~/ReferenceData/Danio_rerio.mmi ~/ReferenceData/Danio_rerio.GRCz11.dna.primary_assembly.fa.gz')
-			# install_cmd ='apt install fastqc'
-			# sudo_pass = '123456'
-			# os.system('echo %s|sudo -S %s'%(sudo_pass, install_cmd))
+
 			os.unlink('/home/ag-rossi/ReferenceData/Danio_rerio.GRCz11.dna.primary_assembly.fa.gz')
 
 			print('Downloading C elegans reference genome')
@@ -96,23 +86,5 @@ if __name__=="__main__":
 			print('creating Covid19 reference genome indexes, please wait')
 			os.system('minimap2 -t 4 -k15 -w10 -d ~/ReferenceData/Covid19.mmi ~/ReferenceData/Sars_cov_2.ASM985889v3.dna.toplevel.fa.gz')
 
-			
-			# install_cmd ='apt install fastqc'
-			# sudo_pass = '123456'
-			# os.system('echo %s|sudo -S %s'%(sudo_pass, install_cmd))
 			os.unlink('/home/ag-rossi/ReferenceData/Caenorhabditis_elegans.WBcel235.dna.toplevel.fa.gz')
 			os.unlink('/home/ag-rossi/ReferenceData/Sars_cov_2.ASM985889v3.dna.toplevel.fa.gz')
-
-
-			# print('creating mouse reference genome indexes, please wait')
-			# os.system('minimap2 -t 4 -k15 -w10 -d ~/ReferenceData/reference_mouse.mmi ~/ReferenceData/Mus_musculus.GRCm39.dna.toplevel.fa.gz')
-			# print('creating rat reference genome indexes, please wait')
-			# os.system('minimap2 -t 4 -k15 -w10 -d ~/ReferenceData/reference_rat.mmi ~/ReferenceData/Rattus_norvegicus.Rnor_6.0.dna.toplevel.fa.gz')
-			# print('creating zebrafish reference genome indexes, please wait')
-			# os.system('minimap2 -t 4 -k15 -w10 -d ~/ReferenceData/reference_zebrafish.mmi ~/ReferenceData/Danio_rerio.GRCz11.dna.toplevel.fa.gz')
-			# print('creating C elegans reference genome indexes, please wait')
-			# os.system('minimap2 -t 4 -k15 -w10 -d ~/ReferenceData/reference_celegans.mmi ~/ReferenceData/Caenorhabditis_elegans.WBcel235.dna.toplevel.fa.gz')
-			# os.unlink('~/ReferenceData/*.fa.gz')
-
-	print('Your webserver IP address is %s, please use http://%s:8000/duesselpore/ on your browser:'%(iplist[-1], iplist[-1]))
-	print('Other alternative address', iplist)
