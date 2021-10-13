@@ -3,7 +3,7 @@
 This is the instruction of using Duesselpore webserver to process RNAseq data. Video of instruction can be found at: 
 
 ## Data availability:
-
+* Docker image on Dockerhub https://hub.docker.com/repository/docker/thachdt4/duesselpore
 * Light weight testdata at https://iufduesseldorf-my.sharepoint.com/:u:/g/personal/thach_nguyen_iuf-duesseldorf_de/ES4BsdfJSKNHl-mDUR3BogcBEmdOawVTRy-eRXU3-XeG2A?e=Kq9O2e 
 * Full test data. https://iufduesseldorf-my.sharepoint.com/:u:/g/personal/thach_nguyen_iuf-duesseldorf_de/EWIk4CLauThHk61_5rItjEcBOP4CJstbyCN9yN3ty36A7g?e=zRUf1T
 
@@ -19,7 +19,8 @@ This is the instruction of using Duesselpore webserver to process RNAseq data. V
 Follow Docker install instruction from https://www.docker.com/get-started.
 After install Docker. Open the terminal (on Linux, MacOS) or WSL(on Window). You may have to run it as superuser. NGS_webserver/settings.py.
 ```console
-$docker run -it -p 8000:8000 thachdt4/duesselpore:running python3 /home/ag-rossi/projects/duesselpore/manage.py runserver 0.0.0.0:8000
+$docker run -it -p 8000:8000 thachdt4/duesselpore:running python3\
+ /home/ag-rossi/projects/duesselpore/manage.py runserver 0.0.0.0:8000
 ```
 Depend on your host Operating system and your IP address range, you may have to configure the Docker IP address (default is 172.17.0.2). 
 IMPORTANT NOTE: If you change your Docker address, you have to add your IP Address in to the ALLOWED_HOST field in /home/ag-rossi/projects/duesselpore/
