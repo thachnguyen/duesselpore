@@ -3,14 +3,17 @@
 ### Getting start
 Duesselpore is a full stack, light weigh webserver for Nanopore RNAseq.
 * Duesselpore web framework is writen using Django Python 3.8.5, NGS data analysis function were written using R and Python
-* Duesselpore can run locally on your virtual machine (Virtualbox)
+* Duesselpore can run locally on your Docker Container or virtual machine (Virtualbox)
 * Most of functional analysis can work without internet connection.
 
+
+
 ### Availability:
-* Virtualbox image at https://iufduesseldorf-my.sharepoint.com/:u:/g/personal/thach_nguyen_iuf-duesseldorf_de/EZB0I5s_Gq5MnPbg1g69WvsBACVULQFQ3s2wJjc-pyN3PA?e=Jh7Hwv   
+* Running Docker images is on dockerhub: thachdt4/duesselpore:running, or you can build your Docker container from Dockerfile on this github repository.    
 * Test data full at https://iufduesseldorf-my.sharepoint.com/:u:/g/personal/thach_nguyen_iuf-duesseldorf_de/EWIk4CLauThHk61_5rItjEcBOP4CJstbyCN9yN3ty36A7g?e=zRUf1T
 * Test data lightweight at https://iufduesseldorf-my.sharepoint.com/:u:/g/personal/thach_nguyen_iuf-duesseldorf_de/ES4BsdfJSKNHl-mDUR3BogcBEmdOawVTRy-eRXU3-XeG2A?e=Kq9O2e 
 * Instruction video https://www.youtube.com/watch?v=-MvffifrQ1Q 
+* Virtualbox image at https://iufduesseldorf-my.sharepoint.com/:u:/g/personal/thach_nguyen_iuf-duesseldorf_de/EZB0I5s_Gq5MnPbg1g69WvsBACVULQFQ3s2wJjc-pyN3PA?e=Jh7Hwv 
 
 ### System requirement
 #### Minimum requirement
@@ -30,6 +33,7 @@ Duesselpore is a full stack, light weigh webserver for Nanopore RNAseq.
 See manual.pdf (manual.md) file or our instruction video
 
 ### Dependancies
+
 Duesselpore use 
 * R version 4.1.1, Bioconductor and its packages
 Full R packages and session info in R.txt

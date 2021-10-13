@@ -20,10 +20,10 @@ RUN cd /home/ag-rossi/projects/; git clone https://github.com/thachnguyen/duesse
 RUN cd duesselpore; R < R.txt --no-save
 
 # Install python dependancies
-RUN pip install django==3.2.8 requests==2.26.0 biopython==1.78 HTSeq==0.13.5
+RUN pip install django==3.2.8 requests==2.26.0 biopython==1.78 HTSeq==0.13.5 openpyxl==3.0.9 pyensembl==1.9.4
 
 #Install decompressor
-RUN apt-get update; apt-get install p7zip-full; apt install fastqc; apt-get install -y samtools
+RUN apt-get update; apt-get -y install p7zip-full; apt install -y fastqc; apt-get install -y samtools
 
 #Fixed fastqc bug 
 RUN cp /home/ag-rossi/projects/duesselpore/duesselpore/fastqc /usr/bin/fastqc
