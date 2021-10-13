@@ -148,7 +148,7 @@ def run_htseq_count(path='users_file/', s_id = 'Test_name_1618217069', organism 
 
     for i, bamfile in enumerate(glob.glob('users_file/%s/Analysis/Minimap/*.bam'%s_id)):
         os.system('samtools index %s'%(bamfile))
-        os.system('htseq-count -s no -a 5 --nonunique=all %s ~/ReferenceData/%s>%s.csv'%(bamfile, file_org[organism], bamfile[:-4]))
+        os.system('htseq-count -s no -a 5 --nonunique=all %s /home/ag-rossi/ReferenceData/%s>%s.csv'%(bamfile, file_org[organism], bamfile[:-4]))
         if i ==0:
             df = pd.read_csv('%s.csv'%(bamfile[:-4]), delimiter='\t', header=None)
             df.columns=['gene_id', bamfile[:-4]]
@@ -169,7 +169,7 @@ def run_htseq_count_parallel(path='users_file/', s_id = 'Test_name_1618217069'):
     data_columns.insert(0, 'gene_id')
     for bamfile in bam_files:
         os.system('samtools index %s'%(bamfile))
-    os.system('htseq-count -s no -a 5 -n %i --nonunique=all %s ~/ReferenceData/Homo_sapiens.GRCh38.102.gtf.gz>%sHTSeq_counts.csv'%(len(bam_files), " ".join(bam_files), hts_out_path))
+    os.system('htseq-count -s no -a 5 -n %i --nonunique=all %s /home/ag-rossi/ReferenceData/Homo_sapiens.GRCh38.102.gtf.gz>%sHTSeq_counts.csv'%(len(bam_files), " ".join(bam_files), hts_out_path))
     
     df1 = pd.read_csv('%sHTSeq_counts.csv'%hts_out_path, delimiter='\t', header=None)
     df1 = df1[:-5]    
@@ -186,7 +186,7 @@ def run_salmon_count(path='users_file/', s_id = 'Test_name_1618217069'):
     for i, bamfile in enumerate(bam_files):
         file_name = bamfile.split('/')[-1][:-4]
         #os.system('samtools index %s'%(bamfile))
-        os.system('salmon quant -p 4 -t ~/ReferenceData/Homo_sapiens.GRCh38.cdna.all.fa.gz -l U -a %s -o users_file/%s/Analysis/Salmon/%s'%(bamfile, s_id, file_name))
+        os.system('salmon quant -p 4 -t /home/ag-rossi/ReferenceData/Homo_sapiens.GRCh38.cdna.all.fa.gz -l U -a %s -o users_file/%s/Analysis/Salmon/%s'%(bamfile, s_id, file_name))
         if i == 0:
             df = pd.read_csv('users_file/%s/Analysis/Salmon/%s/quant.sf'%(s_id, file_name), delimiter='\t')
             df = df.rename(columns={'NumReads':file_name})
