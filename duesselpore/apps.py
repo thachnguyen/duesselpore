@@ -104,11 +104,11 @@ def run_minimap2(path='users_file/', s_id = 'Test_name_1618217069', organism = '
                 os.system('minimap2 -t 4 -ax splice -k14 -uf --secondary=no /home/ag-rossi/ReferenceData/%s %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(file_org[organism], path2, path_minimap, fastq_file1))
                 print('minimap2 -t 4 -ax splice -k14 -uf --secondary=no /home/ag-rossi/ReferenceData/%s %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(file_org[organism], path2, path_minimap, fastq_file1))
             elif seq_method == 'pacbio':
-                os.system('minimap2 -t 4 -ax splice map-hifi -uf --secondary=no /home/ag-rossi/ReferenceData/%s %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(file_org[organism], path2, path_minimap, fastq_file1))
-                print('minimap2 -t 4 -ax splice map-hifi -uf --secondary=no /home/ag-rossi/ReferenceData/%s %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(file_org[organism], path2, path_minimap, fastq_file1))
+                os.system('minimap2 -t 4 -ax map-pb splice -uf --secondary=no /home/ag-rossi/ReferenceData/%s %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(file_org[organism], path2, path_minimap, fastq_file1))
+                print('minimap2 -t 4 -ax map-pb splice -uf --secondary=no /home/ag-rossi/ReferenceData/%s %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(file_org[organism], path2, path_minimap, fastq_file1))
             elif seq_method =='illumina':
-                os.system('minimap2 -t 4 -ax splice sr -uf --secondary=no /home/ag-rossi/ReferenceData/%s %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(file_org[organism], path2, path_minimap, fastq_file1))
-                print('minimap2 -t 4 -ax splice sr -uf --secondary=no /home/ag-rossi/ReferenceData/%s %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(file_org[organism], path2, path_minimap, fastq_file1))
+                os.system('minimap2 -t 4 -ax sr splice -uf --secondary=no /home/ag-rossi/ReferenceData/%s %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(file_org[organism], path2, path_minimap, fastq_file1))
+                print('minimap2 -t 4 -ax sr splice -uf --secondary=no /home/ag-rossi/ReferenceData/%s %s | samtools view -Sb | samtools sort - -o %s/%s.bam'%(file_org[organism], path2, path_minimap, fastq_file1))
             else:
                 print('sequence method is not listed')
 
