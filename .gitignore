@@ -138,7 +138,7 @@ dmypy.json
 # Biodata and other formats
 *.fasta
 *.fastq
-*.zip
+#*.zip
 *.Rhistory
 *.bam
 *.fai
