@@ -1,6 +1,6 @@
 # DUESSELPORE Webserver manual 
 
-This is the instruction of using Duesselpore webserver to process RNAseq data. Video of instruction can be found at: 
+This is the instruction of using Duesselpore webserver to process RNAseq data. 
 
 ## Data availability:
 * Docker image on Dockerhub https://hub.docker.com/repository/docker/thachdt4/duesselpore:main
