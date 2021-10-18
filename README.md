@@ -5,7 +5,7 @@ Simply install Docker and run:
 ```console
 sudo docker run -it -p 8000:8000 thachdt4/duesselpore:running python3 /home/ag-rossi/projects/duesselpore/manage.py runserver 0.0.0.0:8000
 ```
-sudo docker run -it -p 8000:8000 thachdt4/duesselpore:running python3 /home/ag-rossi/projects/duesselpore/manage.py runserver 0.0.0.0:8000
+Then open the web browser at localhost:8000/duesselpore. More information is on manual.md file.
 Duesselpore is a full stack, light weigh webserver for Nanopore RNAseq.
 * Duesselpore web framework is writen using Django Python 3.8.5, NGS data analysis function were written using R and Python
 * Duesselpore can run locally on your Docker Container or virtual machine (Virtualbox)
