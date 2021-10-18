@@ -24,13 +24,22 @@ class Input(models.Model):
     Rsubread = 'Rsubread'
     HTSeq = 'HTSeq'
     Salmon = 'Salmon'
-
+    
     gene_count_method = [
         (Rsubread, 'Rsubread/featureCounts (Liao et. al. 2014) for gene counts'),
         (HTSeq, 'HTSeq/htseq-counts (Ander et. al. 2014) for gene counts'),
         (Salmon, 'Salmon (Patro et. al. 2017) for transcriptome counts'),
     ]
     
+    nanopore='nanopore'
+    pacbio='pacbio'
+    illumina='illumina'
+    seq_method = [
+        (nanopore, 'Oxford Nanopore (long read)'),
+        (pacbio, 'PacBio (long read)'),
+        (illumina, 'illumina (short read)'),
+    ]
+
     DESeq2 = 'DESeq2'
     limma = 'limma'
     edgeR = 'edgeR'
@@ -43,6 +52,13 @@ class Input(models.Model):
 
     name = models.CharField(max_length=100,  verbose_name='Your submission', default='Test_name')
     upfile_fastq = models.FileField(verbose_name= 'Upload your fastq files (all-in zip format, group by study group required)',  upload_to='users_file/', blank=True, null=True)
+    
+    seq_method = models.CharField(
+        max_length=100,
+        choices=seq_method,
+        default=nanopore,
+    )
+
     gene_count_method = models.CharField(
         max_length=100,
         choices=gene_count_method,
@@ -77,5 +93,5 @@ class Input(models.Model):
 class InputForm(ModelForm):
     class Meta:
         model = Input
-        fields = ['name', 'upfile_fastq', 'gene_count_method', 'Differential_expression_method', 'NumberOfTopGene','reference_group', 'study_group', 'reference_genes', 'cluster_by_replica', 'readCountMinThreshold', 'lfcThreshold' , 'adjPValueThreshold', 'pathway_ID']
+        fields = ['name', 'upfile_fastq','seq_method', 'gene_count_method', 'Differential_expression_method', 'NumberOfTopGene','reference_group', 'study_group', 'reference_genes', 'cluster_by_replica', 'readCountMinThreshold', 'lfcThreshold' , 'adjPValueThreshold', 'pathway_ID']
         

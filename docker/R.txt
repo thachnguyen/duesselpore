@@ -1,2 +1,2 @@
 BiocManager::install(c("Rsubread", "ShortRead", "DESeq2", "AnnotationDbi", "org.Hs.eg.db", "vsn", "karyoploteR", "ensembldb", "debrowser", "edgeR", "biomaRt", "DOSE", "pathview", "clusterProfiler", "AnnotationHub", "limma", "EnsDb.Hsapiens.v86", "enrichplot", "pcaMethods"))
-install.packages(c('ggplot2', 'plyr', 'pcaMethods', 'caTools', 'writexl', 'session', 'PoiClaClu', 'pheatmap', 'viridis', 'tidyft', 'VennDiagram', 'kableExtra', 'readxl', 'gridExtra', 'RColorBrewer', 'ggnewscale', 'statmod'))
+install.packages(c('ggplot2', 'plyr', 'pcaMethods', 'caTools', 'writexl', 'session', 'PoiClaClu', 'pheatmap', 'viridis', 'tidyft', 'VennDiagram', 'kableExtra', 'readxl', 'gridExtra', 'RColorBrewer', 'ggnewscale', 'statmod', 'cowplot'))

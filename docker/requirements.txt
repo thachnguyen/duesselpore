@@ -1,0 +1,15 @@
+biopython==1.78 
+Cython=0.29.22
+Django=3.2.0
+json5==0.9.5
+HTSeq==0.13.5
+numpy==1.18.5
+openpyxl==3.0.9
+pandas==1.2.4
+pyensembl==1.9.4
+PyYAML==5.4.1
+requests==2.25.1
+simplejson==3.17.2
+sqlparse==0.4.1
+webencodings==0.5.1
+widgetsnbextension==3.5.1
