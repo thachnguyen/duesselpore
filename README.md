@@ -7,7 +7,7 @@ Duesselpore is a full stack, light weigh webserver for Nanopore RNAseq.
 * Most of functional analysis can work without internet connection.
 
 ### Availability:
-* Running Docker images is on dockerhub: thachdt4/duesselpore:running, or you can build your Docker container from Dockerfile on this github repository.    
+* Running Docker images is on dockerhub: thachdt4/duesselpore:main, or you can build your Docker container from Dockerfile on this github repository.    
 * Test data full at https://iufduesseldorf-my.sharepoint.com/:u:/g/personal/thach_nguyen_iuf-duesseldorf_de/EWIk4CLauThHk61_5rItjEcBOP4CJstbyCN9yN3ty36A7g?e=zRUf1T
 * Test data lightweight at https://iufduesseldorf-my.sharepoint.com/:u:/g/personal/thach_nguyen_iuf-duesseldorf_de/ES4BsdfJSKNHl-mDUR3BogcBEmdOawVTRy-eRXU3-XeG2A?e=Kq9O2e 
 * Instruction video https://www.youtube.com/watch?v=-MvffifrQ1Q 

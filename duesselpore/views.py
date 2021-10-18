@@ -50,7 +50,7 @@ def index(request):
                 
                 #Run minimap for two first options
                 if form.gene_count_method in ['Rsubread', 'HTSeq']:
-                    run_minimap2(s_id=session_id)
+                    run_minimap2(s_id=session_id, seq_method=form.seq_method)
                     t4 = time()
                     print('Run Minimap time %i seconds' %(t4-t3))
 
