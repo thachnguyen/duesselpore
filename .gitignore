@@ -114,8 +114,8 @@ test_data/
 ../NGS_webserver/settings.py
 static/
 #!static/instruction_duesselpore.md.gitkeep
-#!static/manual.pdf.gitkeep
-#!static/Rheinturm_preview.png.gitkeep
+!static/manual.pdf.gitkeep
+!static/Rheinturm_preview.png.gitkeep
 
 # Spyder project settings
 .spyderproject
