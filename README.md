@@ -9,11 +9,11 @@ Then open the web browser at localhost:8000/duesselpore. More information is on 
 Duesselpore is a full stack, light weigh webserver for Nanopore RNAseq.
 * Duesselpore web framework is writen using Django Python 3.8.5, NGS data analysis function were written using R and Python
 * Duesselpore can run locally on your Docker Container or virtual machine (Virtualbox)
-* After installation step (docker pull) most of functional analysis can work without internet connection.
+* After installation step (docker pull) most of functional analysis can work without internet connection.<br>
 
-If you have any question, please contact: 
-Thach Nguyen
-Genome Engineering and Model Development lab (GEMD)
+If you have any question, please contact: <br>
+Thach Nguyen<br>
+Genome Engineering and Model Development lab (GEMD)<br>
 thach.nguyen(remove this bracket &%&//) at IUF-Duesseldorf.de
 
 
