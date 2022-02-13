@@ -16,6 +16,9 @@ from time import time
 from distutils.dir_util import copy_tree
 import shutil
 
+def http_response(request, status):
+    return render(request, 'status.html', {'output': status})
+
 def index(request):
     os.chdir(os.path.dirname(__file__))
     status = ''
@@ -44,20 +47,21 @@ def index(request):
                 t2 = time() 
                 print('Upload time %i seconds' %(t2- t1))
                 status = 'Running 1/15: Upload time %i seconds' %(t2- t1)
+                http_response(request, status)
+
                 samples = manage_fastq_list(session_id)
                 t3 = time() 
                 print('Read time %i seconds' %(t3 - t2))
-                status = 'Running 1/15: Read time %i seconds' %(t3 - t2)
+                status = 'Running 2/15: File unzip completed in %i seconds' %(t3 - t2)
                 create_yaml(s_id=session_id, samples=samples, NumberOfTopGene=form.NumberOfTopGene ,ref_group= form.reference_group, study_group=form.study_group, readCountMinThreshold=form.readCountMinThreshold, lfcThreshold=form.lfcThreshold, adjPValueThreshold=form.adjPValueThreshold, organism=organism, cluster_col = form.cluster_by_replica, pathway_ID=form.pathway_ID)
 
-                
                 #Run minimap for two first options
                 if form.gene_count_method in ['Rsubread', 'HTSeq']:
-                    status = 'Completed 2/ 15: Uploading successfully, Run alignment' 
+                    status = 'Completed 3/ 15: Preprocessing successfully, Running alignment' 
                     run_minimap2(s_id=session_id, seq_method=form.seq_method)
                     t4 = time()
                     
-                    status = 'Completed 3/ 15: Run Minimap time %i seconds' %(t4-t3)
+                    status = 'Completed 4/ 15: Run Minimap time %i seconds' %(t4-t3)
                     print('Run Minimap time %i seconds' %(t4-t3))
 
                     if form.gene_count_method == 'Rsubread':
