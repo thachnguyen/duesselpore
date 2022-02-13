@@ -18,6 +18,7 @@ import shutil
 
 def index(request):
     os.chdir(os.path.dirname(__file__))
+    status = ''
     #print(os.path.dirname(__file__))
     if request.method == 'POST':
         form = InputForm(request.POST, request.FILES)
@@ -42,16 +43,21 @@ def index(request):
                 print(os.getcwd())
                 t2 = time() 
                 print('Upload time %i seconds' %(t2- t1))
+                status = 'Running 1/15: Upload time %i seconds' %(t2- t1)
                 samples = manage_fastq_list(session_id)
                 t3 = time() 
                 print('Read time %i seconds' %(t3 - t2))
+                status = 'Running 1/15: Read time %i seconds' %(t3 - t2)
                 create_yaml(s_id=session_id, samples=samples, NumberOfTopGene=form.NumberOfTopGene ,ref_group= form.reference_group, study_group=form.study_group, readCountMinThreshold=form.readCountMinThreshold, lfcThreshold=form.lfcThreshold, adjPValueThreshold=form.adjPValueThreshold, organism=organism, cluster_col = form.cluster_by_replica, pathway_ID=form.pathway_ID)
 
                 
                 #Run minimap for two first options
                 if form.gene_count_method in ['Rsubread', 'HTSeq']:
+                    status = 'Completed 2/ 15: Uploading successfully, Run alignment' 
                     run_minimap2(s_id=session_id, seq_method=form.seq_method)
                     t4 = time()
+                    
+                    status = 'Completed 3/ 15: Run Minimap time %i seconds' %(t4-t3)
                     print('Run Minimap time %i seconds' %(t4-t3))
 
                     if form.gene_count_method == 'Rsubread':
@@ -96,7 +102,7 @@ def index(request):
                 # send email is not implemented in local mode
                 #send_result(str(form.name), link, form.email)
                 
-            return render(request, 'results_rna.html', context)
+            return render(request, 'results_rna.html', {'output': status}, context)
 
     else:
         form = InputForm()

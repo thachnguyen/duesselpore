@@ -7,6 +7,7 @@ ARG DUESSELPORE=1.0.0
 
 # setup working directory
 RUN mkdir /home/ag-rossi; cd /home/ag-rossi; mkdir projects
+RUN apt update; apt install libssl-dev libcurl4-openssl-dev libxml2-dev libfontconfig1-dev
 
 #Install Salmon 
 RUN wget https://github.com/COMBINE-lab/salmon/releases/download/v1.5.2/salmon-1.5.2_linux_x86_64.tar.gz; tar xzvf salmon-1.5.2_linux_x86_64.tar.gz; rm salmon-1.5.2_linux_x86_64.tar.gz 
