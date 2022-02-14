@@ -15,6 +15,7 @@ import mimetypes
 from time import time
 from distutils.dir_util import copy_tree
 import shutil
+from celery import task
 
 def http_response(request, status):
     return render(request, 'status.html', {'output': status})
@@ -32,6 +33,10 @@ def index(request):
                 session_id = '%s_%s' %(form.name, str(int(time())))
                 organism = form.reference_genes
                 os.mkdir('users_file/%s' %session_id)
+
+                print('Upload time')
+                status = 'Running 1/15: Upload time 5'
+                http_response(request, status)
 
                 #Write log file for each session
                 stdoutOrigin=sys.stdout 
@@ -106,7 +111,7 @@ def index(request):
                 # send email is not implemented in local mode
                 #send_result(str(form.name), link, form.email)
                 
-            return render(request, 'results_rna.html', {'output': status}, context)
+            return render(request, 'results_rna.html', context)
 
     else:
         form = InputForm()
