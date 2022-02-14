@@ -8,14 +8,16 @@ import shutil
 import yaml
 import django
 
+from celery import  shared_task
+
 class duesselporeConfig(AppConfig):
     name = 'duesselpore'
-    #default_auto_field = django.db.models.BigAutoField
 
-def handle_uploaded_file(f, s_id, f_name = 'fastq1'):
+def handle_uploaded_file(self, f, s_id, f_name = 'fastq1'):
     with open('users_file/%s/%s' %(s_id,f_name), 'wb+') as destination:
         for chunk in f.chunks():
             destination.write(chunk)
+    
 
 def manage_fastq_list(s_id):
     '''

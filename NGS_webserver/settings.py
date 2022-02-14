@@ -49,6 +49,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+# CELERY setting
+CELERY_BROKER_URL = 'redis://127.0.0.1:8000'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_BACKEND = 'django-db'
 
 ROOT_URLCONF = 'NGS_webserver.urls'
 

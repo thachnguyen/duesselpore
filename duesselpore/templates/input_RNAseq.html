@@ -2,8 +2,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
-
 <head>
     <meta charset="UTF-8">
     <title>Webserver for NGS analysis. </title>
@@ -38,8 +36,10 @@
   {% endfor %}
 </table>
 <p><input type=submit value=Submit></form></p>
+<p> (*) After submit data, please keep this windows open, you can see computational status on the Docker console</p>
 
-<h3>{{ output }}</h3>
+{% if output %}<h3>{{ output }}</h3>{% endif %}
+
 <p>
   <img src="/static/Rheinturm_preview.png" align="right" width="250px" height="250px" style="opacity:0.4;filter:alpha(opacity=40)"/>
 
@@ -79,6 +79,9 @@
 </div>
 
   </div>
+
+
+
 
 </body>
 </html>

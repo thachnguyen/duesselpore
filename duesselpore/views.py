@@ -15,15 +15,9 @@ import mimetypes
 from time import time
 from distutils.dir_util import copy_tree
 import shutil
-from celery import task
-
-def http_response(request, status):
-    return render(request, 'status.html', {'output': status})
 
 def index(request):
     os.chdir(os.path.dirname(__file__))
-    status = ''
-    #print(os.path.dirname(__file__))
     if request.method == 'POST':
         form = InputForm(request.POST, request.FILES)
         if form.is_valid():
@@ -33,26 +27,21 @@ def index(request):
                 session_id = '%s_%s' %(form.name, str(int(time())))
                 organism = form.reference_genes
                 os.mkdir('users_file/%s' %session_id)
+                output = 'Start'
 
                 print('Upload time')
-                status = 'Running 1/15: Upload time 5'
-                http_response(request, status)
 
-                #Write log file for each session
                 stdoutOrigin=sys.stdout 
                 os.mkdir('users_file/%s/fastq'%session_id)
                 os.mkdir('users_file/%s/Analysis/'%session_id)
                 os.mkdir('users_file/%s/Analysis/Results'%session_id)
                 os.mkdir('users_file/%s/Analysis/Results/QC'%session_id)
                 sys.stdout = open('users_file/%s/Analysis/Results/log.txt' %session_id, "w")
-
                 handle_uploaded_file(request.FILES['upfile_fastq'], s_id=session_id)
 
-                print(os.getcwd())
                 t2 = time() 
                 print('Upload time %i seconds' %(t2- t1))
                 status = 'Running 1/15: Upload time %i seconds' %(t2- t1)
-                http_response(request, status)
 
                 samples = manage_fastq_list(session_id)
                 t3 = time() 
@@ -98,14 +87,12 @@ def index(request):
                 copy_tree('users_file/%s/Analysis/Results/'%session_id, 'static/results/%s'%session_id)
                 shutil.copyfile('templates/report.html', 'static/results/%s/report.html'%session_id)
                 shutil.copyfile('templates/report.html', 'users_file/%s/Analysis/Results/report.html'%session_id)
-                # shutil.copyfile('users_file/%s/Rplots.pdf', 'users_file/%s/Analysis/Results/Rplots.pdf'%session_id)
                 shutil.make_archive('static/results/%s'%session_id, 'zip', 'users_file/%s/Analysis/Results/' %session_id)
                 try:
                     shutil.rmtree('users_file/%s/fastq/'%session_id)
                 except OSError as e:
                     print ("Error: %s - %s." % (e.filename, e.strerror))
-                #os.unlink('users_file/'+session_id)
-
+                
                 context = {'file_id': session_id}
                 #link = 'http://172.17.21.81:8000/static/%s.zip'%session_id
                 # send email is not implemented in local mode
@@ -116,8 +103,8 @@ def index(request):
     else:
         form = InputForm()
 
-    return render(request, 'input_RNAseq.html',
-            {'form': form })
+    return render(request, 'input_RNAseq.html', locals())
+            # {'form': form})
 
 def processing_gene_counts(excel_file = 'ExpressedGenes.xlsx'):
     '''
