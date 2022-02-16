@@ -3,15 +3,13 @@ This is the main application functions. Read the user's upload files (fastaq for
 '''
 from django.apps import AppConfig
 import os
-from zipfile import ZipFile
 import shutil
 import yaml
-import django
 
 class duesselporeConfig(AppConfig):
     name = 'duesselpore'
 
-def handle_uploaded_file(self, f, s_id, f_name = 'fastq1'):
+def handle_uploaded_file(f, s_id, f_name = 'fastq1'):
     with open('users_file/%s/%s' %(s_id,f_name), 'wb+') as destination:
         for chunk in f.chunks():
             destination.write(chunk)
