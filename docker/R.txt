@@ -1,2 +1,10 @@
 BiocManager::install(c("Rsubread", "ShortRead", "DESeq2", "AnnotationDbi", "org.Hs.eg.db", "vsn", "karyoploteR", "ensembldb", "debrowser", "edgeR", "biomaRt", "DOSE", "pathview", "clusterProfiler", "AnnotationHub", "limma", "EnsDb.Hsapiens.v86", "enrichplot", "pcaMethods"))
 install.packages(c('ggplot2', 'plyr', 'pcaMethods', 'caTools', 'writexl', 'session', 'PoiClaClu', 'pheatmap', 'viridis', 'tidyft', 'VennDiagram', 'kableExtra', 'readxl', 'gridExtra', 'RColorBrewer', 'ggnewscale', 'statmod', 'cowplot'))
+
+Other dependancies:
+* R version 4.1.1, Bioconductor and its packages
+Full R packages and session info in R.txt
+* Python 3.8.5, required packages in requirements.txt
+* minimap2 version 2.20-r1061 and samtools version 1.7
+* HTSeq 0.13.5
+* Salmon v1.5.2

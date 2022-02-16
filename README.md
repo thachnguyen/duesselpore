@@ -5,8 +5,8 @@ Simply install Docker and run:
 ```console
 sudo docker run -it -p 8000:8000 thachdt4/duesselpore:running python3 /home/ag-rossi/projects/duesselpore/manage.py runserver 0.0.0.0:8000
 ```
-Then open the web browser at localhost:8000/duesselpore. More information is on manual.md file.
-Duesselpore is a full stack, light weigh webserver for Nanopore RNAseq.
+Open the web browser at localhost:8000/duesselpore. More information is on manual.md file.
+Duesselpore is a full stack, light weight webserver to process RNASeq from Nanopore as well as other (Illumina, PacBio ...)
 * Duesselpore web framework is writen using Django Python 3.8.5, NGS data analysis function were written using R and Python.
 * Duesselpore can run locally on your Docker Container.
 * Most of functional analysis can work without internet connection.
@@ -22,18 +22,8 @@ Duesselpore is a full stack, light weigh webserver for Nanopore RNAseq.
 #### System requirement
     * CPU: 2.0 GHz (64bits) 2 cores or higher
     * Memory: 8 GB or higher
-    * Diskdrive: 100 GB (or higher) free space
-    * Window 10, Linux (64 bits) or Mac
-
-### Installation and manual
-See manual.pdf (manual.md) file or our instruction video
+    * Diskdrive: 100 GB free space 
+    * Window 10, Linux (64 bits) or MacOS.
 
 ### Dependancies
-
-Duesselpore use all solftware built in docker images.
-* R version 4.1.1, Bioconductor and its packages
-Full R packages and session info in R.txt
-* Python 3.8.5, required packages in requirements.txt
-* minimap2 version 2.20-r1061 and samtools version 1.7
-* HTSeq 0.13.5
-* Salmon v1.5.2
+All dependancies package are built in docker images.

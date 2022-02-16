@@ -56,7 +56,7 @@ On Window command prompt (path syntax is different):
 ```console
 $ type \path\to\fastq\files\*.fastq> \your\new\location\output.fastq
 ```
-#### 2.2.3. Setup running parameter:
+#### 2.2.3. Running parameter:
 First, select one group among your groups as the reference group. Select the gene (transcriptome) counting method, then select the differential expression algorithm you want to analyze. 
 To run the analysis, we have to set up other parameters of the analysis function. There are some optional parameters, e.g., ReadCountMinThreshold, Logfold change threshold, adjPValueThreshold. After submit we can wait for the result. 
 Advanced users can customize the RNA.R code to develop a new workflow. The figure bellow exlain the web input form. 

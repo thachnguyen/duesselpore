@@ -12,10 +12,12 @@
     <div id="Text_Buttons">
 
       <h1>
-        Your RNASeq results
+        Your RNASeq results. 
       </h1>
+      <h2>Sample {{file_id}}.
+      </h2>
 
-      Your RNASeq analysis is completed, you can download full result here <a href="/static/results/{{file_id}}.zip" download> Download results </a>
+      Your RNASeq analysis is completed, you can download full result here <a href="/static/results/{{file_id}}.zip" download> Download results </a><br>
       Permanent link: http://localhost:8000/duesselpore/static/results/{{file_id}}.zip
 
       {% autoescape off %}
