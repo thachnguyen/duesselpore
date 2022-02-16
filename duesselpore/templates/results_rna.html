@@ -18,7 +18,7 @@
       </h2>
 
       Your RNASeq analysis is completed, you can download full result here <a href="/static/results/{{file_id}}.zip" download> Download results </a><br>
-      Permanent link: http://localhost:8000/duesselpore/static/results/{{file_id}}.zip
+      Permanent link: http://localhost:8000/static/results/{{file_id}}.zip
 
       {% autoescape off %}
       {{ plot_div }}
@@ -28,33 +28,33 @@
  
 <h2>
   Read quality<br><br>
-  <iframe src="/static/results/{{file_id}}/read_quality.pdf#toolbar=0" width="660" height="660"
+  <iframe src="/static/results/{{file_id}}/read_quality.pdf#toolbar=0" width="600" height="440"
   frameborder="0" scrolling="no">
   </iframe>
 </h2>
 
 <h2>
   Read length<br><br>
-  <iframe src="/static/results/{{file_id}}/read_length.pdf#toolbar=0" width="660" height="660"
+  <iframe src="/static/results/{{file_id}}/read_length.pdf#toolbar=0" width="600" height="440"
   frameborder="0" scrolling="no">  </iframe>
 </h2>
 
 <h2>
   Sample summary<br><br>
-  <iframe src="/static/results/{{file_id}}/sample_summary.pdf#toolbar=0" width="660" height="660"
+  <iframe src="/static/results/{{file_id}}/sample_summary.pdf#toolbar=0" width="600" height="210"
   frameborder="0" scrolling="no">  </iframe>
 </h2>
 
 <h2>
   cDNA_mapping summary<br><br>
-  <iframe src="/static/results/{{file_id}}/cDNA_mapping_summary.pdf#toolbar=0" width="660" height="660"
+  <iframe src="/static/results/{{file_id}}/cDNA_mapping_summary.pdf#toolbar=0" width="600" height="210"
   frameborder="0" scrolling="no">  </iframe>
 </h2>
 
 
 <h2>
   Expression heatmap<br><br>
-  <iframe src="/static/results/{{file_id}}/heatmap.pdf#toolbar=0" width="660" height="660"
+  <iframe src="/static/results/{{file_id}}/heatmap.pdf#toolbar=0" width="670" height="670"
   frameborder="0" scrolling="no">
   </iframe>
 </h2> 
