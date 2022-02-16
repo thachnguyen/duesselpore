@@ -79,7 +79,7 @@ processQCFastq <- function(rowname) {
 data <- lapply(row.names(studyDesign), processQCFastq)
 qcData <- data.frame(data)
 colnames(qcData) <- row.names(studyDesign)
-pdf("Analysis/Results/sample_summary.pdf", width=12, height = 7)       # Export PDF
+pdf("Analysis/Results/sample_summary.pdf", width=8, height = 3)       # Export PDF
 grid.table(qcData)
 dev.off()
 
@@ -98,7 +98,7 @@ lengthMatrixMelt <- reshape2::melt(lengthDataMatrix, na.rm=TRUE, measure.vars=ro
 lengthMatrixMelt <- cbind(lengthMatrixMelt, group=studyDesign[match(lengthMatrixMelt$variable,  rownames(studyDesign)), "group"])
 
 plot <- ggplot(lengthMatrixMelt, aes(x=variable, y=value, fill=group)) + geom_violin() + scale_y_continuous(limits=c(0, as.numeric(quantile(lengthMatrixMelt$value, probs=c(0.975))))) + xlab("study sample") +  ylab("Distribution of Read Lengths (bp)") + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + scale_fill_brewer(palette="Paired") + labs(title="Violin plot showing distribution of read lengths across samples")
-ggsave("Analysis/Results/read_length.pdf")
+ggsave("Analysis/Results/read_length.pdf", width=8, height = 6)
 
 # read quality----
 extractQualities <- function(rowname) {
@@ -115,7 +115,7 @@ qualityMatrixMelt <- reshape2::melt(qualityDataMatrix, na.rm=TRUE, measure.vars=
 qualityMatrixMelt <- cbind(qualityMatrixMelt, group=studyDesign[match(qualityMatrixMelt$variable,  rownames(studyDesign)), "group"])
 
 plotQ <- ggplot(qualityMatrixMelt, aes(x=variable, y=value, fill=group)) + geom_violin() + scale_y_continuous(limits=c(min(qualityMatrixMelt$value), max(qualityMatrixMelt$value))) + xlab("study sample") +  ylab("Distribution of Read Qualities (QV)") + theme(axis.text.x = element_text(angle = 90, hjust = 1)) + scale_fill_brewer(palette="Paired") + labs(title="Violin plot showing distribution of read qualities across samples")
-ggsave("Analysis/Results/read_quality.pdf")
+ggsave("Analysis/Results/read_quality.pdf", width=8, height = 6)
 
 
 # Review of cDNA read mapping----
@@ -152,6 +152,6 @@ flagstatRes[nrow(flagstatRes)+1,] <- round(as.numeric(flagstatRes["Mapped", ]) /
 flagstatRes <- flagstatRes[c(6,1,2,3,4,7),]
 rownames(flagstatRes)[6] <- "%mapping"
 
-pdf("Analysis/Results/cDNA_mapping_summary.pdf", width=12, height = 7)       # Export PDF
+pdf("Analysis/Results/cDNA_mapping_summary.pdf", width=8, height = 3)       # Export PDF
 grid.table(flagstatRes)
 dev.off()
