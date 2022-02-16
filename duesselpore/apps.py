@@ -8,8 +8,6 @@ import shutil
 import yaml
 import django
 
-from celery import  shared_task
-
 class duesselporeConfig(AppConfig):
     name = 'duesselpore'
 
