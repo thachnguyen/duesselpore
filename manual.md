@@ -57,12 +57,14 @@ On Window command prompt (path syntax is different):
 $ type \path\to\fastq\files\*.fastq> \your\new\location\output.fastq
 ```
 #### 2.2.3. Running parameter:
-First, select one group among your groups as the reference group. Select the gene (transcriptome) counting method, then select the differential expression algorithm you want to analyze. 
-To run the analysis, we have to set up other parameters of the analysis function. There are some optional parameters, e.g., ReadCountMinThreshold, Logfold change threshold, adjPValueThreshold. After submit we can wait for the result. 
+First, select one group among your groups as the reference group. Select the gene (or transcriptome) counting method, select the differential expression algorithm you want to analyze.<br> 
+To run the analysis, we have to set up other parameters of the analysis function. There are some optional parameters, e.g., ReadCountMinThreshold, Logfold change threshold, adjPValueThreshold. After submiting we have to keep the webbrowser open then wait for the result. <br>
 Advanced users can customize the RNA.R code to develop a new workflow. The figure bellow exlain the web input form. 
 
-![Input web form explaination](img/web_interface_explanation.pdf)
+<!-- ![Input web form explaination](img/web_interface_explanation.pdf) -->
 
 #### 2.2.4. Collecting the results:
-The run time depends on your data size and the system speed.   For our standard dataset, which contains 6 replicates, approximate totals 16 million reads (around 15 Gb), the run time is around 6 hours.  For lightweight test data, running time is 1.5 hours.  After the computation is completed, all the results are downloaded from the browser.  The interactive HTML file is exported with different plots.  Users can continue the offline analysis on the Linux virtual machine directory at /home/ag-rossi/duesselpore/users_file/{your session id}.  Experienced users will be able to further analyze their data by editing the R script.  NGS data will occupy high volume space, therefore we recommend erasing the data on the virtual machine regularly.  The Sample result is in the Support Information, or sample_result/report.html in sample_result.zip.
-Please note that while most of the analysis do not require an internet connection, gene ontology and disease pathway will require an internet connection.
+The run time depends on your data size and the system speed.   For our standard dataset, which contains 6 replicates, approximate totals 16 million reads (around 15 Gb), the run time is around 6 hours.  
+For lightweight test data, running time is one hours on normal laptop.  After the computation is completed, all the results are downloaded from the browser.  The interactive HTML file is exported with different plots.  Users can continue the offline analysis Docker directory at /home/ag-rossi/duesselpore/users_file/{your session id}.  <br>
+Experienced users will be able to further analyze their data by editing the R script.  NGS data requires high volume space, therefore we recommend user erasing the data on the Docker regularly.  The sample result is in the Support Information, or sample_result/report.html in sample_result.zip. <br>
+Please note that while most of the analysis do not require an internet connection, except gene ontology and disease pathway will require an internet connection.
