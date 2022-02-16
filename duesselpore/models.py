@@ -62,7 +62,7 @@ class Input(models.Model):
     gene_count_method = models.CharField(
         max_length=100,
         choices=gene_count_method,
-        default=Rsubread,
+        default=HTSeq,
     )
 
     Differential_expression_method = models.CharField(
