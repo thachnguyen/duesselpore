@@ -3,7 +3,7 @@
 ### Getting start
 Simply install Docker and run:
 ```console
-sudo docker run -it -p 8000:8000 thachdt4/duesselpore:running python3 /home/ag-rossi/projects/duesselpore/manage.py runserver 0.0.0.0:8000
+docker run -it -p 8000:8000 thachdt4/duesselpore:running python3 /home/ag-rossi/projects/duesselpore/manage.py runserver 0.0.0.0:8000
 ```
 Open the web browser at localhost:8000/duesselpore. More information is on manual.md file.
 Duesselpore is a full stack, light weight webserver to process RNASeq from Nanopore as well as other (Illumina, PacBio ...)
