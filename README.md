@@ -1,7 +1,7 @@
 # DUESSELPORE Webserver manual
 
 ### Getting start
-Simply install Docker and run:
+Simply install Docker and run (you may have to run it as sudo user on Linux):
 ```console
 docker run -it -p 8000:8000 thachdt4/duesselpore:running python3 /home/ag-rossi/projects/duesselpore/manage.py runserver 0.0.0.0:8000
 ```
