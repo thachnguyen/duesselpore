@@ -23,8 +23,7 @@ This is the instruction of using Duesselpore webserver to process RNAseq data.
 Install Docker from https://www.docker.com/get-started.<br>
 Open the terminal (on Linux, MacOS), commandline interface or WSL(on Window). You may have to run it as superuser. 
 ```console
-$docker run -it -p 8000:8000 thachdt4/duesselpore:main python3\
- /home/ag-rossi/projects/duesselpore/manage.py runserver 0.0.0.0:8000
+$docker run -it -p 8000:8000 thachdt4/duesselpore:main python3 /home/ag-rossi/projects/duesselpore/manage.py runserver 0.0.0.0:8000
 ```
 Depend on your host Operating system and your IP address range, you may have to configure the Docker IP address (default is 172.17.0.2).<br>
 
