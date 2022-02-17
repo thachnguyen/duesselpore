@@ -35,7 +35,9 @@
     </tr>
   {% endfor %}
 </table>
-<p><input type=submit value=Submit></form></p>
+<p><input type=submit value=Submit ></form></p>
+
+
 <p> (*) After submit data, please keep this windows open, you can see computational status on the Docker console</p>
 
 {% if output %}<h3>{{ output }}</h3>{% endif %}
@@ -69,7 +71,8 @@
 </div>
 
   </div>
-
+  <div id="progress" style="display:none; padding: 10px; border: 10px solid #CCC; background: #EEE; width:20%; position:absolute; top:50%;left:30%">
+  </div>
   <div class="cookie">
     
     <p class="cookie__text">This website run locally on your PC, we don't use cookies on this website</p>
@@ -83,4 +86,6 @@
 
 
 </body>
+
+
 </html>
