@@ -6,7 +6,6 @@ This is the instruction of using Duesselpore webserver to process RNAseq data.
 * Docker image on Dockerhub https://hub.docker.com/repository/docker/thachdt4/duesselpore:main
 * Light weight testdata at https://iufduesseldorf-my.sharepoint.com/:u:/g/personal/thach_nguyen_iuf-duesseldorf_de/ES4BsdfJSKNHl-mDUR3BogcBEmdOawVTRy-eRXU3-XeG2A?e=Kq9O2e 
 * Full test data. https://iufduesseldorf-my.sharepoint.com/:u:/g/personal/thach_nguyen_iuf-duesseldorf_de/EWIk4CLauThHk61_5rItjEcBOP4CJstbyCN9yN3ty36A7g?e=zRUf1T
-* Instruction video
 
 ## Install and configure webserver
 
@@ -23,7 +22,7 @@ This is the instruction of using Duesselpore webserver to process RNAseq data.
 Install Docker from https://www.docker.com/get-started.<br>
 Open the terminal (on Linux, MacOS), commandline interface or WSL(on Window). You may have to run it as superuser. 
 ```console
-docker run -it -p 8000:8000 thachdt4/duesselpore:main python3 /home/ag-rossi/projects/duesselpore/manage.py runserver 0.0.0.0:8000
+docker run -it -p 8000:8000 thachdt4/duesselpore:running python3 /home/ag-rossi/projects/duesselpore/manage.py runserver 0.0.0.0:8000
 ```
 Depend on your host Operating system and your IP address range, you may have to configure the Docker IP address (default is 172.17.0.2).<br>
 
@@ -65,7 +64,7 @@ $ type \path\to\fastq\files\*.fastq> \your\new\location\output.fastq
 First, select one group among your groups as the reference group. Select the gene (or transcriptome) counting method, select the differential expression algorithm you want to analyze.<br> 
 To run the analysis, we have to set up other parameters of the analysis function. There are some optional parameters, e.g., ReadCountMinThreshold, Logfold change threshold, adjPValueThreshold. After submiting we have to keep the webbrowser open then wait for the result. <br>
 Advanced users can customize the RNA.R code to develop a new workflow. 
-<!-- ![Input web form explaination](img/web_interface_explanation.pdf) -->
+
 #### Collecting the results:
 
 The run time depends on your data size and the system speed. For our standard 6 replicates dataset, approximate totals 16 million reads (around 15 Gb), the run time is around 6 hours. For lightweight test data, running time is one hours on normal laptop.<br>  
