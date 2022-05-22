@@ -79,19 +79,19 @@ class Input(models.Model):
     )
 
     cluster_choices= (('Yes','Yes'), ('No', 'No'))
+    number_cpu = models.IntegerField(verbose_name='Number of CPU use(optional)', default=4)
 
-    reference_group = models.CharField(max_length=100,  verbose_name='Reference group (reference\'s sub-directory name)', default='first group', help_text='Your reference group (must be one of your subfolder name)')
-    study_group = models.CharField(max_length=100,  verbose_name='Study group (study groups\'s sub-directory name)', default='second group', help_text='Your study group (must be one of your subfolder name)')
+    reference_group = models.CharField(max_length=100,  verbose_name='Reference group (reference\'s sub-directory name)', default='DMSO', help_text='Your reference group (must be one of your subfolder name)')
+    study_group = models.CharField(max_length=100,  verbose_name='Study group (study groups\'s sub-directory name)', default='PCB', help_text='Your study group (must be one of your subfolder name)')
     NumberOfTopGene = models.IntegerField(verbose_name='Number of top variance genes (For Gene Ontology)', default=30)
     readCountMinThreshold = models.IntegerField(verbose_name='readCountMinThreshold (Optional)', default=10)
     lfcThreshold = models.FloatField(verbose_name='lfcThreshold (Optional)', default=1.0)
     adjPValueThreshold = models.FloatField(verbose_name='adjPValueThreshold (Optional)', default=0.05)
     cluster_by_replica = models.CharField(max_length=6, choices=cluster_choices, verbose_name='Cluster replicate', default='Yes')
     pathway_ID = models.CharField(max_length=10, verbose_name='KEGG id (for pathview)', default='hsa04144')
-    # gene_gene_templates_file = models.FileField(verbose_name= 'Upload your reference genome',  upload_to='users_file/', blank=False, null=True)
-   
+       
 class InputForm(ModelForm):
     class Meta:
         model = Input
-        fields = ['name', 'upfile_fastq','seq_method', 'gene_count_method', 'Differential_expression_method', 'NumberOfTopGene','reference_group', 'study_group', 'reference_genes', 'cluster_by_replica', 'readCountMinThreshold', 'lfcThreshold' , 'adjPValueThreshold', 'pathway_ID']
+        fields = ['name', 'upfile_fastq','seq_method', 'gene_count_method', 'Differential_expression_method', 'NumberOfTopGene','reference_group', 'study_group', 'reference_genes', 'cluster_by_replica', 'number_cpu', 'readCountMinThreshold', 'lfcThreshold' , 'adjPValueThreshold', 'pathway_ID']
         
