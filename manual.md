@@ -27,6 +27,10 @@ python3 /home/ag-rossi/projects/duesselpore/manage.py runserver 0.0.0.0:8000
 ```
 Depend on your host Operating system and your IP address range, you may have to configure the Docker IP address (default is 172.17.0.2).<br>
 
+##### (Optional) You can add your user account to docker group to use docker without sudo 
+$ sudo usermod -aG docker $USER 
+$ sudo chmod 666 /var/run/docker.sock
+
 ### Using webserver
 
 #### Access webserver

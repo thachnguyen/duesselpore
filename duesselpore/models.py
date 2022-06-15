@@ -88,7 +88,7 @@ class Input(models.Model):
     lfcThreshold = models.FloatField(verbose_name='lfcThreshold (Optional)', default=1.0)
     adjPValueThreshold = models.FloatField(verbose_name='adjPValueThreshold (Optional)', default=0.05)
     cluster_by_replica = models.CharField(max_length=6, choices=cluster_choices, verbose_name='Cluster replicate', default='Yes')
-    pathway_ID = models.CharField(max_length=10, verbose_name='KEGG id (for pathview)', default='hsa04144')
+    pathway_ID = models.CharField(max_length=10, verbose_name='KEGG id (for pathview: Optional, Internet required (**))', default='hsa04144')
        
 class InputForm(ModelForm):
     class Meta:
