@@ -97,5 +97,5 @@ class Input(models.Model):
 class InputForm(ModelForm):
     class Meta:
         model = Input
-        fields = ['name', 'upfile_fastq','seq_method', 'gene_count_method', 'Differential_expression_method', 'NumberOfTopGene','reference_group', 'study_group', 'reference_genes', 'cluster_by_replica', 'number_cpu', 'readCountMinThreshold', 'lfcThreshold' , 'adjPValueThreshold', 'pathway_ID']
+        fields = ['name', 'upfile_fastq', 'upfile_fasta_ref', 'upfile_gtf_ref','seq_method', 'gene_count_method', 'Differential_expression_method', 'NumberOfTopGene','reference_group', 'study_group', 'reference_genes', 'cluster_by_replica', 'number_cpu', 'readCountMinThreshold', 'lfcThreshold' , 'adjPValueThreshold', 'pathway_ID']
         
