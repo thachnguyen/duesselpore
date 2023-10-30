@@ -5,6 +5,7 @@ from django.forms import ModelForm
 
 
 class Input(models.Model):
+    customized = 'customized'
     human = 'human'
     zebrafish = 'zebrafish'
     mouse = 'mouse'
@@ -13,6 +14,7 @@ class Input(models.Model):
     covid19 = 'covid19'
 
     Reference_gene = [
+        (customized, 'customized genome (you have to upload reference fasta and gtf files)'), 
         (human, 'Human hg38 (Homo sapiens)'),
         (mouse, 'Mouse (Mus musculus)'),
         (rat, 'Rat (Rattus norvegicus)'),
@@ -52,7 +54,9 @@ class Input(models.Model):
 
     name = models.CharField(max_length=100,  verbose_name='Your submission', default='Test_name')
     upfile_fastq = models.FileField(verbose_name= 'Upload your fastq files (all-in zip format, group by study group required)',  upload_to='users_file/', blank=True, null=True)
-    
+    upfile_fasta_ref = models.FileField(verbose_name= 'Upload your reference fasta',  upload_to='users_file/', blank=True, null=True)    
+    upfile_gtf_ref = models.FileField(verbose_name= 'Upload your reference genome annotation GTF',  upload_to='users_file/', blank=True, null=True)    
+
     seq_method = models.CharField(
         max_length=100,
         choices=seq_method,
@@ -75,7 +79,7 @@ class Input(models.Model):
     reference_genes = models.CharField(
         max_length=100,
         choices=Reference_gene,
-        default=human,
+        default=customized,
     )
 
     cluster_choices= (('Yes','Yes'), ('No', 'No'))

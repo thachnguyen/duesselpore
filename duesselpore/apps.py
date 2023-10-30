@@ -13,6 +13,11 @@ def handle_uploaded_file(f, s_id, f_name = 'fastq1'):
     with open('users_file/%s/%s' %(s_id,f_name), 'wb+') as destination:
         for chunk in f.chunks():
             destination.write(chunk)
+
+def handle_uploaded_file_ref(f, f_name = 'customized.fa'):
+    with open('/home/ag-rossi/ReferenceData/%s' %(f_name), 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
     
 
 def manage_fastq_list(s_id):
@@ -38,7 +43,9 @@ def manage_fastq_list(s_id):
     #print(samples_data)
     os.unlink(zipfilename)
 
-    return samples_data    
+    return samples_data  
+
+
 
 def create_yaml(s_id, samples, yaml_file = 'config.yaml', NumberOfTopGene=30 ,ref_group = '0',study_group= '1', readCountMinThreshold = 10, lfcThreshold =1,  adjPValueThreshold = 0.05, tutorialText=False, organism='human', cluster_col = False, pathway_ID='hsa05034'):
     # '''
@@ -83,7 +90,7 @@ def run_minimap2(path='users_file/', s_id = 'Test_name_1618217069', organism = '
                 'mouse':'Mus_musculus.mmi',
                 'zebrafish':'Danio_rerio.mmi',
                 'celegans':'Caenorhabditis_elegans.mmi',
-                'covid19': 'Covid19.mmi'}
+                'customized': 'customized.fa'}
 
     if not os.path.exists('users_file/%s/Analysis'%s_id):
         os.mkdir('users_file/%s/Analysis'%s_id)
@@ -142,6 +149,7 @@ def run_htseq_count(path='users_file/', s_id = 'Test_name_1618217069', organism 
     #bam_path= 'users_file/%s/Analysis/Minimap/'%s_id
     #hts_out_path = 'users_file/%s/Analysis/'%s_id
     file_org={'human':'Homo_sapiens.GRCh38.102.gtf.gz',
+              'customized':'customized.gtf',
                 'rat': 'Rattus_norvegicus.Rnor_6.0.102.gtf.gz',
                 'mouse':'Mus_musculus.GRCm38.102.gtf.gz',
                 'zebrafish':'Danio_rerio.GRCz11.102.gtf.gz',

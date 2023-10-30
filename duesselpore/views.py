@@ -37,6 +37,9 @@ def index(request):
                 os.mkdir('users_file/%s/Analysis/Results/QC'%session_id)
                 sys.stdout = open('users_file/%s/Analysis/Results/log.txt' %session_id, "w")
                 handle_uploaded_file(request.FILES['upfile_fastq'], s_id=session_id)
+                handle_uploaded_file_ref(request.FILES['upfile_fasta_ref'], f_name='customized.fa')
+                handle_uploaded_file_ref(request.FILES['upfile_gtf_ref'], f_name='customized.gtf')
+
 
                 t2 = time() 
                 print('Upload time %i seconds' %(t2- t1))
